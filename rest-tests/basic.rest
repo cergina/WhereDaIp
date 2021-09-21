@@ -1,0 +1,35 @@
+###
+
+// just basic info about this project
+GET http://localhost:13000/
+
+###
+
+// which geolocation databases work now
+GET http://localhost:13000/available-providers
+
+###
+
+// send a request for specific ip
+POST http://localhost:13000/specific
+Content-Type: application/json
+
+{
+    "__available_modes": "basic, full",
+    "mode": "basic",
+    "ip": "62.197.243.225"
+}
+
+###
+
+// send a request for ip batch
+POST http://localhost:13000/batch/
+Content-Type: application/json
+
+{
+    "__available_modes": "basic, full",
+    "mode": "basic",
+    "ip_collection": ["62.197.243.225", "147.175.250.7"]
+}
+
+###

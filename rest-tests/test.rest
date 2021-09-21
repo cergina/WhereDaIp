@@ -1,0 +1,14 @@
+###
+
+POST http://localhost:13000/test
+
+###
+
+POST http://localhost:13000/test-content-type
+Content-Type: application/json
+
+{
+    "__irelevantKey": "irelevant value",
+    "exampleKey": "example Value"
+}
+
