@@ -6,6 +6,7 @@ var config = {}
 // all need to be specified here
 config.SKUSOBNA=process.env.SKUSOBNA
 config.PORT=process.env.PORT
+config.USER="Maroš Čergeť"
 
 // export for usage outside
 module.exports = config;

@@ -1,6 +1,27 @@
-<title>Welcome home!</title>
-<h1>Hi <%= name %></h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
-<form action="/logout?_method=DELETE" method="POST">
-    <button type="submit">Log Out</button>
-</form>
+    <title>Home page</title>
+</head>
+<body>
+    <div class="container">
+        <div class="mb-4 display-4">Welcome home, <%= name %> !</div>
+        
+        <a href="/providers" class="btn btn-info">List of GeoDB providers in system</a>
+        <a href="/requests" class="btn btn-info">List of IP's in database</a>
+        <a href="/api" class="btn btn-info">How to use API</a>
+        
+        <form class="mt-4" action="/logout?_method=DELETE" method="POST">
+            <button class="btn btn-warning" type="submit">Log Out</button>
+        </form>
+    </div>
+</body>
+</html>
+
+

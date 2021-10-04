@@ -5,6 +5,10 @@ const locationProviderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    description: {
+        type: String,
+        required: false
+    }, 
     format: {
         type: String,
         required: true,
@@ -55,9 +59,15 @@ const locationProviderSchema = new mongoose.Schema({
         orgPath: String,
         ispPath: String,
         currencyPath: String,
-        fullfilledRequestsPath: Number,
-        required: true
+        fullfilledRequestsPath: Number
     }
+})
+
+// anytime save, update, create and delete
+locationProviderSchema.pre('validate', function(next) {
+    
+
+    next()
 })
 
 module.exports = mongoose.model('LocationProviderSchema', locationProviderSchema)
