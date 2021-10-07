@@ -1,11 +1,109 @@
+<h5 class="display-5 mt-4">Information relevant, to this system only</h5>
+<!-- popisky systemove -->
 <div class="form-group">
-    <label for="name">Name</label>
+    <label for="name">Name of the service in this system</label>
     <input required value="<%= provider.name %>" type="text" name="name" id="name" class="form-control">
 </div>
 <div class="form-group">
-    <label for="description">Description</label>
+    <label for="description">Your own description and notes on the service</label>
     <textarea name="description" id="description" class="form-control"><%= provider.description %></textarea>
 </div>
 
+
+<h5 class="display-5 mt-4">Service's request fields (see service's documentation)</h5>
+<!-- informacie potrebne k uspesnemu odoslaniu poziadavky -->
+<div class="form-group">
+    <label for="api-url">Service's API url</label>
+    <input required value="" placeholder="http://serviceurl.com/json/" type="text" name="api-url" id="api-url" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-free">Is the service free?</label>
+    <select id="api-free" class="form-select form-select-sm" required aria-label=".form-select-sm example">
+        <option selected value="1">Yes</option>
+        <option value="2">No</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="api-method">Request method</label>
+    <select id="api-method" class="form-select form-select-sm" required aria-label=".form-select-sm example">
+        <option selected value="1">GET + param in link</option>
+        <option value="2">GET + ip after service url</option>
+        <option value="3">POST + body json</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="api-req-param-ip">Name for parameter "IP address"</label>
+    <input required value="" type="text" name="api-req-param-ip" id="api-req-param-ip" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-req-param-ip">Name for parameter "authentication" (if service not free)</label>
+    <input required value="" type="text" name="api-req-param-ip" id="api-req-param-ip" class="form-control">
+</div>
+
+
+<h5 class="display-5 mt-4">Service's response fields (see service's documentation)</h5>
+<!-- to co budeme spracovavat ako odpoved od sluzby -->
+<div class="form-group">
+    <label for="response-format">Response format type</label>
+    <select id="response-format" class="form-select form-select-sm" required aria-label=".form-select-sm example">
+        <option selected value="1">JSON</option>
+        <option value="2">XML</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="api-resp-success-path">Path to "was succesfull request"</label>
+    <input required value="" placeholder="success" type="text" name="api-resp-success-path" id="api-resp-success-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-continent-path">Path to "continent"</label>
+    <input required value="" placeholder="continent" type="text" name="api-resp-continent-path" id="api-resp-continent-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-country-path">Path to "country"</label>
+    <input required value="" placeholder="country" type="text" name="api-resp-country-path" id="api-resp-country-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-countrycode-path">Path to "country code"</label>
+    <input required value="" placeholder="country_code" type="text" name="api-resp-countrycode-path" id="api-resp-countrycode-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-countryflag-path">Path to "country flag"</label>
+    <input required value="" placeholder="country_flag" type="text" name="api-resp-countryflag-path" id="api-resp-countryflag-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-region-path">Path to "region"</label>
+    <input required value="" placeholder="region" type="text" name="api-resp-region-path" id="api-resp-region-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-city-path">Path to "city"</label>
+    <input required value="" placeholder="city" type="text" name="api-resp-city-path" id="api-resp-city-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-latitude-path">Path to "latitude"</label>
+    <input required value="" placeholder="latitude" type="text" name="api-resp-latitude-path" id="api-resp-latitude-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-longitude-path">Path to "longitude"</label>
+    <input required value="" placeholder="longitude" type="text" name="api-resp-longitude-path" id="api-resp-longitude-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-organization-path">Path to "organization"</label>
+    <input required value="" placeholder="org" type="text" name="api-resp-organization-path" id="api-resp-organization-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-isp-path">Path to "ISP (internet service provider)"</label>
+    <input required value="" placeholder="isp" type="text" name="api-resp-isp-path" id="api-resp-isp-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-currency-path">Path to "currency in country"</label>
+    <input required value="" placeholder="currency" type="text" name="api-resp-currency-path" id="api-resp-currency-path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api-resp-requestscount-path">Path to "number of already fullfilled requests"</label>
+    <input required value="" placeholder="completed_requests" type="text" name="api-resp-requestscount-path" id="api-resp-requestscount-path" class="form-control">
+</div>
+
+
+<!-- akcne tlacidla -->
 <a href="/" class="btn btn-secondary">Cancel</a>
 <button type="submit" class="btn btn-primary">Save</button>

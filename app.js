@@ -8,9 +8,12 @@ const generalRoutes = require('./routes/general')
 const providersRoutes = require('./routes/providers/providers')
 const ipsRequests = require('./routes/requests/ips')
 
-const app = express()
+var app = express()
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+//app.use(express.static(__dirname + 'public'));
+//app.use('*/css',express.static('public/css'));
+app.use(express.static(__dirname + '/public'));
 
 app.set('view-engine', 'ejs')
 app.use(express.json())
