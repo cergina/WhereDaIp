@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
+const slugify = require('slugify')
 
 const locationProviderSchema = new mongoose.Schema({
+    slug: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true
@@ -22,7 +27,7 @@ const locationProviderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    isFree: {
+    isFree: {   
         type: Boolean,
         required: true
     },
@@ -31,6 +36,11 @@ const locationProviderSchema = new mongoose.Schema({
         required: true
     },
     addedAt: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    lastEditAt: {
         type: Date,
         required: true,
         default: Date.now
@@ -65,7 +75,9 @@ const locationProviderSchema = new mongoose.Schema({
 
 // anytime save, update, create and delete
 locationProviderSchema.pre('validate', function(next) {
-    
+    if (this.name) {
+        this.slug = slugify(this.name, {lower: true, strict: true })
+    }
 
     next()
 })

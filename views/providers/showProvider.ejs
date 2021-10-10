@@ -9,14 +9,18 @@
     <link rel="stylesheet" type="text/css" href="/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/css/callout.css">
 
-    <title>API tutorial</title>
+    <title>Edit provider</title>
 </head>
 <body>
     <div class="container">
-        <h1 class="mb-4 display-4">How to use API</h1>
-        <a href="https://github.com/cergina/WhereDaIp" class="btn btn-primary">GitHub repo</a>
+        <h1 class="mb-4 display-4">Name: <% provider.name %></h1>
+        
         <a href="/" class="btn btn-dark">Home</a>
          
+        <form action="/providers/edit/<% provider.id %> " method="POST">
+            <!-- this is to output raw html instead of conerting to String -->
+            <%- include('_form_fields_provider') %>
+        </form>
     </div>
 </body>
 </html>

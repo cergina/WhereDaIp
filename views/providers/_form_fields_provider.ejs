@@ -1,4 +1,12 @@
+<div class="bd-callout bd-callout-info">
+    <p>
+        Here it's possible to add new service that provides Geolocation services publicly via API.
+        However, it's needed to tell our software, how to contact the API and how to "understand" 
+        replies, because all of them might call different fields with different words.
+    </p>
+</div>
 <h5 class="display-5 mt-4">Information relevant, to this system only</h5>
+
 <!-- popisky systemove -->
 <div class="form-group">
     <label for="name">Name of the service in this system</label>
@@ -9,98 +17,147 @@
     <textarea name="description" id="description" class="form-control"><%= provider.description %></textarea>
 </div>
 
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="added_date">Date added (if new, current date shows up)</label>
+        </div>
+        <div class="col-md-6">
+            <label for="last_edit_at">Last edit at (if new, current date shows up)</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <input disabled value="<%= provider.addedAt %>" type="text" name="added_date" id="added_date" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <input disabled value="<%= provider.lastEditAt %>" type="text" name="last_edit_at" id="last_edit_at" class="form-control">
+        </div>
+    </div>
+</div>
 
+
+<div class="bd-callout bd-callout-info">
+    <p>
+        These are information, necessary for the remote API to understand our request.
+        
+        Some APIs are free, some are payed. All of them have different URLs under which they are accessible.
+        Sometimes they can be accessed via pure url + '192.168.0.1', but sometimes you need to craete
+        POST request and put information into the body.
+    </p>
+</div>
 <h5 class="display-5 mt-4">Service's request fields (see service's documentation)</h5>
 <!-- informacie potrebne k uspesnemu odoslaniu poziadavky -->
 <div class="form-group">
-    <label for="api-url">Service's API url</label>
-    <input required value="" placeholder="http://serviceurl.com/json/" type="text" name="api-url" id="api-url" class="form-control">
+    <label for="api_url">Service's API url</label>
+    <input  value="<%= provider.baseUrl %>" placeholder="http://serviceurl.com/json/" type="text" name="api_url" id="api_url" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-free">Is the service free?</label>
-    <select id="api-free" class="form-select form-select-sm" required aria-label=".form-select-sm example">
+    <label for="api_free">Is the service free?</label>
+    <select id="api_free" class="form-select form-select-sm"  aria-label=".form-select-sm example">
         <option selected value="1">Yes</option>
         <option value="2">No</option>
     </select>
 </div>
 <div class="form-group">
-    <label for="api-method">Request method</label>
-    <select id="api-method" class="form-select form-select-sm" required aria-label=".form-select-sm example">
+    <label for="active">Enable service?</label>
+    <select id="active" class="form-select form-select-sm"  aria-label=".form-select-sm example">
+        <option selected value="1">Yes</option>
+        <option value="2">No</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="api_method">Request method</label>
+    <select id="api_method" class="form-select form-select-sm"  aria-label=".form-select-sm example">
         <option selected value="1">GET + param in link</option>
         <option value="2">GET + ip after service url</option>
         <option value="3">POST + body json</option>
     </select>
 </div>
 <div class="form-group">
-    <label for="api-req-param-ip">Name for parameter "IP address"</label>
-    <input required value="" type="text" name="api-req-param-ip" id="api-req-param-ip" class="form-control">
+    <label for="api_req_param_ip">Name for parameter "IP address" (if any)</label>
+    <input value="<%= provider.ipAddress %>" type="text" name="api_req_param_ip" id="api_req_param_ip" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-req-param-ip">Name for parameter "authentication" (if service not free)</label>
-    <input required value="" type="text" name="api-req-param-ip" id="api-req-param-ip" class="form-control">
+    <label for="api_req_param_auth">Name for parameter "authentication" (if service not free)</label>
+    <input value="<%= provider.authentication %>" type="text" name="api_req_param_auth" id="api_req_param_auth" class="form-control">
 </div>
 
 
+
+
+<div class="bd-callout bd-callout-info">
+    <p>
+        In the following part you specify what kind of name is used in the json/xml/... 
+        part of the object returned from the service. Placeholders contain examples which
+        are used in iphois in format eg.: 'example', where you write just words inside ''
+    </p>
+</div>
 <h5 class="display-5 mt-4">Service's response fields (see service's documentation)</h5>
 <!-- to co budeme spracovavat ako odpoved od sluzby -->
+
 <div class="form-group">
-    <label for="response-format">Response format type</label>
-    <select id="response-format" class="form-select form-select-sm" required aria-label=".form-select-sm example">
+    <label for="repsonse_format">Response format type</label>
+    <select id="repsonse_format" class="form-select form-select-sm"  aria-label=".form-select-sm example">
         <option selected value="1">JSON</option>
         <option value="2">XML</option>
     </select>
 </div>
 <div class="form-group">
-    <label for="api-resp-success-path">Path to "was succesfull request"</label>
-    <input required value="" placeholder="success" type="text" name="api-resp-success-path" id="api-resp-success-path" class="form-control">
+    <label for="api_resp_success_path">Path to "was succesfull request"</label>
+    <input  value="<%= provider.sucessPath %>" placeholder="eg.: 'success'" type="text" name="api_resp_success_path" id="api_resp_success_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-continent-path">Path to "continent"</label>
-    <input required value="" placeholder="continent" type="text" name="api-resp-continent-path" id="api-resp-continent-path" class="form-control">
+    <label for="api_resp_iptype_path">Path to "Type of IP address v4 or v6"</label>
+    <input value="<%= provider.typePath %>" placeholder="eg.: 'type'" type="text" name="api_resp_iptype_path" id="api_resp_iptype_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-country-path">Path to "country"</label>
-    <input required value="" placeholder="country" type="text" name="api-resp-country-path" id="api-resp-country-path" class="form-control">
+    <label for="api_resp_continent_path">Path to "continent"</label>
+    <input value="<%= provider.continentPath %>" placeholder="eg.: 'continent'" type="text" name="api_resp_continent_path" id="api_resp_continent_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-countrycode-path">Path to "country code"</label>
-    <input required value="" placeholder="country_code" type="text" name="api-resp-countrycode-path" id="api-resp-countrycode-path" class="form-control">
+    <label for="api_resp_country_path">Path to "country"</label>
+    <input  value="<%= provider.countryPath %>" placeholder="eg.: 'country'" type="text" name="api_resp_country_path" id="api_resp_country_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-countryflag-path">Path to "country flag"</label>
-    <input required value="" placeholder="country_flag" type="text" name="api-resp-countryflag-path" id="api-resp-countryflag-path" class="form-control">
+    <label for="api_resp_countrycode_path">Path to "country code"</label>
+    <input value="<%= provider.countryCodePath %>" placeholder="eg.: 'country_code'" type="text" name="api_resp_countrycode_path" id="api_resp_countrycode_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-region-path">Path to "region"</label>
-    <input required value="" placeholder="region" type="text" name="api-resp-region-path" id="api-resp-region-path" class="form-control">
+    <label for="api_resp_countryflag_path">Path to "country flag"</label>
+    <input value="<%= provider.countryFlagPath %>" placeholder="eg.: 'country_flag'" type="text" name="api_resp_countryflag_path" id="api_resp_countryflag_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-city-path">Path to "city"</label>
-    <input required value="" placeholder="city" type="text" name="api-resp-city-path" id="api-resp-city-path" class="form-control">
+    <label for="api_resp_region_path">Path to "region"</label>
+    <input value="<%= provider.regionPath %>" placeholder="eg.: 'region'" type="text" name="api_resp_region_path" id="api_resp_region_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-latitude-path">Path to "latitude"</label>
-    <input required value="" placeholder="latitude" type="text" name="api-resp-latitude-path" id="api-resp-latitude-path" class="form-control">
+    <label for="api_resp_city_path">Path to "city"</label>
+    <input  value="<%= provider.cityPath %>" placeholder="eg.: 'city'" type="text" name="api_resp_city_path" id="api_resp_city_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-longitude-path">Path to "longitude"</label>
-    <input required value="" placeholder="longitude" type="text" name="api-resp-longitude-path" id="api-resp-longitude-path" class="form-control">
+    <label for="api_resp_latitude_path">Path to "latitude"</label>
+    <input value="<%= provider.latitudePath %>" placeholder="eg.: 'latitude'" type="text" name="api_resp_latitude_path" id="api_resp_latitude_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-organization-path">Path to "organization"</label>
-    <input required value="" placeholder="org" type="text" name="api-resp-organization-path" id="api-resp-organization-path" class="form-control">
+    <label for="api_resp_longitude_path">Path to "longitude"</label>
+    <input value="<%= provider.longitudePath %>" placeholder="eg.: 'longitude'" type="text" name="api_resp_longitude_path" id="api_resp_longitude_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-isp-path">Path to "ISP (internet service provider)"</label>
-    <input required value="" placeholder="isp" type="text" name="api-resp-isp-path" id="api-resp-isp-path" class="form-control">
+    <label for="api_resp_organization_path">Path to "organization"</label>
+    <input value="<%= provider.orgPath %>" placeholder="eg.: 'org'" type="text" name="api_resp_organization_path" id="api_resp_organization_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-currency-path">Path to "currency in country"</label>
-    <input required value="" placeholder="currency" type="text" name="api-resp-currency-path" id="api-resp-currency-path" class="form-control">
+    <label for="api_resp_isp_path">Path to "ISP (internet service provider)"</label>
+    <input value="<%= provider.ispPath %>" placeholder="eg.: 'isp'" type="text" name="api_resp_isp_path" id="api_resp_isp_path" class="form-control">
 </div>
 <div class="form-group">
-    <label for="api-resp-requestscount-path">Path to "number of already fullfilled requests"</label>
-    <input required value="" placeholder="completed_requests" type="text" name="api-resp-requestscount-path" id="api-resp-requestscount-path" class="form-control">
+    <label for="api_resp_currency_path">Path to "current currency in use by country"</label>
+    <input value="<%= provider.currencyPath %>" placeholder="eg.: 'currency'" type="text" name="api_resp_currency_path" id="api_resp_currency_path" class="form-control">
+</div>
+<div class="form-group">
+    <label for="api_resp_requestscount_path">Path to "number of already fullfilled requests"</label>
+    <input value="<%= provider.fullfilledRequestsPath %>" placeholder="eg.: 'completed_requests'" type="text" name="api_resp_requestscount_path" id="api_resp_requestscount_path" class="form-control">
 </div>
 
 
