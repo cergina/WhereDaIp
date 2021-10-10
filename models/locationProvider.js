@@ -4,7 +4,8 @@ const slugify = require('slugify')
 const locationProviderSchema = new mongoose.Schema({
     slug: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     name: {
         type: String,
@@ -15,25 +16,32 @@ const locationProviderSchema = new mongoose.Schema({
         required: false
     }, 
     format: {
-        type: String,
+        type: Number,
         required: true,
-        default: "json"
+        default: 0,
+        _options: ["JSON", "XML"]
     },
     baseUrl: {
         type: String,
         required: true
     },
     restMethod: {
-        type: String,
-        required: true
+        type: Number,
+        required: true,
+        default: 0,
+        _options: ["GET= url + ?param=ip", "GET= url + /ip", "POST + body app/json"]
     },
     isFree: {   
-        type: Boolean,
-        required: true
+        type: Number,
+        required: true,
+        default: 1,
+        _options: ["No", "Yes"]
     },
     isActive: {
-        type: Boolean,
-        required: true
+        type: Number,
+        required: true,
+        default: 1,
+        _options: ["No", "Yes"]
     },
     addedAt: {
         type: Date,
@@ -48,7 +56,8 @@ const locationProviderSchema = new mongoose.Schema({
     request: {
         ipAddress: {
             type: String,
-            required: true
+            required: false,
+            default: ""
         },
         authentication: {
             type: String,
@@ -69,7 +78,7 @@ const locationProviderSchema = new mongoose.Schema({
         orgPath: String,
         ispPath: String,
         currencyPath: String,
-        fullfilledRequestsPath: Number
+        fulfilledRequestsPath: Number
     }
 })
 

@@ -3,10 +3,9 @@
 
 const locationProvider = require("../models/locationProvider")
 
-// to show all providers in the system
+// for GETs
 const showAllProviders = async (req, res) => {
     const providers = await locationProvider.find().sort({ addedAt: 'desc'})
-    
     res.render('providers/fullList.ejs', { providers: providers })
 }
 
@@ -23,11 +22,20 @@ const editProvider = async (req, res) => {
     res.render('providers/showProvider.ejs', { provider: provider })
 }
 
-
-// to process providers
+// for POSTs
 const createNewProvider = async (req, res, next) => {
     req.provider = new locationProvider()
     next()
+}
+
+const editExistingProvider = async (req, res, next) => {
+    req.provider = await locationProvider.findById(req.params.id)
+    next()
+}
+
+const deleteExistingProvider = async (req, res) => {
+    await locationProvider.findByIdAndDelete(req.params.id)
+    res.redirect('/providers')
 }
 
 // helper
@@ -38,15 +46,15 @@ function saveAndRedirect(viewName) {
         provider.name = req.body.name
         provider.description = req.body.description
 
-        provider.lastEditAt = req.body.last_edit_at
-        //provider.format = req.body.response_format
-        //provider.isFree = req.body.api_free
-        //provider.isActive = req.body.active
+        provider.lastEditAt = new Date()
+        provider.format = req.body.response_format
+        provider.isFree = req.body.api_free
+        provider.isActive = req.body.active
 
         provider.baseUrl = req.body.api_url
-        // provider.restMethod = req.body.api_method
-        // provider.request.ipAddress = req.body.api_req_paramip
-        // provider.request.authentication = req.body.api_req_paramauth
+        provider.restMethod = req.body.api_method
+        provider.request.ipAddress = req.body.api_req_param_ip
+        provider.request.authentication = req.body.api_req_param_auth
 
         provider.successPath = req.body.api_resp_success_path
         provider.typePath = req.body.api_resp_iptype_path
@@ -61,7 +69,7 @@ function saveAndRedirect(viewName) {
         provider.orgPath = req.body.api_resp_organization_path
         provider.ispPath = req.body.api_resp_isp_path
         provider.currencyPath = req.body.api_resp_currency_path
-        provider.fullfilledRequestsPath = req.body.api_resp_requestscount_path
+        provider.fulfilledRequestsPath = req.body.api_resp_requestscount_path
 
         try {
             provider = await provider.save()
@@ -75,5 +83,6 @@ function saveAndRedirect(viewName) {
 
 module.exports = {
     showAllProviders, newProvider, editProvider,
-    createNewProvider, saveAndRedirect
+    createNewProvider, editExistingProvider, deleteExistingProvider,
+    saveAndRedirect
 }

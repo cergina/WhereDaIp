@@ -13,10 +13,41 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mb-4 display-4">List of providers in the system</h1>
-        <a href="/providers/new" class="btn btn-success">Add New Provider</a>
-        <a href="/" class="btn btn-dark">Home</a>
          
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">List of providers in the system</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Providers</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Here, you can see all of the services in the system. You can proceed to add a new one
+                or edit missing. It's also possible to delete one. Look for buttons with coresponding 
+                symbols. Beware what you edit and delete. Deletion is permanent.
+            </p>
+        </div>
+
+        <a href="/providers/new" class="btn btn-success">Add New Provider</a>
+        
+        <% providers.forEach(provider => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4 class="card-title"><%= provider.name %></h4>
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= provider.addedAt.toLocaleString() %>
+                    </div>
+                    <div class="card-text mb-2"><%= provider.description %></div>
+                    <a href="providers/<%= provider.slug %>" class="btn btn-primary">Read More</a>
+                    <form action="/providers/delete/<%= provider.id %>?_method=DELETE" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %> 
     </div>
 </body>
 </html>

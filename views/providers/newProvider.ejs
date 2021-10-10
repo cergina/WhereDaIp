@@ -13,14 +13,30 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mb-4 display-4">Add new provider</h1>
-        
-        <a href="/" class="btn btn-dark">Home</a>
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Add new provider</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/providers">Providers</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">New</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Here it's possible to add new service that provides Geolocation services publicly via API.
+                However, it's needed to tell our software, how to contact the API and how to "understand" 
+                replies, because all of them might call different fields with different words.
+            </p>
+        </div>
          
         <form action="/providers" method="POST">
             <!-- this is to output raw html instead of conerting to String -->
             <%- include('_form_fields_provider') %>
         </form>
+
+
     </div>
 </body>
 </html>

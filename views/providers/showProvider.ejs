@@ -13,11 +13,25 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="mb-4 display-4">Name: <% provider.name %></h1>
-        
-        <a href="/" class="btn btn-dark">Home</a>
-         
-        <form action="/providers/edit/<% provider.id %> " method="POST">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Name: <%= provider.name %></h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/providers">Providers</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Here you can view the details of already stored geolocation service in the database.
+                It's possible to change some fields and save them. Be warned, that changing these
+                fields may result in the service not working. See service's API documentation.
+            </p>
+        </div>
+
+        <form action="/providers/edit/<%= provider.id %> " method="POST">
             <!-- this is to output raw html instead of conerting to String -->
             <%- include('_form_fields_provider') %>
         </form>

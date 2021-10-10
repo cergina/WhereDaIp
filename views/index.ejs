@@ -13,15 +13,23 @@
 </head>
 <body>
     <div class="container">
-        <div class="mb-4 display-4">Welcome home, <%= name %> !</div>
-        
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Welcome, <%= name %></h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">Home</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Some welcome info to system.
+            </p>
+        </div>
+
         <a href="/providers" class="btn btn-info">List of GeoDB providers in system</a>
         <a href="/requests" class="btn btn-info">List of IP's in database</a>
         <a href="/api" class="btn btn-info">How to use API</a>
-        
-        <form class="mt-4" action="/logout?_method=DELETE" method="POST">
-            <button class="btn btn-warning" type="submit">Log Out</button>
-        </form>
     </div>
 </body>
 </html>
