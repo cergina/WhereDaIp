@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+    <div class="container">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Make a new request</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/requests">Results</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">New Request</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Here it's possible to add new request. One IP, batch of IPs, ... 
+            </p>
+        </div>
+         
+        <form action="/requests" method="POST">
+            <!-- this is to output raw html instead of conerting to String -->
+            <%- include('_form_fields_request') %>
+        </form>
+
+    </div>
+</body>
+</html>

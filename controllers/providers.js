@@ -6,11 +6,11 @@ const locationProvider = require("../models/locationProvider")
 // for GETs
 const showAllProviders = async (req, res) => {
     const providers = await locationProvider.find().sort({ addedAt: 'desc'})
-    res.render('providers/fullList.ejs', { providers: providers })
+    res.render('providers/fullList.ejs', { providers: providers, siteTitle: 'GeoDB provider list' })
 }
 
 const newProvider = (req, res) => {
-    res.render('providers/newProvider.ejs', { provider: new locationProvider() })
+    res.render('providers/newProvider.ejs', { provider: new locationProvider(), siteTitle: 'New provider' })
 }
 
 const editProvider = async (req, res) => {
@@ -19,7 +19,7 @@ const editProvider = async (req, res) => {
     if (provider == null)
         res.redirect('/')
 
-    res.render('providers/showProvider.ejs', { provider: provider })
+    res.render('providers/showProvider.ejs', { provider: provider, siteTitle: 'Edit provider' })
 }
 
 // for POSTs

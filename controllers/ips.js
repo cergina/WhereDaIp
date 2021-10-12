@@ -3,8 +3,13 @@
 
 // to show all providers in the system
 const showAllIps = (req, res) => {
-    res.render('requests/ips.ejs')
+    res.render('requests/ips.ejs', { siteTitle: 'List of IPs'})
 }
 
-module.exports = {showAllIps}
+
+const makeRequestController = (req, res) => {
+    res.render('requests/makeRequest.ejs', { siteTitle: 'New request'})
+}
+
+module.exports = {showAllIps, makeRequestController}
 
