@@ -56,24 +56,24 @@ function saveAndRedirect(viewName) {
         provider.request.ipAddress = req.body.api_req_param_ip
         provider.request.authentication = req.body.api_req_param_auth
 
-        provider.successPath = req.body.api_resp_success_path
-        provider.typePath = req.body.api_resp_iptype_path
-        provider.continentPath = req.body.api_resp_continent_path
-        provider.countryPath = req.body.api_resp_country_path
-        provider.countryCodePath = req.body.api_resp_countrycode_path
-        provider.countryFlagPath = req.body.api_resp_countryflag_path
-        provider.regionPath = req.body.api_resp_region_path
-        provider.cityPath = req.body.api_resp_city_path
-        provider.latitudePath = req.body.api_resp_latitude_path
-        provider.longitudePath = req.body.api_resp_longitude_path
-        provider.orgPath = req.body.api_resp_organization_path
-        provider.ispPath = req.body.api_resp_isp_path
-        provider.currencyPath = req.body.api_resp_currency_path
-        provider.fulfilledRequestsPath = req.body.api_resp_requestscount_path
+        provider.response.successPath = req.body.api_resp_success_path
+        provider.response.typePath = req.body.api_resp_iptype_path
+        provider.response.continentPath = req.body.api_resp_continent_path
+        provider.response.countryPath = req.body.api_resp_country_path
+        provider.response.countryCodePath = req.body.api_resp_countrycode_path
+        provider.response.countryFlagPath = req.body.api_resp_countryflag_path
+        provider.response.regionPath = req.body.api_resp_region_path
+        provider.response.cityPath = req.body.api_resp_city_path
+        provider.response.latitudePath = req.body.api_resp_latitude_path
+        provider.response.longitudePath = req.body.api_resp_longitude_path
+        provider.response.orgPath = req.body.api_resp_organization_path
+        provider.response.ispPath = req.body.api_resp_isp_path
+        provider.response.currencyPath = req.body.api_resp_currency_path
+        provider.response.fulfilledRequestsPath = req.body.api_resp_requestscount_path
 
         try {
             provider = await provider.save()
-            res.redirect(`/providers/${provider.slug}`)
+            res.redirect(`/providers/${provider.slug}/?changed=1`)
         } catch (e) {
             res.render(`providers/${viewName}`, { provider: provider })
         }

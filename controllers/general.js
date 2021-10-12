@@ -4,7 +4,7 @@ const config = require('./../config/config.js')
 
 // just for / to show basic info
 const welcome = (req, res) => {
-    res.render('index.ejs', { name: config.USER})
+    res.render('index.ejs', { name: config.USER })
 }
 
 const apiInfo = (req, res) => {

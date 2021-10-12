@@ -89,7 +89,7 @@
             <label class="col-form-label" for="api_method">Request method</label>
             
             <select name="api_method" id="api_method" class="form-select">
-                <% var options = ["GET= url + ?param=ip", "GET= url + /ip", "POST + body app/json"] %>
+                <% var options = ["GET= url + ?param={ip}", "GET= url + /{ip}", "POST + {ip} in body app/json"] %>
                 <% var selected_method = provider.restMethod %>
                 <% for(var i = 0; i < options.length; i++) { %>
                     <% var selected = (selected_method == i) ? 'selected' : '' %> 
@@ -154,8 +154,8 @@
             <div class="col-md-6"><label for="api_resp_iptype_path">Path to "Type of IP address v4 or v6"</label></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><input value="<%= provider.successPath %>" placeholder="eg.: 'success'" type="text" name="api_resp_success_path" id="api_resp_success_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.typePath %>" placeholder="eg.: 'type'" type="text" name="api_resp_iptype_path" id="api_resp_iptype_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.successPath %>" placeholder="eg.: 'success'" type="text" name="api_resp_success_path" id="api_resp_success_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.typePath %>" placeholder="eg.: 'type'" type="text" name="api_resp_iptype_path" id="api_resp_iptype_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -166,8 +166,8 @@
             <div class="col-md-6"><label for="api_resp_country_path">Path to "country"</label></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><input value="<%= provider.continentPath %>" placeholder="eg.: 'continent'" type="text" name="api_resp_continent_path" id="api_resp_continent_path" class="form-control"></div>
-            <div class="col-md-6"><input  value="<%= provider.countryPath %>" placeholder="eg.: 'country'" type="text" name="api_resp_country_path" id="api_resp_country_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.continentPath %>" placeholder="eg.: 'continent'" type="text" name="api_resp_continent_path" id="api_resp_continent_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.countryPath %>" placeholder="eg.: 'country'" type="text" name="api_resp_country_path" id="api_resp_country_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -178,8 +178,8 @@
             <div class="col-md-6"><label for="api_resp_countryflag_path">Path to "country flag"</label></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><input value="<%= provider.countryCodePath %>" placeholder="eg.: 'country_code'" type="text" name="api_resp_countrycode_path" id="api_resp_countrycode_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.countryFlagPath %>" placeholder="eg.: 'country_flag'" type="text" name="api_resp_countryflag_path" id="api_resp_countryflag_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.countryCodePath %>" placeholder="eg.: 'country_code'" type="text" name="api_resp_countrycode_path" id="api_resp_countrycode_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.countryFlagPath %>" placeholder="eg.: 'country_flag'" type="text" name="api_resp_countryflag_path" id="api_resp_countryflag_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -190,8 +190,8 @@
             <div class="col-md-6"><label for="api_resp_city_path">Path to "city"</label></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><input value="<%= provider.regionPath %>" placeholder="eg.: 'region'" type="text" name="api_resp_region_path" id="api_resp_region_path" class="form-control"></div>
-            <div class="col-md-6"><input  value="<%= provider.cityPath %>" placeholder="eg.: 'city'" type="text" name="api_resp_city_path" id="api_resp_city_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.regionPath %>" placeholder="eg.: 'region'" type="text" name="api_resp_region_path" id="api_resp_region_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.cityPath %>" placeholder="eg.: 'city'" type="text" name="api_resp_city_path" id="api_resp_city_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -202,8 +202,8 @@
             <div class="col-md-6"><label for="api_resp_longitude_path">Path to "longitude"</label></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><input value="<%= provider.latitudePath %>" placeholder="eg.: 'latitude'" type="text" name="api_resp_latitude_path" id="api_resp_latitude_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.longitudePath %>" placeholder="eg.: 'longitude'" type="text" name="api_resp_longitude_path" id="api_resp_longitude_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.latitudePath %>" placeholder="eg.: 'latitude'" type="text" name="api_resp_latitude_path" id="api_resp_latitude_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.longitudePath %>" placeholder="eg.: 'longitude'" type="text" name="api_resp_longitude_path" id="api_resp_longitude_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -214,8 +214,8 @@
             <div class="col-md-6"><label for="api_resp_isp_path">Path to "ISP (internet service provider)"</label></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><input value="<%= provider.orgPath %>" placeholder="eg.: 'org'" type="text" name="api_resp_organization_path" id="api_resp_organization_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.ispPath %>" placeholder="eg.: 'isp'" type="text" name="api_resp_isp_path" id="api_resp_isp_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.orgPath %>" placeholder="eg.: 'org'" type="text" name="api_resp_organization_path" id="api_resp_organization_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.ispPath %>" placeholder="eg.: 'isp'" type="text" name="api_resp_isp_path" id="api_resp_isp_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -226,8 +226,8 @@
             <div class="col-md-6"><label for="api_resp_requestscount_path">Path to "number of already fulfilled requests"</label></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><input value="<%= provider.currencyPath %>" placeholder="eg.: 'currency'" type="text" name="api_resp_currency_path" id="api_resp_currency_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.fulfilledRequestsPath %>" placeholder="eg.: 'completed_requests'" type="text" name="api_resp_requestscount_path" id="api_resp_requestscount_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.currencyPath %>" placeholder="eg.: 'currency'" type="text" name="api_resp_currency_path" id="api_resp_currency_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.fulfilledRequestsPath %>" placeholder="eg.: 'completed_requests'" type="text" name="api_resp_requestscount_path" id="api_resp_requestscount_path" class="form-control"></div>
         </div>
     </div>
 </div>

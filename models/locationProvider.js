@@ -64,6 +64,63 @@ const locationProviderSchema = new mongoose.Schema({
             required: false
         }
     },
+    // response
+    // successPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // typePath: {
+    //     type: String,
+    //     required: false
+    // },
+    // continentPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // countryPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // countryCodePath: {
+    //     type: String,
+    //     required: false
+    // },
+    // countryFlagPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // regionPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // cityPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // latitudePath: {
+    //     type: String,
+    //     required: false
+    // },
+    // longitudePath: {
+    //     type: String,
+    //     required: false
+    // },
+    // orgPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // ispPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // currencyPath: {
+    //     type: String,
+    //     required: false
+    // },
+    // fulfilledRequestsPath: {
+    //     type: String,
+    //     required: false
+    // },
     response: {
         successPath: String,
         typePath: String,
@@ -78,7 +135,7 @@ const locationProviderSchema = new mongoose.Schema({
         orgPath: String,
         ispPath: String,
         currencyPath: String,
-        fulfilledRequestsPath: Number
+        fulfilledRequestsPath: String
     }
 })
 
