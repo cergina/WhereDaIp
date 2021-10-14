@@ -2,7 +2,9 @@
 <html lang="en">
 <!-- head -->
 <%- include('../_header') %> 
-<body>
+<body onload="afterLoaded()">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
     <div class="container">
         <div class="alert alert-info">
             <h1 class="mb-4 display-4">Make a new request</h1>
@@ -26,5 +28,19 @@
         </form>
 
     </div>
+
+    <!-- toto sa zobrazi po nacitani stranky a hladam v tom parameter unauthorized, ktory sa posle len po zle zadanom hesle -->
+    <script>
+        function afterLoaded() {
+            var queryString = window.location.search
+            var urlParams = new URLSearchParams(queryString)
+
+            if (urlParams.get('unauthorized') == '1') {
+                swal({icon: 'error', title: 'Ooops!', text: 'You\'ve entered a wrong password.', button: false, timer: 1500})
+            } else if (urlParams.get('invalid') == '1') {
+                swal({icon: 'error', title: 'Ooops!', text: 'One or more IPs are invalid.', button: false, timer: 1500})
+            }
+        }
+    </script>
 </body>
 </html>

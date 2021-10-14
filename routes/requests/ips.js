@@ -7,4 +7,6 @@ const controller = require('../../controllers/ips')
 router.get('/', controller.showAllIps)
 router.get('/new/', controller.makeRequestController)
 
+router.post('/', controller.acceptRequestController)
+
 module.exports = router

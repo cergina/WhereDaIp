@@ -1,6 +1,7 @@
 // controller is usually a callback function that corresponds to routers
 // to handle requests. 
 
+const configuration = require("../config/config-nonRestricted")
 const locationProvider = require("../models/locationProvider")
 
 // for GETs
@@ -17,7 +18,7 @@ const editProvider = async (req, res) => {
     const provider = await locationProvider.findOne({ slug: req.params.slug })
 
     if (provider == null)
-        res.redirect('/')
+        res.redirect(`${configuration.WWW_ROOT}`)
 
     res.render('providers/showProvider.ejs', { provider: provider, siteTitle: 'Edit provider' })
 }
@@ -35,10 +36,10 @@ const editExistingProvider = async (req, res, next) => {
 
 const deleteExistingProvider = async (req, res) => {
     await locationProvider.findByIdAndDelete(req.params.id)
-    res.redirect('/providers')
+    res.redirect(`${configuration.WWW_GEODB_HOME}`)
 }
 
-// helper
+// helper - znovupouzitelnost
 function saveAndRedirect(viewName) {
     return async (req, res) => {
         let provider = req.provider
@@ -73,9 +74,9 @@ function saveAndRedirect(viewName) {
 
         try {
             provider = await provider.save()
-            res.redirect(`/providers/${provider.slug}/?changed=1`)
+            res.redirect(`${configuration.WWW_GEODB_HOME}/${provider.slug}/?changed=1`)
         } catch (e) {
-            res.render(`providers/${viewName}`, { provider: provider })
+            res.render(`${configuration.WWW_GEODB_HOME}/${viewName}`, { provider: provider })
         }
     }
 }

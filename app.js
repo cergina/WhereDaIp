@@ -1,5 +1,5 @@
 // entry point
-const config = require('./config/config.js')
+const configuration = require('./config/config-nonRestricted.js')
 const express = require('express')
 const mongoose = require('mongoose')
 const favicon = require('serve-favicon')
@@ -25,14 +25,14 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded( {extended: false} ))
 //app.use(bodyParser.json())
 
-app.use('/', testingRoutes)
-app.use('/', generalRoutes)
-app.use('/providers', providersRoutes)
-app.use('/requests', ipsRequests)
+app.use(`${configuration.WWW_ROOT}`, testingRoutes)
+app.use(`${configuration.WWW_ROOT}`, generalRoutes)
+app.use(`${configuration.WWW_GEODB_HOME}`, providersRoutes)
+app.use(`${configuration.WWW_REQ_HOME}`, ipsRequests)
 
-const listener = app.listen(config.PORT, () => {
-    console.log(`Skuska config suboru: ${config.SKUSOBNA}`)
-    console.log(`Server bezi na porte: ${config.PORT}`)
+const listener = app.listen(configuration.PORT, () => {
+    console.log(`Skuska config suboru: ${configuration.SKUSOBNA}`)
+    console.log(`Server bezi na porte: ${configuration.PORT}`)
 
     //console.log(__dirname)
     //console.log(process.cwd())

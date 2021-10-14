@@ -5,7 +5,7 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-3">
-            <label class="col-form-label" for="name">Name of the service in this system</label>
+            <label class="col-form-label" for="name">Name of the service in this system *</label>
         </div>
         <div class="col-md-4">
             <input required value="<%= provider.name %>" type="text" name="name" id="name" class="form-control">        
@@ -53,8 +53,8 @@
 <!-- informacie potrebne k uspesnemu odoslaniu poziadavky -->
 
 <div class="form-group">
-    <label for="api_url">Service's API url</label>
-    <input value="<%= provider.baseUrl %>" placeholder="http://serviceurl.com/json/" type="text" name="api_url" id="api_url" class="form-control">
+    <label for="api_url">Service's API url *</label>
+    <input required value="<%= provider.baseUrl %>" placeholder="http://serviceurl.com/json/" type="text" name="api_url" id="api_url" class="form-control">
 </div>
 <!-- dropdowny -->
 <div class="form-group">
@@ -163,11 +163,11 @@
     <div class="form-group p-2 bg-light border">
         <div class="row">
             <div class="col-md-6"><label for="api_resp_continent_path">Path to "continent"</label></div>
-            <div class="col-md-6"><label for="api_resp_country_path">Path to "country"</label></div>
+            <div class="col-md-6"><label for="api_resp_country_path">Path to "country" *</label></div>
         </div>
         <div class="row">
             <div class="col-md-6"><input value="<%= provider.response.continentPath %>" placeholder="eg.: 'continent'" type="text" name="api_resp_continent_path" id="api_resp_continent_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.countryPath %>" placeholder="eg.: 'country'" type="text" name="api_resp_country_path" id="api_resp_country_path" class="form-control"></div>
+            <div class="col-md-6"><input required value="<%= provider.response.countryPath %>" placeholder="eg.: 'country'" type="text" name="api_resp_country_path" id="api_resp_country_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -187,23 +187,23 @@
     <div class="form-group p-2 bg-light border">
         <div class="row">
             <div class="col-md-6"><label for="api_resp_region_path">Path to "region"</label></div>
-            <div class="col-md-6"><label for="api_resp_city_path">Path to "city"</label></div>
+            <div class="col-md-6"><label for="api_resp_city_path">Path to "city" *</label></div>
         </div>
         <div class="row">
             <div class="col-md-6"><input value="<%= provider.response.regionPath %>" placeholder="eg.: 'region'" type="text" name="api_resp_region_path" id="api_resp_region_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.cityPath %>" placeholder="eg.: 'city'" type="text" name="api_resp_city_path" id="api_resp_city_path" class="form-control"></div>
+            <div class="col-md-6"><input required value="<%= provider.response.cityPath %>" placeholder="eg.: 'city'" type="text" name="api_resp_city_path" id="api_resp_city_path" class="form-control"></div>
         </div>
     </div>
 </div>
 <div class="d-grid gap-3">
     <div class="form-group p-2 bg-light border">
         <div class="row">
-            <div class="col-md-6"><label for="api_resp_latitude_path">Path to "latitude"</label></div>
-            <div class="col-md-6"><label for="api_resp_longitude_path">Path to "longitude"</label></div>
+            <div class="col-md-6"><label for="api_resp_latitude_path">Path to "latitude" *</label></div>
+            <div class="col-md-6"><label for="api_resp_longitude_path">Path to "longitude" *</label></div>
         </div>
         <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.latitudePath %>" placeholder="eg.: 'latitude'" type="text" name="api_resp_latitude_path" id="api_resp_latitude_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.longitudePath %>" placeholder="eg.: 'longitude'" type="text" name="api_resp_longitude_path" id="api_resp_longitude_path" class="form-control"></div>
+            <div class="col-md-6"><input required value="<%= provider.response.latitudePath %>" placeholder="eg.: 'latitude'" type="text" name="api_resp_latitude_path" id="api_resp_latitude_path" class="form-control"></div>
+            <div class="col-md-6"><input required value="<%= provider.response.longitudePath %>" placeholder="eg.: 'longitude'" type="text" name="api_resp_longitude_path" id="api_resp_longitude_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -211,11 +211,11 @@
     <div class="form-group p-2 bg-light border">
         <div class="row">
             <div class="col-md-6"><label for="api_resp_organization_path">Path to "organization"</label></div>
-            <div class="col-md-6"><label for="api_resp_isp_path">Path to "ISP (internet service provider)"</label></div>
+            <div class="col-md-6"><label for="api_resp_isp_path">Path to "ISP (internet service provider) *"</label></div>
         </div>
         <div class="row">
             <div class="col-md-6"><input value="<%= provider.response.orgPath %>" placeholder="eg.: 'org'" type="text" name="api_resp_organization_path" id="api_resp_organization_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.ispPath %>" placeholder="eg.: 'isp'" type="text" name="api_resp_isp_path" id="api_resp_isp_path" class="form-control"></div>
+            <div class="col-md-6"><input required value="<%= provider.response.ispPath %>" placeholder="eg.: 'isp'" type="text" name="api_resp_isp_path" id="api_resp_isp_path" class="form-control"></div>
         </div>
     </div>
 </div>
@@ -231,7 +231,7 @@
         </div>
     </div>
 </div>
-
+<small class="form-text text-muted mb-4">Inputs marked with * are required.</small>
 
 <!-- akcne tlacidla -->
 <a href="/" class="btn btn-secondary">Cancel</a>

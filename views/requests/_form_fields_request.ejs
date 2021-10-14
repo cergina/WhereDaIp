@@ -1,14 +1,15 @@
 <div class="form-group">
-    <label for="password_for_lookup">Enter secret code</label>
-    <input required type="password" class="form-control" id="password_for_lookup" placeholder="Password">
+    <label for="password_for_lookup">Enter secret code *</label>
+    <input required type="password" class="form-control" name="password_for_lookup" id="password_for_lookup" placeholder="Password">
     <small id="help_password_for_lookup" class="form-text text-muted">This helps avoid unauthorized people spending your requests.</small>
   </div>
 
 <div class="form-group">
-    <label for="ip_addresses_to_lookup">IP addresses to lookup</label>
-    <textarea required class="form-control" id="ip_addresses_to_lookup" rows="10"></textarea>
+    <label for="ip_addresses_to_lookup">IP addresses to lookup *</label>
+    <textarea required class="form-control" name="ip_addresses_to_lookup" id="ip_addresses_to_lookup" rows="10"></textarea>
     <small id="help_ip_addresses_to_lookup" class="form-text text-muted">Differentiate between IP's with new line.</small>
 </div>
+<small class="form-text text-muted mb-4">Inputs marked with * are required.</small>
 
 <!-- akcne tlacidla -->
 <a href="/" class="btn btn-secondary">Cancel</a>
