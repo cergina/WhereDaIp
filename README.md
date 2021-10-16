@@ -1,4 +1,4 @@
-# WhereDaIp 0.1 (in development) 
+# WhereDaIp 0.3 (in development) 
 
 *WhereDaIp is a SW created as a part of diploma thesis research on FIIT STU by student Bc. Maroš Čergeť in the academic year of 2021/2022.*
 
@@ -18,9 +18,14 @@ Run instructions
 
 
 > podporovane features
-- [ ] Ability to add geodb services via REST API
-- [ ] Get info about actual geodb services in the db
+- [X] Ability to add GeoDb services via REST API
+- [ ] Test if: Are services good for paid services? 
+- [X] Get info about actual GeoDb services in the db
 - [ ] Get info about actual IPs stored in the db
+- [X] Ability to make request from GUI on one IP
+- [X] Ability to make request from GUI on more IPs
+- [X] Ability to receive reply
+- [ ] Ability to save data from replies
 - [ ] Ability to make a request for an IP via REST API
 
 
@@ -46,4 +51,5 @@ Run instructions
 
 app.js: specification of used engines, frameworks, view-engines, routes and listening ports
 
-
+note to myself:
+git log --all --decorate --oneline --graph

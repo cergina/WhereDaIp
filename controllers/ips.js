@@ -3,6 +3,10 @@
 
 const configuration = require('../config/config-nonRestricted.js')
 const net = require('net')
+const { getAllUsableProviders } = require('./providers.js')
+const { logDebug, logInfo, logError } = require('../services/helper.js')
+const { send, sendPromise } = require('../services/apiCommunicator.js')
+
 
 // GETs
 const showAllIps = (req, res) => {
@@ -21,12 +25,12 @@ const acceptRequestController = async (req, res) => {
         return
     }
 
-    console.log('I will look onto it')  
+    //logInfo('I will look onto it')
 
     // TODO it's necessarry to clear \r\n, maybe on linux it will be only \n, will have to test
     var addresses = req.body.ip_addresses_to_lookup.split("\r\n").filter(item => item)
 
-    console.log(addresses)
+    //logDebug(addresses)
     
     // supports IPv4 and IPv6, but accepts only minimal like 192.168.0.1 and no 192.168.0.001
     if (! addresses.every( currentValue => net.isIP(currentValue))) {
@@ -34,9 +38,25 @@ const acceptRequestController = async (req, res) => {
         return
     }
     
-    console.log('I\'m gonna send it')    
+    logInfo(`I'm gonna send it`)
     
     // TODO send and process it
+    try {
+        var providers = await getAllUsableProviders()
+
+        // for every address send
+        addresses.forEach(address => {
+            console.log(providers)
+            providers.forEach(provider => {
+                //send(address, provider)
+                sendPromise(address, provider)
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err))
+            })
+        })
+    } catch (e) {
+        logError(e)
+    }
 }
 
 module.exports = {

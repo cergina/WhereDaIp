@@ -3,6 +3,17 @@
 
 const configuration = require("../config/config-nonRestricted")
 const locationProvider = require("../models/locationProvider")
+const { logDebug, logInfo, logRaw } = require('../services/helper.js')
+
+
+// for Internal
+async function getAllUsableProviders() {
+
+    var providers = await locationProvider.find({ isActive: 1})
+    
+    return providers
+}
+
 
 // for GETs
 const showAllProviders = async (req, res) => {
@@ -83,6 +94,7 @@ function saveAndRedirect(viewName) {
 
 
 module.exports = {
+    getAllUsableProviders,
     showAllProviders, newProvider, editProvider,
     createNewProvider, editExistingProvider, deleteExistingProvider,
     saveAndRedirect

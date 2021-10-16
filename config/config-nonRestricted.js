@@ -7,10 +7,13 @@ var configuration = {}
 configuration.SKUSOBNA=process.env.SKUSOBNA 
 configuration.PASS=process.env.PASS    // set-up your own password, so no one can make tons of requests without at least basic password knowledge
 
+// debug
+configuration.PRODUCTION = false
+configuration.DEBUG = true
+
 // data publically available
 configuration.PORT=13000
 configuration.USER="Maroš Čergeť"
-
 
 // site tree (optional upgrade)
 configuration.WWW_ROOT = "/"

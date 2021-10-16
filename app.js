@@ -9,6 +9,8 @@ const generalRoutes = require('./routes/general')
 const providersRoutes = require('./routes/providers/providers')
 const ipsRequests = require('./routes/requests/ips')
 const bodyParser = require('body-parser')
+const { logDebug, logInfo, logRaw } = require('./services/helper.js')
+
 
 var app = express()
 mongoose.connect('mongodb://localhost/wdip')
@@ -31,9 +33,12 @@ app.use(`${configuration.WWW_GEODB_HOME}`, providersRoutes)
 app.use(`${configuration.WWW_REQ_HOME}`, ipsRequests)
 
 const listener = app.listen(configuration.PORT, () => {
-    console.log(`Skuska config suboru: ${configuration.SKUSOBNA}`)
-    console.log(`Server bezi na porte: ${configuration.PORT}`)
+    logRaw(`\n\n-------------------------\n\n`)
+    logRaw(`${(new Date()).toLocaleTimeString()} -- ${(new Date()).toLocaleDateString()}`)
+    logRaw(`Skuska config suboru: ${configuration.SKUSOBNA}`)
+    logRaw(`Server bezi na porte: ${configuration.PORT}`)
 
-    //console.log(__dirname)
-    //console.log(process.cwd())
+    logRaw(`\n\n-------------------------\n\n`)
+    //logRaw(__dirname)
+    //logRaw(process.cwd())
 })
