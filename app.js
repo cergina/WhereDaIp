@@ -11,9 +11,14 @@ const ipsRequests = require('./routes/requests/ips')
 const bodyParser = require('body-parser')
 const { logDebug, logInfo, logRaw } = require('./services/helper.js')
 
+// if mongodb does not work, stop npm and do these steps //
+// Go to Control Panel and click on Administrative Tools.
+// Double click on Services. A new window opens up.
+// Search MongoDB.exe. Right click on it and select Start.
 
-var app = express()
+
 mongoose.connect('mongodb://localhost/wdip')
+var app = express()
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.set('views', path.join(__dirname, 'views'));

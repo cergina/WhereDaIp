@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body onload="afterLoaded()">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <div class="container">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4"><%= response.ipRequested %></h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/requests">Results</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Details</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Here is something about response
+            </p>
+        </div>
+
+        <!-- here some details -->
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Requested IP: <%= response.ipRequested %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Received at: <%= response.addedAt %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">ID of provider: <%= response.provider %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Was success: <%= response.success %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Type: <%= response.type %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Continent: <%= response.continent %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Country: <%= response.country %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Country code: <%= response.contryCode %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Country Flag: <%= response.countryFlag %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Region: <%= response.region %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">City: <%= response.city %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Latitude: <%= response.latitude %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Longitude: <%= response.longitude %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Org: <%= response.org %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">ISP: <%= response.isp %></small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>
+                    <small class="text-muted">Currency: <%= response.currency %></small>
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- toto sa zobrazi po nacitani stranky a hladam v tom parameter changed, ktory sa posle len po uspesnom ulozeni a redirecte na toto -->
+    <script>
+        function afterLoaded() {
+            var queryString = window.location.search
+            var urlParams = new URLSearchParams(queryString)
+
+            if (urlParams.get('changed') == '1') {
+                swal({icon: 'success', title: 'Saved!', button: false, timer: 1500})
+            }
+        }
+    </script>
+</body>
+</html>

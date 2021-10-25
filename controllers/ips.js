@@ -2,22 +2,38 @@
 // to handle requests. 
 
 const configuration = require('../config/config-nonRestricted.js')
+const responseData = require("../models/responseData")
 const net = require('net')
 const { getAllUsableProviders } = require('./providers.js')
 const { logDebug, logInfo, logError } = require('../services/helper.js')
-const { send, sendPromise } = require('../services/apiCommunicator.js')
+const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 
 
 // GETs
-const showAllIps = (req, res) => {
-    res.render('requests/ips.ejs', { siteTitle: 'List of IPs'})
+const showAllIps = async (req, res) => {
+    const requests = await responseData.find().sort({ addedAt: 'desc'})
+    res.render('requests/ips.ejs', { requests: requests, siteTitle: 'List of IPs'})
 }
 
 const makeRequestController = (req, res) => {
     res.render('requests/makeRequest.ejs', { siteTitle: 'New request'})
 }
 
+const showResponse = async (req, res) => {
+    const response = await responseData.findById(req.params.id)
+
+    if (response == null)
+        res.redirect(`${configuration.WWW_ROOT}`)
+
+    res.render('requests/showResponse.ejs', { response: response, siteTitle: 'Response details' })
+}
+
 // POSTs
+const deleteExistingResponse = async (req, res) => {
+    await responseData.findByIdAndDelete(req.params.id)
+    res.redirect(`${configuration.WWW_REQ_HOME}`)
+}
+
 const acceptRequestController = async (req, res) => {
 
     if (configuration.PASS !== req.body.password_for_lookup) {
@@ -38,7 +54,7 @@ const acceptRequestController = async (req, res) => {
         return
     }
     
-    logInfo(`I'm gonna send it`)
+    //logInfo(`I'm gonna send it`)
     
     // TODO send and process it
     try {
@@ -48,19 +64,66 @@ const acceptRequestController = async (req, res) => {
         addresses.forEach(address => {
             console.log(providers)
             providers.forEach(provider => {
-                //send(address, provider)
-                sendPromise(address, provider)
-                    .then(res => console.log(res))
+                //send(address, provider) // this one is most likely obsolete already
+                //sendPromise(address, provider) // this one is real
+                sendFakePromise(address, provider)
+                    .then(async res => {
+                        console.log(res)
+
+                        let extractedData = extractDataFromResponse(address, res, provider)
+
+                        await extractedData.save()
+                    })
                     .catch(err => console.log(err))
             })
         })
+
+        //res.redirect(`${configuration.WWW_REQ_HOME}/${provider.slug}/?changed=1`)
+        res.redirect(`${configuration.WWW_REQ_HOME}`)
     } catch (e) {
         logError(e)
     }
 }
 
+
+// PRIVATE
+
+function extractDataFromResponse(address, originalResponse, provider) {
+    let extractedData = new responseData()
+
+    // console.log('kluce su')
+    // console.log(Object.keys(originalResponse))
+
+    //console.log(provider.response.continentPath)
+
+    extractedData.ipRequested = address
+    extractedData.addedAt = new Date()
+    extractedData.provider = provider._id
+
+    // TODO
+    // this will work only in json and also when every field is filled
+    extractedData.success = originalResponse[provider.response.successPath]
+    extractedData.type = net.isIPv4(address) ? 0 : 1
+    extractedData.continent = originalResponse[provider.response.continentPath]
+    extractedData.country = originalResponse[provider.response.countryPath]
+    extractedData.countryCode = originalResponse[provider.response.countryCodePath]
+    extractedData.countryFlag = originalResponse[provider.response.countryFlagPath]
+    extractedData.region = originalResponse[provider.response.regionPath]
+    extractedData.city = originalResponse[provider.response.cityPath]
+    extractedData.latitude = originalResponse[provider.response.latitudePath]
+    extractedData.longitude = originalResponse[provider.response.longitudePath]
+    extractedData.org = originalResponse[provider.response.orgPath]
+    extractedData.isp = originalResponse[provider.response.ispPath]
+    extractedData.currency = originalResponse[provider.response.currencyPath]
+
+    return extractedData
+}
+
+
+
 module.exports = {
-    showAllIps, makeRequestController,
-    acceptRequestController
+    showAllIps, makeRequestController, showResponse,
+    acceptRequestController,
+    deleteExistingResponse
 }
 

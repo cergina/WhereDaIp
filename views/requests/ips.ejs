@@ -25,7 +25,27 @@
         <a href="/requests/new" class="btn btn-success">Make Request</a>
 
         <!-- zoznam -->
-        
+        <% requests.forEach(request => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <!-- ci je aktivny -->
+                    <div class="float-right"><span class="badge badge-primary badge-pill"><%= request.success == 1 ? 'Successful' : 'Failed' %> </span></div>
+                    <!-- nadpis -->
+                    <h4 class="card-title"><%= request.ipRequested %></h4>
+                    <!-- tenke sede pismo -->
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= request.addedAt.toLocaleString() %>
+                    </div>
+                    <!-- Krajina odkial -->
+                    <div class="card-text mb-2"><%= request.country %></div>
+                    <!-- tlacidla -->
+                    <a href="requests/<%= request.id %>" class="btn btn-primary">Read More</a>
+                    <form action="/requests/delete/<%= request.id %>?_method=DELETE" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %> 
     </div>
 </body>
 </html>

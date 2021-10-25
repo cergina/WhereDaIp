@@ -6,6 +6,8 @@ var configuration = {}
 // all need to be specified here are parts of the .env file, which needs dotenv node.js library. Secret files
 configuration.SKUSOBNA=process.env.SKUSOBNA 
 configuration.PASS=process.env.PASS    // set-up your own password, so no one can make tons of requests without at least basic password knowledge
+configuration.FAKEIPV6=process.env.FAKEIPV6
+configuration.FAKEIPV4=process.env.FAKEIPV4
 
 // debug
 configuration.PRODUCTION = false
@@ -14,6 +16,7 @@ configuration.DEBUG = true
 // data publically available
 configuration.PORT=13000
 configuration.USER="Maroš Čergeť"
+
 
 // site tree (optional upgrade)
 configuration.WWW_ROOT = "/"
