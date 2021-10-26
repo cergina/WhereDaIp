@@ -15,6 +15,10 @@ const showAllIps = async (req, res) => {
     res.render('requests/ips.ejs', { requests: requests, siteTitle: 'List of IPs'})
 }
 
+const showTestMap = (req, res) => {
+    res.render('requests/mapTest.ejs')
+}
+
 const makeRequestController = (req, res) => {
     res.render('requests/makeRequest.ejs', { siteTitle: 'New request'})
 }
@@ -27,6 +31,7 @@ const showResponse = async (req, res) => {
 
     res.render('requests/showResponse.ejs', { response: response, siteTitle: 'Response details' })
 }
+
 
 // POSTs
 const deleteExistingResponse = async (req, res) => {
@@ -96,14 +101,29 @@ function extractDataFromResponse(address, originalResponse, provider) {
 
     //console.log(provider.response.continentPath)
 
+    // success, type, country, city, latitude, longitude, isp is necessary
     extractedData.ipRequested = address
     extractedData.addedAt = new Date()
     extractedData.provider = provider._id
+    extractedData.type = net.isIPv4(address) ? 0 : 1
+    
+    if (provider.format === 0) {
+        // json
+        extractedData = extractFromJSON(extractedData, originalResponse, provider)
+    } else if (provider.format === 1) {
+        // xml not implemented yet
+        extractedData = extractFromXML(extractedData, originalResponse, provider)
+    }
+    
 
+    return extractedData
+}
+
+function extractFromJSON(extractedData, originalResponse, provider) {
     // TODO
     // this will work only in json and also when every field is filled
     extractedData.success = originalResponse[provider.response.successPath]
-    extractedData.type = net.isIPv4(address) ? 0 : 1
+    
     extractedData.continent = originalResponse[provider.response.continentPath]
     extractedData.country = originalResponse[provider.response.countryPath]
     extractedData.countryCode = originalResponse[provider.response.countryCodePath]
@@ -119,10 +139,17 @@ function extractDataFromResponse(address, originalResponse, provider) {
     return extractedData
 }
 
+function extractFromXML(extractedData, originalResponse, provider) {
+    // success, type, country, city, latitude, longitude, isp is necessary
+    
+    // TODO - not implemented yet
 
+    return extractedData
+}
 
 module.exports = {
     showAllIps, makeRequestController, showResponse,
+    showTestMap,
     acceptRequestController,
     deleteExistingResponse
 }

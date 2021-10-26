@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+      function initialize() {
+        // zisk url parametrov
+        var queryString = window.location.search
+        var urlParams = new URLSearchParams(queryString)
+
+        var lat = parseFloat(urlParams.get('latitude'))
+        var lon = parseFloat(urlParams.get('longitude'))
+        var ip = urlParams.get('target')
+
+        // zobrazenie lokacie
+        var earth = new WE.map('earth_div');
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+
+        var marker = WE.marker([lat, lon]).addTo(earth);
+        marker.bindPopup("<b>Location marked!</b><br>Target found<br/><span style='font-size:10px;color:#999'>" + ip + "</span>", {maxWidth: 300, closeButton: true}).openPopup();
+
+        var markerCustom = WE.marker([lat, lon], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
+
+        earth.setView([lat, lon], 3);
+      }
+    </script>
+    <style>
+      html, body{padding: 0; margin: 0; background-color: black;}
+      #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
+    </style>
+    <title>WebGL Earth API: Markers</title>
+  </head>
+  <body onload="initialize()">
+    <div id="earth_div"></div>
+  </body>
+</html>

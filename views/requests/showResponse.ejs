@@ -22,119 +22,132 @@
             </p>
         </div>
 
+        <% var targetMapUrl = "/requests/testmap?latitude=" + response.latitude %>
+        <% targetMapUrl += "&longitude=" + response.longitude %>
+        <% targetMapUrl += "&target=" + response.ipRequested %>
+        <% console.log(targetMapUrl) %> 
+        <% targetMapUrl = encodeURI(targetMapUrl) %>
+
+        <a href="<%= targetMapUrl %> ">Here is a target on a MAP</a> 
+
         <!-- here some details -->
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Requested IP: <%= response.ipRequested %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-2">
+                <div class="col-form-label" >Received at: </div>
+            </div>
+            <div class="col-md-10">
                 <h3>
-                    <small class="text-muted">Received at: <%= response.addedAt %></small>
+                    <input value="<%= response.addedAt %>"  type="text" class="form-control" disabled >
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">ID of provider: <%= response.provider %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
-                    <small class="text-muted">Was success: <%= response.success %></small>
+                    <small class="text-muted">Reply state: <%= response.success === 0 ? 'Failed' : 'Succesfull' %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
-                    <small class="text-muted">Type: <%= response.type %></small>
+                    <small class="text-muted">Type: <%= response.type === 0 ? 'IPv4' : 'IPv6' %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Continent: <%= response.continent %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Country: <%= response.country %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Country code: <%= response.contryCode %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Country Flag: <%= response.countryFlag %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Region: <%= response.region %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">City: <%= response.city %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Latitude: <%= response.latitude %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Longitude: <%= response.longitude %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Org: <%= response.org %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">ISP: <%= response.isp %></small>
                 </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <h3>
                     <small class="text-muted">Currency: <%= response.currency %></small>
                 </h3>
             </div>
         </div>
+
+        
     </div>
 
     <!-- toto sa zobrazi po nacitani stranky a hladam v tom parameter changed, ktory sa posle len po uspesnom ulozeni a redirecte na toto -->
