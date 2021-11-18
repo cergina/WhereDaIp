@@ -31,16 +31,13 @@
         <a href="<%= targetMapUrl %> ">Here is a target on a MAP</a> 
 
         <!-- here some details -->
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Requested IP: <%= response.ipRequested %></small>
-                </h3>
-            </div>
-        </div>
+        <%- include('_resp_fields', {fieldTitle: 'Requested IP: ', fieldValue: response.ipRequested}) %>
         <div class="row">
             <div class="col-md-2">
-                <div class="col-form-label" >Received at: </div>
+                <!-- <div class="col-form-label" >Received at: </div> -->
+                <h3>
+                    <small class="text-muted" >Received at: </small>
+                </h3>
             </div>
             <div class="col-md-10">
                 <h3>
@@ -48,106 +45,30 @@
                 </h3>
             </div>
         </div>
-        <div class="row">
+        <%- include('_resp_fields', {fieldTitle: 'ID of provider: ', fieldValue: response.provider}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Reply state: ', fieldValue: response.success === 0 ? 'Failed' : 'Succesfull'}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Type: ', fieldValue: response.type === 0 ? 'IPv4' : 'IPv6'}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Continent: ', fieldValue: response.continent}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Country: ', fieldValue: response.country}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Country code: ', fieldValue: response.countryCode}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Country Flag: ', fieldValue: response.countryFlag, image: {src: response.countryFlag, alt: 'Image belonging to the resulting country', width: '220', height: '165'} }) %>
+        <!-- if everything works remove this later -->
+        <!-- <div class="row">
             <div class="col-md-12">
                 <h3>
-                    <small class="text-muted">ID of provider: <%= response.provider %></small>
+                    <small class="text-muted">Country Flag:</small>
+                    <small class="text-info"><%= response.countryFlag %></small>
                 </h3>
+                <img src="<%= response.countryFlag %>" alt="Image belonging to the resulting country" width="220" height="165" />
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Reply state: <%= response.success === 0 ? 'Failed' : 'Succesfull' %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Type: <%= response.type === 0 ? 'IPv4' : 'IPv6' %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Continent: <%= response.continent %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Country: <%= response.country %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Country code: <%= response.contryCode %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Country Flag: <%= response.countryFlag %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Region: <%= response.region %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">City: <%= response.city %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Latitude: <%= response.latitude %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Longitude: <%= response.longitude %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Org: <%= response.org %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">ISP: <%= response.isp %></small>
-                </h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Currency: <%= response.currency %></small>
-                </h3>
-            </div>
-        </div>
-
-        
+        </div> -->
+        <%- include('_resp_fields', {fieldTitle: 'Region: ', fieldValue: response.region}) %>
+        <%- include('_resp_fields', {fieldTitle: 'City: ', fieldValue: response.city}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Latitude: ', fieldValue: response.latitude}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Longitude: ', fieldValue: response.longitude}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Org: ', fieldValue: response.org}) %>
+        <%- include('_resp_fields', {fieldTitle: 'ISP: ', fieldValue: response.isp}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Currency: ', fieldValue: response.currency}) %>
     </div>
 
     <!-- toto sa zobrazi po nacitani stranky a hladam v tom parameter changed, ktory sa posle len po uspesnom ulozeni a redirecte na toto -->

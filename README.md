@@ -12,7 +12,7 @@ This tool provides a way to request geolocation information about single IP or b
 
 Run instructions
 
-`node run devStart`
+`npm run devStart`
 
 --- 
 
@@ -27,7 +27,7 @@ Run instructions
 - [X] Ability to receive reply
 - [X] Ability to process reply from JSON
 - [X] Ability to process reply from XML
-- [] Ability to process data that does not have all fields in specified response data model
+- [ ] Ability to process data that does not have all fields in specified response data model
 - [ ] Ability to save data from replies
 - [ ] Ability to make a request for an IP via REST API
 

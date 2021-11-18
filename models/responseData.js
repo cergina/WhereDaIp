@@ -36,7 +36,7 @@ const responseDataSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
-    contryCode: {
+    countryCode: {
         type: String, 
         required: false
     },

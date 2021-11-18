@@ -1,0 +1,13 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3>
+            <small class="text-muted"><%= fieldTitle %></small>
+            <small class="text-info"><%= fieldValue %></small>
+        </h3>
+        <% if (typeof image !== 'undefined') { %>
+            <!-- <h1>foo</h1> -->
+            <img src="<%= image.src %>" alt="<%= image.alt %>" width="<%= image.width %>" height="<%= image.height %>" />
+        <% } else { %>
+        <% } %>  
+    </div>
+</div>
