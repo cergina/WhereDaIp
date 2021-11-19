@@ -1,12 +1,24 @@
 <div class="row">
-    <div class="col-md-12">
+
+    <!-- decide whether to use margin -->
+    <% let mbToUse = '' %> 
+    <% if (typeof useMb !== 'undefined') { %>
+        <% mbToUse = useMb; %>
+    <% } %>  
+    
+
+    <!-- main information panel -->
+    <div class="col-md-6 <%= mbToUse %> ">
+        <!-- title and value -->
         <h3>
             <small class="text-muted"><%= fieldTitle %></small>
             <small class="text-info"><%= fieldValue %></small>
         </h3>
+    </div>
+    <div class="col-md-4">
+        <!-- useful eg. for flag show -->
         <% if (typeof image !== 'undefined') { %>
-            <!-- <h1>foo</h1> -->
-            <img src="<%= image.src %>" alt="<%= image.alt %>" width="<%= image.width %>" height="<%= image.height %>" />
+            <img style="border: 2px solid;" src="<%= image.src %>" alt="<%= image.alt %>" width="<%= image.width %>" height="<%= image.height %>" />
         <% } else { %>
         <% } %>  
     </div>

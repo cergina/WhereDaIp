@@ -22,15 +22,17 @@
             </p>
         </div>
 
+        <!-- handle WebGL planet -->
         <% var targetMapUrl = "/requests/testmap?latitude=" + response.latitude %>
         <% targetMapUrl += "&longitude=" + response.longitude %>
         <% targetMapUrl += "&target=" + response.ipRequested %>
         <% console.log(targetMapUrl) %> 
         <% targetMapUrl = encodeURI(targetMapUrl) %>
 
-        <a href="<%= targetMapUrl %> ">Here is a target on a MAP</a> 
+        <!-- <a href="<%= targetMapUrl %> ">Here is a target on a MAP</a>  -->
+        <button type="button" class="btn btn-primary btn-lg btn-block mb-4" onclick="location.href='<%= targetMapUrl %>'">WebGL Earth with target positioned on it</button>
 
-        <!-- here some details -->
+        <!-- here some details from response -->
         <%- include('_resp_fields', {fieldTitle: 'Requested IP: ', fieldValue: response.ipRequested}) %>
         <div class="row">
             <div class="col-md-2">
@@ -39,35 +41,29 @@
                     <small class="text-muted" >Received at: </small>
                 </h3>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-6">
                 <h3>
-                    <input value="<%= response.addedAt %>"  type="text" class="form-control" disabled >
+                    <input value="<%= response.addedAt %>"  type="text" class="form-control" readonly >
                 </h3>
             </div>
         </div>
         <%- include('_resp_fields', {fieldTitle: 'ID of provider: ', fieldValue: response.provider}) %>
         <%- include('_resp_fields', {fieldTitle: 'Reply state: ', fieldValue: response.success === 0 ? 'Failed' : 'Succesfull'}) %>
-        <%- include('_resp_fields', {fieldTitle: 'Type: ', fieldValue: response.type === 0 ? 'IPv4' : 'IPv6'}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Type: ', fieldValue: response.type === 0 ? 'IPv4' : 'IPv6', useMb: 'mb-4'}) %>
         <%- include('_resp_fields', {fieldTitle: 'Continent: ', fieldValue: response.continent}) %>
         <%- include('_resp_fields', {fieldTitle: 'Country: ', fieldValue: response.country}) %>
         <%- include('_resp_fields', {fieldTitle: 'Country code: ', fieldValue: response.countryCode}) %>
         <%- include('_resp_fields', {fieldTitle: 'Country Flag: ', fieldValue: response.countryFlag, image: {src: response.countryFlag, alt: 'Image belonging to the resulting country', width: '220', height: '165'} }) %>
-        <!-- if everything works remove this later -->
-        <!-- <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    <small class="text-muted">Country Flag:</small>
-                    <small class="text-info"><%= response.countryFlag %></small>
-                </h3>
-                <img src="<%= response.countryFlag %>" alt="Image belonging to the resulting country" width="220" height="165" />
-            </div>
-        </div> -->
         <%- include('_resp_fields', {fieldTitle: 'Region: ', fieldValue: response.region}) %>
         <%- include('_resp_fields', {fieldTitle: 'City: ', fieldValue: response.city}) %>
         <%- include('_resp_fields', {fieldTitle: 'Latitude: ', fieldValue: response.latitude}) %>
         <%- include('_resp_fields', {fieldTitle: 'Longitude: ', fieldValue: response.longitude}) %>
+        
+        <!-- give here maps.google url with longitude and latitude as well -->
+        <button type="button" class="btn btn-primary btn-lg btn-block mb-4" onclick="location.href='https://www.google.com/maps/@<%= response.latitude %>,<%= response.longitude %>,15.39z'">Visit on Google maps</button>
+
         <%- include('_resp_fields', {fieldTitle: 'Org: ', fieldValue: response.org}) %>
-        <%- include('_resp_fields', {fieldTitle: 'ISP: ', fieldValue: response.isp}) %>
+        <%- include('_resp_fields', {fieldTitle: 'ISP: ', fieldValue: response.isp, useMb: 'mb-4'}) %>
         <%- include('_resp_fields', {fieldTitle: 'Currency: ', fieldValue: response.currency}) %>
     </div>
 
