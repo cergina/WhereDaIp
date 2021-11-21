@@ -89,7 +89,7 @@
             <label class="col-form-label" for="api_method">Request method</label>
             
             <select name="api_method" id="api_method" class="form-select">
-                <% var options = ["GET= url + ?param={ip}", "GET= url + /{ip}", "POST + {ip} in body app/json"] %>
+                <% var options = ["GET= url + ?param={ip}", "GET= url + /{ip}", "POST + {ip} in body app/json", "GET= url + /ip + ?fields="] %>
                 <% var selected_method = provider.restMethod %>
                 <% for(var i = 0; i < options.length; i++) { %>
                     <% var selected = (selected_method == i) ? 'selected' : '' %> 
@@ -228,6 +228,30 @@
         <div class="row">
             <div class="col-md-6"><input value="<%= provider.response.currencyPath %>" placeholder="eg.: 'currency'" type="text" name="api_resp_currency_path" id="api_resp_currency_path" class="form-control"></div>
             <div class="col-md-6"><input value="<%= provider.response.fulfilledRequestsPath %>" placeholder="eg.: 'completed_requests'" type="text" name="api_resp_requestscount_path" id="api_resp_requestscount_path" class="form-control"></div>
+        </div>
+    </div>
+</div>
+<div class="d-grid gap-3">
+    <div class="form-group p-2 bg-light border">
+        <div class="row">
+            <div class="col-md-6"><label for="api_resp_as_path">Path to "AS number or/and name (if in BGP tables)"</label></div>
+            <div class="col-md-6"><label for="api_resp_mobile_path">Path to "originates from cellular?"</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><input value="<%= provider.response.asPath %>" placeholder="eg.: 'as_number'" type="text" name="api_resp_as_path" id="api_resp_as_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.mobilePath %>" placeholder="eg.: 'is_mobile'" type="text" name="api_resp_mobile_path" id="api_resp_mobile_path" class="form-control"></div>
+        </div>
+    </div>
+</div>
+<div class="d-grid gap-3">
+    <div class="form-group p-2 bg-light border">
+        <div class="row">
+            <div class="col-md-6"><label for="api_resp_proxy_path">Path to "is proxy/vpn/TOR exit node?"</label></div>
+            <div class="col-md-6"><label for="api_resp_hosting_path">Path to "is hosted?"</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><input value="<%= provider.response.proxyPath %>" placeholder="eg.: 'proxy'" type="text" name="api_resp_proxy_path" id="api_resp_proxy_path" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.hostingPath %>" placeholder="eg.: 'hosting'" type="text" name="api_resp_hosting_path" id="api_resp_hosting_path" class="form-control"></div>
         </div>
     </div>
 </div>

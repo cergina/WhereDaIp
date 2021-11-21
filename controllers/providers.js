@@ -83,6 +83,11 @@ function saveAndRedirect(viewName) {
         provider.response.currencyPath = req.body.api_resp_currency_path
         provider.response.fulfilledRequestsPath = req.body.api_resp_requestscount_path
 
+        provider.response.asPath = req.body.api_resp_as_path
+        provider.response.mobilePath = req.body.api_resp_mobile_path
+        provider.response.proxyPath = req.body.api_resp_proxy_path
+        provider.response.hostingPath = req.body.api_resp_hosting_path
+
         try {
             provider = await provider.save()
             res.redirect(`${configuration.WWW_GEODB_HOME}/${provider.slug}/?changed=1`)

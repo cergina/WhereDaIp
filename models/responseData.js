@@ -72,6 +72,22 @@ const responseDataSchema = new mongoose.Schema({
     currency: {
         type: String, 
         required: false
+    },
+    as: {
+        type: String,
+        required: false
+    },
+    mobile: {
+        type: String,
+        required: false
+    },
+    proxy: {
+        type: String,
+        required: false
+    },
+    hosting: {
+        type: String,
+        required: false
     }
 })
 

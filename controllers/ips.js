@@ -59,9 +59,6 @@ const acceptRequestController = async (req, res) => {
         return
     }
     
-    //logInfo(`I'm gonna send it`)
-    
-    // TODO send and process it
     try {
         var providers = await getAllUsableProviders()
 
@@ -69,9 +66,8 @@ const acceptRequestController = async (req, res) => {
         addresses.forEach(address => {
             console.log(providers)
             providers.forEach(provider => {
-                //send(address, provider) // this one is most likely obsolete already
-                //sendPromise(address, provider) // this one is real
-                sendFakePromise(address, provider)
+                sendPromise(address, provider) // this one is real
+                //sendFakePromise(address, provider)
                     .then(async res => {
                         console.log(res)
 
@@ -83,8 +79,10 @@ const acceptRequestController = async (req, res) => {
             })
         })
 
-        //res.redirect(`${configuration.WWW_REQ_HOME}/${provider.slug}/?changed=1`)
-        res.redirect(`${configuration.WWW_REQ_HOME}`)
+        // this needs to be done differently because sometimes there can be more requests and the time will not be enough
+        setTimeout(function() {
+            res.redirect(`${configuration.WWW_REQ_HOME}`);
+        }, 500)
     } catch (e) {
         logError(e)
     }
@@ -122,7 +120,17 @@ function extractDataFromResponse(address, originalResponse, provider) {
 function extractFromJSON(extractedData, originalResponse, provider) {
     // TODO
     // this will work only in json and also when every field is filled
-    extractedData.success = originalResponse[provider.response.successPath]
+    
+    // sometimes response is true, false, 0, 1 thats ok
+    // but sometimes its 'success' 'fail' and that has to be handled
+    let tmpVar = originalResponse[provider.response.successPath]
+
+    if (tmpVar === 'true' || tmpVar === true || tmpVar === 'success' || tmpVar === 1)
+        extractedData.success = 1
+    else
+        extractedData.success = 0
+    
+    //logInfo(`hlasim: ${extractedData.success} lebo '${provider.response.successPath}'  '${originalResponse[provider.response.successPath]}'`)
     
     extractedData.continent = originalResponse[provider.response.continentPath]
     extractedData.country = originalResponse[provider.response.countryPath]
@@ -135,6 +143,13 @@ function extractFromJSON(extractedData, originalResponse, provider) {
     extractedData.org = originalResponse[provider.response.orgPath]
     extractedData.isp = originalResponse[provider.response.ispPath]
     extractedData.currency = originalResponse[provider.response.currencyPath]
+
+    // only in ip-api (for now)
+    extractedData.as = originalResponse[provider.response.asPath]
+    extractedData.mobile = originalResponse[provider.response.mobilePath]
+    extractedData.proxy = originalResponse[provider.response.proxyPath]
+    extractedData.hosting = originalResponse[provider.response.hostingPath]
+
 
     return extractedData
 }

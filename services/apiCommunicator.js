@@ -33,8 +33,17 @@ function sendFakePromise(ip, provider) {
         }
 
         logDebug(`FAKING of Sending via ${cesta}`)
-            
-        if (verzia) {
+        
+        /*
+         - change manually - 
+        FAKES act like
+        0 : ipwhois
+        1 : ip-api
+        */
+        var whichFakeToUse = 1;
+
+        if (whichFakeToUse == 0) {
+            // fake of IPWHOIS.com
             resolve({
                 ip: ip,
                 success: true,
@@ -65,8 +74,29 @@ function sendFakePromise(ip, provider) {
                 currency_rates: 0.861,
                 currency_plural: 'euros',
                 completed_requests: 22
-              })
+            })
+        } else if (whichFakeToUse == 1) {
+            // fake of IP-API.com
+            resolve({
+                "query": "62.197.243.225",
+                "status": "success",
+                "continent": "Europe",
+                "country": "Slovakia",
+                "countryCode": "SK",
+                "regionName": "Trnava",
+                "city": "Trnava",
+                "lat": 48.3762,
+                "lon": 17.5829,
+                "currency": "EUR",
+                "isp": "SWAN, a.s.",
+                "org": "Residential NAT",
+                "as": "AS5578 SWAN, a.s.",
+                "mobile": false,
+                "proxy": false,
+                "hosting": false
+            })
         }
+        
     })
 }
 
@@ -82,6 +112,29 @@ function sendViaGetParam(ip, provider) {
     return cesta
 }
 
+function sendViaGetWithFieldsAfterIp(ip, provider, fieldsName) {
+    var cesta = makeUrlPure(ip, provider)
+    cesta += `?${fieldsName}=`
+    
+    // iterate over the keys in response of location provider
+    var testJson = provider.response
+    //logDebug(testJson)
+
+    Object.entries(testJson).forEach((entry) => {
+        const [key, value] = entry
+        if (value && value.length > 0) {
+            cesta += `${value},`
+        }
+    })
+
+    //logDebug(cesta)
+
+    // remove last ,
+    cesta = cesta.slice(0, -1)
+
+    return cesta
+}
+
 // POST app/json
 function sendViaPost(ip, provider) {
     logDebug('not supported yet')
@@ -92,15 +145,22 @@ function sendViaPost(ip, provider) {
 function getCorrectURI(ip, provider) {
     var cesta 
 
+    // GET - used by ipwhois.com
     if (provider.restMethod === 0)
         cesta = sendViaGetParam(ip, provider)
 
     if (provider.restMethod === 1)
         cesta = sendViaGet(ip, provider)
 
-    if (provider.restMethod === 3) 
+    // POST - not implemented
+    if (provider.restMethod === 2) 
         cesta = sendViaPost(ip, provider)
 
+    // GET - for IP-API that has ?fields={} after
+    if (provider.restMethod === 3)
+        cesta = sendViaGetWithFieldsAfterIp(ip, provider, 'fields')
+
+    logDebug(`Request will be on ${cesta}`)
     cesta = encodeURI(cesta)
 
     return cesta
@@ -120,8 +180,6 @@ function makeUrlParam(ip, provider) {
         cesta += (cesta.slice(-1) === '=') ? ip : '=' + ip
     }
     
-    logDebug(`Request will be on: ${cesta}`)
-    
     return cesta
 }
 
@@ -129,8 +187,6 @@ function makeUrlPure(ip, provider) {
     var cesta = provider.baseUrl
 
     cesta += (cesta.slice(-1) === '/') ? ip : '/' + ip
-    
-    logDebug(`Request will be on: ${cesta}`)
     
     return cesta
 }
