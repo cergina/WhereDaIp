@@ -1,21 +1,34 @@
 
 <h5 class="display-5 mt-4">Information relevant, to this system only</h5>
 
-<!-- popisky systemove -->
+<!-- System notes -->
 <div class="form-group">
     <div class="row">
+        <!-- label -->
         <div class="col-md-3">
             <label class="col-form-label" for="name">Name of the service in this system *</label>
         </div>
+        <!-- value -->
         <div class="col-md-4">
             <input required value="<%= provider.name %>" type="text" name="name" id="name" class="form-control">        
         </div>
+
+        <!-- Test switch (Enable service) -->
+        <div class="col-md-2 custom-control custom-switch align-self-center justify-content-center">
+            <input type="checkbox" class="custom-control-input" name="service_enabled" id="service_enabled" <%= provider.isActive ? "checked" : "" %>>
+            <label class="custom-control-label" for="service_enabled">Enable service?</label>
+        </div>
+        
+        <!-- Test switch (Is service free) -->
+        <div class="col-md-2 custom-control custom-switch align-self-center justify-content-center">
+            <input type="checkbox" class="custom-control-input" name="service_free" id="service_free" <%= provider.isFree ? "checked" : "" %>>
+            <label class="custom-control-label" for="service_free">Is service free?</label>
+        </div>
     </div>
 </div>
-<div class="form-group">
-    
-    
-</div>
+
+
+
 <div class="form-group">
     <label for="description">Your own description and notes on the service</label>
     <textarea name="description" id="description" class="form-control"><%= provider.description %></textarea>
@@ -55,40 +68,19 @@
 <div class="form-group">
     <label for="api_url">Service's API url *</label>
     <input required value="<%= provider.baseUrl %>" placeholder="http://serviceurl.com/json/" type="text" name="api_url" id="api_url" class="form-control">
+    <small class="form-text text-muted mb-4">See in documentation. The url has to comply with rules set in Request method dropdown</small>
 </div>
+
+
+
 <!-- dropdowny -->
 <div class="form-group">
     <div class="row">
         <!-- miesto pre dropdown-->
         <div class="col-md-4">
-            <label class="col-form-label" for="api_free">Is the service free?</label>
-            <select name="api_free" id="api_free" class="form-select">
-                <% var options = ["No", "Yes"] %>
-                <% var selected_free = provider.isFree %>
-                <% for(var i = 0; i < options.length; i++) { %>
-                    <% var selected = (selected_free == i) ? 'selected' : '' %> 
-                    <option <%= selected %> value='<%= i %>'><%= options[i] %></option>
-                <% } %>
-            </select>
-        </div>
-        <!-- miesto pre dropdown-->
-        <div class="col-md-4">
-            <label class="col-form-label" for="active">Enable service?</label>
-            <select name="active" id="active" class="form-select">
-                <% var options = ["No", "Yes"] %>
-                <% var selected_active = provider.isActive %>
-                <% for(var i = 0; i < options.length; i++) { %>
-                    <% var selected = (selected_active == i) ? 'selected' : '' %> 
-                    <option <%= selected %> value='<%= i %>'><%= options[i] %></option>
-                <% } %>
-            </select>
-            
-        </div>
-        <!-- miesto pre dropdown-->
-        <div class="col-md-4">
             <label class="col-form-label" for="api_method">Request method</label>
             
-            <select name="api_method" id="api_method" class="form-select">
+            <select class="form-control" name="api_method" id="api_method">
                 <% var options = ["GET= url + ?param={ip}", "GET= url + /{ip}", "POST + {ip} in body app/json", "GET= url + /ip + ?fields="] %>
                 <% var selected_method = provider.restMethod %>
                 <% for(var i = 0; i < options.length; i++) { %>
@@ -98,7 +90,9 @@
             </select>
         </div>
     </div>
+    <small class="form-text text-muted mb-4">Mind that incorrect set-up of this will lead to non working requests</small>
 </div>
+
 
 <form-group>
     <!-- nadpisy -->
@@ -114,9 +108,11 @@
     <div class="row">
         <div class="col-md-6">
             <input value="<%= provider.request.ipAddress %>" type="text" name="api_req_param_ip" id="api_req_param_ip" class="form-control">
+            <small class="form-text text-muted mb-4">Not used yet</small>
         </div>
         <div class="col-md-6">
             <input value="<%= provider.request.authentication %>" type="text" name="api_req_param_auth" id="api_req_param_auth" class="form-control">
+            <small class="form-text text-muted mb-4">Not supported right now</small>
         </div>
     </div>
 </form-group>
@@ -137,7 +133,7 @@
 <div class="form-group">
     <label for="response_format">Response format type</label>
 
-    <select name="response_format" id="response_format" class="form-select">
+    <select name="response_format" id="response_format" class="form-control">
         <% var options = ["JSON", "XML"] %>
         <% var selected_response_format = provider.format %>
         <% for(var i = 0; i < options.length; i++) { %>
@@ -145,6 +141,7 @@
             <option  <%= selected %>  value='<%= i %>'><%= options[i] %></option>
         <% } %>
     </select>
+    <small class="form-text text-muted mb-4">XML not implemmented yet</small>
 </div>
 
 <div class="d-grid gap-3">

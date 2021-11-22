@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+    <div class="container">
+        <!-- navbar + info -->
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">List of fused IP addresses</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Results</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Here, it's possible to see IP addesses grouped and inside these items, you will find fused information from various providers.
+            </p>
+        </div>
+
+        <!-- akcne tlacidlo -->
+        <a href="/requests/new" class="btn btn-success">Make request</a>
+        <a href="/requests/" class="btn btn-info">All IPs (non fused)</a>
+    </div>
+
+
+</body>
+</html>

@@ -60,8 +60,8 @@ function saveAndRedirect(viewName) {
 
         provider.lastEditAt = new Date()
         provider.format = req.body.response_format
-        provider.isFree = req.body.api_free
-        provider.isActive = req.body.active
+        provider.isFree = req.body.service_free === 'on' ? 1 : 0
+        provider.isActive = req.body.service_enabled === 'on' ? 1 : 0
 
         provider.baseUrl = req.body.api_url
         provider.restMethod = req.body.api_method

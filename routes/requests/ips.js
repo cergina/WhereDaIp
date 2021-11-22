@@ -7,6 +7,7 @@ const controller = require('../../controllers/ips')
 // get
 router.get('/', controller.showAllIps)
 router.get('/new/', controller.makeRequestController)
+router.get('/filtered', controller.showFilteredIps)
 router.get('/testmap/', controller.showTestMap)
 router.get('/:id', controller.showResponse) // id's parameters always LAST, or else cast error will be shown
 

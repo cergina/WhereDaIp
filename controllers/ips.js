@@ -7,12 +7,39 @@ const net = require('net')
 const { getAllUsableProviders } = require('./providers.js')
 const { logDebug, logInfo, logError } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
+const locationProvider = require('../models/locationProvider.js')
 
 
 // GETs
 const showAllIps = async (req, res) => {
     const requests = await responseData.find().sort({ addedAt: 'desc'})
-    res.render('requests/ips.ejs', { requests: requests, siteTitle: 'List of IPs'})
+    const providers = await locationProvider.find()
+
+    // create shortened json to send to frontend 
+    var customizedProviders = {}
+
+    for (var i in providers) {
+        var item = { name: providers[i].name, slug: providers[i].slug, _id: providers[i]._id }
+        customizedProviders[providers[i]._id] = item
+    }
+
+    res.render('requests/ips.ejs', { requests: requests, 
+        providers: customizedProviders,
+        siteTitle: 'List of IPs'})
+}
+
+const showFilteredIps = async (req, res) => {
+    const requests = await responseData.find().sort({ addedAt: 'desc'})
+    const providers = await locationProvider.find()
+    
+    // create shortened json to send to frontend 
+    var customizedProviders = {}
+
+    // TODO
+
+    res.render('requests/filteredIps.ejs', { requests: requests, 
+        providers: customizedProviders,
+        siteTitle: 'Fused IP information'})
 }
 
 const showTestMap = (req, res) => {
@@ -29,7 +56,9 @@ const showResponse = async (req, res) => {
     if (response == null)
         res.redirect(`${configuration.WWW_ROOT}`)
 
-    res.render('requests/showResponse.ejs', { response: response, siteTitle: 'Response details' })
+    const provider = await locationProvider.findById(response.provider)
+
+    res.render('requests/showResponse.ejs', { response: response, provider: provider, siteTitle: 'Response details' })
 }
 
 
@@ -150,7 +179,6 @@ function extractFromJSON(extractedData, originalResponse, provider) {
     extractedData.proxy = originalResponse[provider.response.proxyPath]
     extractedData.hosting = originalResponse[provider.response.hostingPath]
 
-
     return extractedData
 }
 
@@ -163,7 +191,7 @@ function extractFromXML(extractedData, originalResponse, provider) {
 }
 
 module.exports = {
-    showAllIps, makeRequestController, showResponse,
+    showAllIps, showFilteredIps, makeRequestController, showResponse,
     showTestMap,
     acceptRequestController,
     deleteExistingResponse

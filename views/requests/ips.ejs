@@ -22,7 +22,8 @@
         </div>
 
         <!-- akcne tlacidlo -->
-        <a href="/requests/new" class="btn btn-success">Make Request</a>
+        <a href="/requests/new" class="btn btn-success">Make request</a>
+        <a href="/requests/filtered" class="btn btn-info">Fused responses from various services</a>
 
         <!-- zoznam -->
         <% requests.forEach(request => { %>
@@ -31,15 +32,16 @@
                     <!-- ci je aktivny -->
                     <div class="float-right"><span class="badge badge-primary badge-pill"><%= request.success == 1 ? 'Successful' : 'Failed' %> </span></div>
                     <!-- nadpis -->
-                    <h4 class="card-title"><%= request.ipRequested %></h4>
+                    <h4 class="card-title"><%= request.ipRequested %> by '<%= providers[request.provider].name %>' </h4>
                     <!-- tenke sede pismo -->
                     <div class="card-subtitle text-muted mb-2">
                         <%= request.addedAt.toLocaleString() %>
                     </div>
                     <!-- Krajina odkial -->
-                    <div class="card-text mb-2"><%= request.country %></div>
+                    <div class="card-text mb-2"> <%= request.city %>, <%= request.country %></div>
                     <!-- tlacidla -->
                     <a href="requests/<%= request.id %>" class="btn btn-primary">Read More</a>
+                    <a href="providers/<%= providers[request.provider].slug %>" class="btn btn-secondary">About provider</a>
                     <form action="/requests/delete/<%= request.id %>?_method=DELETE" method="POST" class="d-inline">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>

@@ -48,13 +48,13 @@
                 </h3>
             </div>
         </div>
-        <%- include('_resp_fields', {fieldTitle: 'ID of provider: ', fieldValue: response.provider}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Provider: ', fieldValue: provider.name, clickableLocalLink: '/providers/' + provider.slug}) %>
         <%- include('_resp_fields', {fieldTitle: 'Reply state: ', fieldValue: response.success === 0 ? 'Failed' : 'Succesfull'}) %>
         <%- include('_resp_fields', {fieldTitle: 'Type: ', fieldValue: response.type === 0 ? 'IPv4' : 'IPv6', useMb: 'mb-4'}) %>
         <%- include('_resp_fields', {fieldTitle: 'Continent: ', fieldValue: response.continent}) %>
         <%- include('_resp_fields', {fieldTitle: 'Country: ', fieldValue: response.country}) %>
         <%- include('_resp_fields', {fieldTitle: 'Country code: ', fieldValue: response.countryCode}) %>
-        <%- include('_resp_fields', {fieldTitle: 'Country Flag: ', fieldValue: response.countryFlag, image: {src: response.countryFlag, alt: 'Image belonging to the resulting country', width: '220', height: '165'} }) %>
+        <%- include('_resp_fields', {fieldTitle: 'Country Flag: ', fieldValue: response.countryFlag, image: {src: response.countryFlag, alt: 'Image belonging to the resulting country. If nothing shows up, service didn\'t provide link to one.', width: '220', height: '165'} }) %>
         <%- include('_resp_fields', {fieldTitle: 'Region: ', fieldValue: response.region}) %>
         <%- include('_resp_fields', {fieldTitle: 'City: ', fieldValue: response.city}) %>
         <%- include('_resp_fields', {fieldTitle: 'Latitude: ', fieldValue: response.latitude}) %>
