@@ -17,12 +17,33 @@
         <div class="bd-callout bd-callout-info">
             <p>
                 Here, it's possible to see IP addesses grouped and inside these items, you will find fused information from various providers.
+                Please mind, that these items are not saved in database and are only fused during runtime.
             </p>
         </div>
 
         <!-- akcne tlacidlo -->
         <a href="/requests/new" class="btn btn-success">Make request</a>
         <a href="/requests/" class="btn btn-info">All IPs (non fused)</a>
+
+        <!-- zoznam -->
+        <% summedRequests.forEach(summedRequest => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <!-- ci je aktivny -->
+                    <div class="float-right"><span class="badge badge-primary badge-pill"><%= summedRequest.success == 1 ? 'Successful' : 'Failed' %> </span></div>
+                    <!-- nadpis -->
+                    <h4 class="card-title"><%= summedRequest.ipRequested %></h4>
+                    <!-- tenke sede pismo -->
+                    <div class="card-subtitle text-muted mb-2">
+                        First: <%= summedRequest.firstAddedAt.toLocaleString() %> Last: <%= summedRequest.lastAddedAt.toLocaleString() %>
+                    </div>
+                    <!-- Krajina odkial -->
+                    <div class="card-text mb-2"> <%= summedRequest.city %>, <%= summedRequest.country %></div>
+                    <!-- tlacidla -->
+                    <a href="/requests/filtered/<%= summedRequest.ipRequested %>" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        <% }) %> 
     </div>
 
 

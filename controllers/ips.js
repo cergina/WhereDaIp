@@ -8,6 +8,7 @@ const { getAllUsableProviders } = require('./providers.js')
 const { logDebug, logInfo, logError } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
+const { request } = require('express')
 
 
 // GETs
@@ -18,7 +19,8 @@ const showAllIps = async (req, res) => {
     // create shortened json to send to frontend 
     var customizedProviders = {}
 
-    for (var i in providers) {
+    for (var i in providers) 
+    {
         var item = { name: providers[i].name, slug: providers[i].slug, _id: providers[i]._id }
         customizedProviders[providers[i]._id] = item
     }
@@ -35,9 +37,33 @@ const showFilteredIps = async (req, res) => {
     // create shortened json to send to frontend 
     var customizedProviders = {}
 
-    // TODO
+    for (var i in providers) 
+    {
+        var item = { name: providers[i].name, slug: providers[i].slug, _id: providers[i]._id }
+        customizedProviders[providers[i]._id] = item
+    }
+    
+    // create summed Up request to show in list
+    var summedRequests = []
 
-    res.render('requests/filteredIps.ejs', { requests: requests, 
+    for (var i in requests) {
+        if (summedRequests.some(item => item.ipRequested === requests[i].ipRequested))
+            continue
+
+        var item = 
+        {
+            success: requests[i].success,
+            ipRequested: requests[i].ipRequested,
+            firstAddedAt: requests[i].addedAt,
+            lastAddedAt: requests[i].addedAt,
+            city: requests[i].city,
+            country: requests[i].country
+        }
+
+        summedRequests.push(item)
+    }
+
+    res.render('requests/filteredIps.ejs', { summedRequests: summedRequests, 
         providers: customizedProviders,
         siteTitle: 'Fused IP information'})
 }
@@ -48,6 +74,20 @@ const showTestMap = (req, res) => {
 
 const makeRequestController = (req, res) => {
     res.render('requests/makeRequest.ejs', { siteTitle: 'New request'})
+}
+
+const showFilteredResponse = async (req, res) => {
+    console.log(`checkujeme filter pre ${req.params.ipRequested}`)
+
+    const response = await responseData.findOne({ ipRequested : req.params.ipRequested })
+
+    if (response == null)
+        res.redirect(`${configuration.WWW_ROOT}`)
+
+    const provider = await locationProvider.findById(response.provider)
+    
+    // this whole thing is Temporary!
+    res.render('requests/showResponse.ejs', {response: response, provider: provider, siteTitle: 'Fused Response'})
 }
 
 const showResponse = async (req, res) => {
@@ -191,7 +231,7 @@ function extractFromXML(extractedData, originalResponse, provider) {
 }
 
 module.exports = {
-    showAllIps, showFilteredIps, makeRequestController, showResponse,
+    showAllIps, showFilteredIps, makeRequestController, showFilteredResponse, showResponse,
     showTestMap,
     acceptRequestController,
     deleteExistingResponse

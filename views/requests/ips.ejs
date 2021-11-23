@@ -40,8 +40,8 @@
                     <!-- Krajina odkial -->
                     <div class="card-text mb-2"> <%= request.city %>, <%= request.country %></div>
                     <!-- tlacidla -->
-                    <a href="requests/<%= request.id %>" class="btn btn-primary">Read More</a>
-                    <a href="providers/<%= providers[request.provider].slug %>" class="btn btn-secondary">About provider</a>
+                    <a href="/requests/<%= request.id %>" class="btn btn-primary">Read More</a>
+                    <a href="/providers/<%= providers[request.provider].slug %>" class="btn btn-secondary">About provider</a>
                     <form action="/requests/delete/<%= request.id %>?_method=DELETE" method="POST" class="d-inline">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
