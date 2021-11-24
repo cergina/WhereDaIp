@@ -3,7 +3,7 @@
 
 const configuration = require("../config/config-nonRestricted")
 const locationProvider = require("../models/locationProvider")
-const { logDebug, logInfo, logRaw } = require('../services/helper.js')
+const { logDebug, logInfo, logRaw, yyyymmdd } = require('../services/helper.js')
 
 
 // for Internal
@@ -33,6 +33,26 @@ const editProvider = async (req, res) => {
 
     res.render('providers/showProvider.ejs', { provider: provider, siteTitle: 'Edit provider' })
 }
+
+const downloadProviders = async (req, res) => {
+    console.log('Downloading providers')
+
+    // make sure to know when was it downloaded
+    const date = new Date()
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
+
+    var text = "WhereDaIp - providers extraction\r\n"
+    text += `Downloaded at: ${date.toLocaleDateString(undefined, options)}\r\n\r\n`
+    const providers = await locationProvider.find().sort({ addedAt: 'desc'})
+    text += JSON.stringify(providers)
+    text += '\r\n'
+
+    // name the file accordingly
+    res.attachment(`WDP-Providers-${yyyymmdd()}.txt`)
+    res.type('txt')
+    res.send(text)
+}
+
 
 // for POSTs
 const createNewProvider = async (req, res, next) => {
@@ -102,5 +122,6 @@ module.exports = {
     getAllUsableProviders,
     showAllProviders, newProvider, editProvider,
     createNewProvider, editExistingProvider, deleteExistingProvider,
-    saveAndRedirect
+    saveAndRedirect,
+    downloadProviders
 }

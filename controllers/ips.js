@@ -5,7 +5,7 @@ const configuration = require('../config/config-nonRestricted.js')
 const responseData = require("../models/responseData")
 const net = require('net')
 const { getAllUsableProviders } = require('./providers.js')
-const { logDebug, logInfo, logError } = require('../services/helper.js')
+const { logDebug, logInfo, logError, yyyymmdd } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
 const { request } = require('express')
@@ -72,6 +72,26 @@ const showTestMap = (req, res) => {
     res.render('requests/mapTest.ejs')
 }
 
+const downloadResponses = async (req, res) => {
+    console.log('Downloading responses')
+
+    // make sure to know when was it downloaded
+    const date = new Date()
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'}
+
+    var text = "WhereDaIp - responses extraction\r\n"
+    text += `Downloaded at: ${date.toLocaleDateString(undefined, options)}\r\n\r\n`
+    const requests = await responseData.find().sort({ addedAt: 'desc'})
+    text += JSON.stringify(requests)
+    text += '\r\n'
+
+
+    // name the file accordingly
+    res.attachment(`WDP-Responses-${yyyymmdd()}.txt`)
+    res.type('txt')
+    res.send(text)
+}
+
 const makeRequestController = (req, res) => {
     res.render('requests/makeRequest.ejs', { siteTitle: 'New request'})
 }
@@ -132,6 +152,13 @@ const showResponse = async (req, res) => {
 
 
 // POSTs
+// show file explorer, choose location, save
+const extractResponses = async (req, res) => {
+    console.log("extraction attempt")
+
+
+}
+
 const deleteExistingResponse = async (req, res) => {
     await responseData.findByIdAndDelete(req.params.id)
     res.redirect(`${configuration.WWW_REQ_HOME}`)
@@ -261,7 +288,8 @@ function extractFromXML(extractedData, originalResponse, provider) {
 
 module.exports = {
     showAllIps, showFilteredIps, makeRequestController, showFusedResponse, showResponse,
-    showTestMap,
+    showTestMap, downloadResponses,
+    extractResponses,
     acceptRequestController,
     deleteExistingResponse
 }

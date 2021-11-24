@@ -34,6 +34,18 @@ function log(title, textToLog) {
     console.log(`$$`)
 }
 
+function yyyymmdd() {
+    var x = new Date();
+    var y = x.getFullYear().toString();
+    var m = (x.getMonth() + 1).toString();
+    var d = x.getDate().toString();
+    (d.length == 1) && (d = '0' + d);
+    (m.length == 1) && (m = '0' + m);
+    var yyyymmdd = y + m + d;
+    return yyyymmdd;
+}
+
 module.exports = {
-    logInfo, logDebug, logRaw, logError
+    logInfo, logDebug, logRaw, logError,
+    yyyymmdd
 }
