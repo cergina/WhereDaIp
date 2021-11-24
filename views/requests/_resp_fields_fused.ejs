@@ -17,6 +17,22 @@
             <!-- if clickable link -->
             <% if (typeof clickableLocalLink !== 'undefined') { %> 
                 <a href="<%= clickableLocalLink %>" class="link-primary"><%= fieldValue %> </a>
+            <% } else if (typeof valueName !== 'undefined') { %> 
+                
+                <!-- find which provider has this value -->
+                <% var tmpText = '' %>
+                <% var by = '' %> 
+                <% for (var key in providers) { %> 
+                    <% if (providers[key].data[valueName]) { %> 
+                        <% tmpText = providers[key].data[valueName] %> 
+                        <% by = providers[key].name %> 
+                        <% break %> 
+                    <% } %> 
+                <% } %> 
+
+                <!-- show it in -->
+                <small class="text-info"><%= `${tmpText} \t\t [${by}]` %></small>
+
             <% } else { %> 
                 <small class="text-info"><%= fieldValue %></small>
             <% } %> 
@@ -26,7 +42,7 @@
     <!-- useful eg. for flag show -->
     <div class="col-md-3">
         <% if (typeof image !== 'undefined') { %>
-            <img style="margin-bottom: -4.5rem; border: 2px solid;" src="<%= image.src %>" alt="<%= image.alt %>" width="<%= image.width %>" height="<%= image.height %>" />
+            <img style="margin-bottom: -4.5rem; border: 2px solid;" src="<%= tmpText %>" alt="<%= image.alt %>" width="<%= image.width %>" height="<%= image.height %>" />
         <% } %>
     </div>
 

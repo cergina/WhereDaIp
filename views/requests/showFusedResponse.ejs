@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body onload="afterLoaded()">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <div class="container">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4"><%= response.ipRequested %></h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/requests">Results</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Details</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Data returned for given IP address from various services. We try to show the fused version of requests,
+                where you will see missing fields filled out with data from other APIs, if available.
+                Please mind, that this IP address might belong to the VPN, ISP or a Onion Router node. This is especially
+                true for trained personnel performing cyber-attacks.
+            </p>
+        </div>
+
+        <!-- handle WebGL planet -->
+        <%  %> 
+        <% var targetMapUrl = "/requests/testmap?latitude=" + response.latitude %>
+        <% targetMapUrl += "&longitude=" + response.longitude %>
+        <% targetMapUrl += "&target=" + response.ipRequested %>
+        <% console.log(targetMapUrl) %> 
+        <% targetMapUrl = encodeURI(targetMapUrl) %>
+
+        <!-- <a href="<%= targetMapUrl %> ">Here is a target on a MAP</a>  -->
+        <button type="button" class="btn btn-primary btn-lg btn-block mb-4" onclick="location.href='<%= targetMapUrl %>'">WebGL Earth with target positioned on it</button>
+
+        <!-- here some details from response -->
+        <h2>
+            General information
+        </h2>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Requested IP: ', fieldValue: response.ipRequested}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Type: ', fieldValue: response.type === 0 ? 'IPv4' : 'IPv6', useMb: 'mb-4'}) %>
+        
+        <h2>
+            Geolocation
+        </h2>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Continent: ', valueName: 'continent'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Country: ', valueName: 'country'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Country\'s currency:', valueName: 'currency'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Country code: ', valueName: 'countryCode'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Region: ', valueName: 'region'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'City: ', valueName: 'city'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Latitude: ', valueName: 'latitude'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Longitude: ', valueName: 'longitude'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Country Flag: ', valueName: 'countryFlag', image: {alt: 'Image belonging to the resulting country. If nothing shows up, service didn\'t provide link to one.', width: '220', height: '165'} }) %>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                The location (region, city and GPS coordinates might correspon to servers of the ISP).
+            </p>
+        </div>
+        
+        <!-- give here maps.google url with longitude and latitude as well -->
+        <button type="button" class="btn btn-primary btn-lg btn-block mb-4" onclick="location.href='https://www.google.com/maps/@<%= response.latitude %>,<%= response.longitude %>,15.39z'">Visit on Google maps</button>
+
+        <h2>
+            Additional information
+        </h2>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Org: ', valueName: 'org'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'AS: ', valueName: 'as'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Cellular: ', valueName: 'mobile'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Proxy/VPN/TOR: ', valueName: 'proxy'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'Hosting: ', valueName: 'hosting'}) %>
+        <%- include('_resp_fields_fused', {fieldTitle: 'ISP: ', valueName: 'isp', useMb: 'mb-4'}) %>
+
+
+        <h2 class="mt-4">
+            Providers used
+        </h2>
+        <% for (var key in providers) { %> 
+            <%- include('_resp_provider_fields', {fieldTitle: 'Provider: ', fieldValue: providers[key].name, clickableLocalLink: '/providers/' + providers[key].slug, date: providers[key].date, rating: 'X/10'}) %>
+        <% } %> 
+
+    </div>
+
+</body>
+</html>

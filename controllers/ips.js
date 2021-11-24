@@ -76,20 +76,49 @@ const makeRequestController = (req, res) => {
     res.render('requests/makeRequest.ejs', { siteTitle: 'New request'})
 }
 
-const showFilteredResponse = async (req, res) => {
-    console.log(`checkujeme filter pre ${req.params.ipRequested}`)
-
+/* this needs to contain fused data and providers array, low chance of some fields being empty */
+const showFusedResponse = async (req, res) => {
+    /* make sure at least one response is found */
     const response = await responseData.findOne({ ipRequested : req.params.ipRequested })
 
     if (response == null)
         res.redirect(`${configuration.WWW_ROOT}`)
 
-    const provider = await locationProvider.findById(response.provider)
+    /* get all providers */
+    const providers = await locationProvider.find()
     
-    // this whole thing is Temporary!
-    res.render('requests/showResponse.ejs', {response: response, provider: provider, siteTitle: 'Fused Response'})
+    // create shortened json to send to frontend 
+    var customizedProviders = {}
+
+    for (var i in providers) 
+    {
+        var item = { name: providers[i].name, date: response.addedAt, slug: providers[i].slug, _id: providers[i]._id }
+
+        var dataForThisProvider = await responseData.findOne({ ipRequested: req.params.ipRequested, provider: providers[i]._id })
+        
+        if (typeof dataForThisProvider === 'undefined')
+            continue
+
+        item.data = dataForThisProvider
+
+        customizedProviders[providers[i]._id] = item
+    }
+
+    console.log(customizedProviders + '\nhaha\n')
+    
+    for(var a in customizedProviders) {
+        console.log(a)
+        console.log(customizedProviders[a])
+        console.log('ende\n')
+    }
+
+    res.render('requests/showFusedResponse.ejs', {
+        response: response, // only used for general info
+        providers: customizedProviders, 
+        siteTitle: 'Fused Response'})
 }
 
+/* specific response from specific provider, some fields will surely be empty */
 const showResponse = async (req, res) => {
     const response = await responseData.findById(req.params.id)
 
@@ -231,7 +260,7 @@ function extractFromXML(extractedData, originalResponse, provider) {
 }
 
 module.exports = {
-    showAllIps, showFilteredIps, makeRequestController, showFilteredResponse, showResponse,
+    showAllIps, showFilteredIps, makeRequestController, showFusedResponse, showResponse,
     showTestMap,
     acceptRequestController,
     deleteExistingResponse

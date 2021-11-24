@@ -20,6 +20,7 @@
             <p>
                 Data returned for given IP address. Please mind, that this IP address might belong to the VPN,
                 ISP or a Onion Router node. This is especially true for trained personnel performing cyber-attacks.
+                Some fields may be empty, because not all services provide each kind of information.
             </p>
         </div>
 
@@ -34,31 +35,40 @@
         <button type="button" class="btn btn-primary btn-lg btn-block mb-4" onclick="location.href='<%= targetMapUrl %>'">WebGL Earth with target positioned on it</button>
 
         <!-- here some details from response -->
+        <h2>
+            General information
+        </h2>
         <%- include('_resp_fields', {fieldTitle: 'Requested IP: ', fieldValue: response.ipRequested}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Type: ', fieldValue: response.type === 0 ? 'IPv4' : 'IPv6'}) %>
         <div class="row">
             <div class="col-md-3">
-                <!-- <div class="col-form-label" >Received at: </div> -->
                 <h3>
                     <small class="text-muted" >Received at: </small>
                 </h3>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <h3>
                     <input value="<%= response.addedAt %>"  type="text" class="form-control" readonly >
                 </h3>
             </div>
         </div>
+
         <%- include('_resp_fields', {fieldTitle: 'Provider: ', fieldValue: provider.name, clickableLocalLink: '/providers/' + provider.slug}) %>
-        <%- include('_resp_fields', {fieldTitle: 'Reply state: ', fieldValue: response.success === 0 ? 'Failed' : 'Succesfull'}) %>
-        <%- include('_resp_fields', {fieldTitle: 'Type: ', fieldValue: response.type === 0 ? 'IPv4' : 'IPv6', useMb: 'mb-4'}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Reply state: ', fieldValue: response.success === 0 ? 'Failed' : 'Succesfull', useMb: 'mb-4'}) %>
+        
+        
+        <h2>
+            Geolocation
+        </h2>
         <%- include('_resp_fields', {fieldTitle: 'Continent: ', fieldValue: response.continent}) %>
         <%- include('_resp_fields', {fieldTitle: 'Country: ', fieldValue: response.country}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Country\'s currency: ', fieldValue: response.currency}) %>
         <%- include('_resp_fields', {fieldTitle: 'Country code: ', fieldValue: response.countryCode}) %>
-        <%- include('_resp_fields', {fieldTitle: 'Country Flag: ', fieldValue: response.countryFlag, image: {src: response.countryFlag, alt: 'Image belonging to the resulting country. If nothing shows up, service didn\'t provide link to one.', width: '220', height: '165'} }) %>
         <%- include('_resp_fields', {fieldTitle: 'Region: ', fieldValue: response.region}) %>
         <%- include('_resp_fields', {fieldTitle: 'City: ', fieldValue: response.city}) %>
         <%- include('_resp_fields', {fieldTitle: 'Latitude: ', fieldValue: response.latitude}) %>
         <%- include('_resp_fields', {fieldTitle: 'Longitude: ', fieldValue: response.longitude}) %>
+        <%- include('_resp_fields', {fieldTitle: 'Country Flag: ', fieldValue: response.countryFlag, image: {src: response.countryFlag, alt: 'Image belonging to the resulting country. If nothing shows up, service didn\'t provide link to one.', width: '220', height: '165'} }) %>
         <div class="bd-callout bd-callout-info">
             <p>
                 The location (region, city and GPS coordinates might correspon to servers of the ISP).
@@ -68,14 +78,15 @@
         <!-- give here maps.google url with longitude and latitude as well -->
         <button type="button" class="btn btn-primary btn-lg btn-block mb-4" onclick="location.href='https://www.google.com/maps/@<%= response.latitude %>,<%= response.longitude %>,15.39z'">Visit on Google maps</button>
 
+        <h2>
+            Additional information
+        </h2>
         <%- include('_resp_fields', {fieldTitle: 'Org: ', fieldValue: response.org}) %>
         <%- include('_resp_fields', {fieldTitle: 'AS: ', fieldValue: response.as}) %>
         <%- include('_resp_fields', {fieldTitle: 'Cellular: ', fieldValue: response.mobile}) %>
         <%- include('_resp_fields', {fieldTitle: 'Proxy/VPN/TOR: ', fieldValue: response.proxy}) %>
         <%- include('_resp_fields', {fieldTitle: 'Hosting: ', fieldValue: response.hosting}) %>
         <%- include('_resp_fields', {fieldTitle: 'ISP: ', fieldValue: response.isp, useMb: 'mb-4'}) %>
-        
-        <%- include('_resp_fields', {fieldTitle: 'Currency: ', fieldValue: response.currency}) %>
     </div>
 
     <!-- toto sa zobrazi po nacitani stranky a hladam v tom parameter changed, ktory sa posle len po uspesnom ulozeni a redirecte na toto -->
