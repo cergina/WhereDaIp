@@ -11,10 +11,12 @@ const ipsRequests = require('./routes/requests/ips')
 const bodyParser = require('body-parser')
 const { logDebug, logInfo, logRaw } = require('./services/helper.js')
 
-// if mongodb does not work, stop npm and do these steps //
-// Go to Control Panel and click on Administrative Tools.
-// Double click on Services. A new window opens up.
+// If during attempt to visit a website infinite loading is experienced 
+// MongoDB is usually stopped. Kill running npm with Ctrl+C => Y => Enter in the console
+// Go to Control Panel, Change view category to large icons, click on Administrative Tools.
+// Double click on Services. New window opens up.
 // Search MongoDB.exe. Right click on it and select Start.
+// Start service again, should work
 
 
 mongoose.connect('mongodb://localhost/wdip')
