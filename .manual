@@ -1,0 +1,36 @@
+####################################
+# This should not be in .gitignore #
+####################################
+
+# System installation  (may breake package-lock)
+npm install
+
+# Use only dependencies in package-lock
+npm ci
+
+# System start
+npm run devStart
+
+#################
+# ERROR SOLVING #
+#################
+
+# Error 0 (database)
+# 
+# = What happens
+#   Entry page works, but page that communicates with DB freezes
+#   
+# = What to do
+#   1. Kill the 'npm process' with 'ctrl+c', confirm with 'Y' -> Enter
+#   2. WindowsControlPanel / Change view category to large icons
+#   3. Open Administrative tools
+#   4. Double click on 'services' (new window opens up)
+#   5. Look for MongoDB.exe | RMB on it | selecte 'start'
+#   6. service is started, should work now
+
+# Error 1 (unknown yet)
+#
+# = What happens
+#
+# = What to do
+#

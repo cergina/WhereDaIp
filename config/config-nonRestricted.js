@@ -25,16 +25,27 @@ configuration.PASS=process.env.PASS         // set-up your own password, so no o
 configuration.FAKEIPV6=process.env.FAKEIPV6 // example IPv6 address used for fake requests (if enabled)
 configuration.FAKEIPV4=process.env.FAKEIPV4 // example IPv6 address used for fake requests (if enabled)
 
+configuration.PORT=process.env.PORT
+configuration.USER=process.env.USER
+
+// Check for Errors and SET defaults
+if (typeof configuration.USER != 'string' || configuration.USER.length < 1) {
+        configuration.USER="Mr. X"
+}
+if (typeof configuration.PORT != 'number' || configuration.PORT < 0 || configuration.PORT > 65536) {
+        configuration.PORT=13000
+}
+if (typeof configuration.SKUSOBNA != 'string' || configuration.SKUSOBNA.length < 1) {
+        configuration.SKUSOBNA="Make sure a file '.env' is created according to instructions"
+}
+
 ////////////////////////////////////////////////////////////////////////
 ////////////////// AVAILABLE FOR PUBLIC ////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
+// Working state
 configuration.PRODUCTION = false    // Disable INFO level msg logging
 configuration.DEBUG = true          // Enable DEBUG level msg logging
-
-configuration.PORT=13000            // this will be moved into .env in future
-configuration.USER="Maroš Čergeť"   // this will be moved into .env in future
-
 
 // Site tree used for navigation URLs
 configuration.WWW_ROOT = "/"
