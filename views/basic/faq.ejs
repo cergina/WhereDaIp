@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+    <div class="container">
+         
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Frequently Asked Questions</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+                </ol>
+              </nav>
+        </div>
+
+        <!-- start test -->
+        <div class="accordion mb-4" id="accordionExample">
+            <!-- one -->
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseOne" id="1" onclick="myFunction(this.id)">
+                    FAQ 1
+                  </button>
+                </h5>
+              </div>
+              <div class="collapse" id="collapse-1">
+                <div class="card-body">
+                  Example 1
+                </div>
+              </div>
+            </div>
+            <!-- two -->
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo" id="2" onclick="myFunction(this.id)">
+                    FAQ 2
+                  </button>
+                </h5>
+              </div>
+              <div class="collapse" id="collapse-2">
+                <div class="card-body">
+                  Example 2
+                </div>
+              </div>
+            </div>
+            <!-- three -->
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseThree" id="3" onclick="myFunction(this.id)">
+                    FAQ 3
+                  </button>
+                </h5>
+              </div>
+              <div class="collapse" id="collapse-3">
+                <div class="card-body">
+                  Example 3
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- end test -->
+
+        <a href="https://github.com/cergina/WhereDaIp" class="btn btn-primary">GitHub repo</a>
+    </div>
+</body>
+
+<script>
+    function myFunction(clicked_id) {
+        var element = document.getElementById('collapse-' + clicked_id);
+        
+        if (element.classList.contains("show"))
+            element.classList.remove("show");
+        else
+            element.classList.add("show");
+    }
+</script>
+</html>

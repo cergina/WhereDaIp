@@ -39,6 +39,7 @@ const listener = app.listen(configuration.PORT, () => {
     logRaw(`${(new Date()).toLocaleTimeString()} -- ${(new Date()).toLocaleDateString()}`)
     logRaw(`Config file test: ${configuration.SKUSOBNA}`)
     logRaw(`Server on port: ${configuration.PORT}`)
+    configuration.STARTEDAT=`${(new Date()).toLocaleDateString()} @ ${(new Date()).toLocaleTimeString()}`
 
     logRaw(`\n\n-------------------------\n\n`)
 })

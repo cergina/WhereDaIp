@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+
+    <div class="container">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">State of application</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">State</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Running since: <%= startedAt %>
+            </p>
+        </div>
+        <div class="bd-callout bd-callout-danger">
+            <p>
+                No information about running jobs
+            </p>
+        </div>
+        <div class="bd-callout bd-callout-danger">
+            <p>
+                Unknown whether present GeoAPIs cover necessary fields
+            </p>
+        </div>
+        <div class="bd-callout bd-callout-warning">
+            <p>
+                Probably ready, but at risk of overfilling max requests
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
+
+

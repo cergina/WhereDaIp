@@ -15,12 +15,22 @@
         </div>
         <div class="bd-callout bd-callout-info">
             <p>
-                Some welcome info to system.
+                Running since: <%= startedAt %>
             </p>
         </div>
 
+        <a href="/state" class="btn btn-info">Application status</a>
+        <a href="/geolocation" class="btn btn-primary">Geolocation</a>
+        <a href="/covert" class="btn btn-secondary">Covert module</a>
+        <a href="/suspicious" class="btn btn-secondary">Suspicious module</a>
+        <a href="/presentation" class="btn btn-danger">Results</a>
+        <a href="/faq" class="btn btn-warning">FAQ</a>
+
+        <br>
+        Old layout buttons under <br>
         <a href="/providers" class="btn btn-info">List of GeoDB providers in system</a>
         <a href="/requests" class="btn btn-info">List of IP responses in Database</a>
+        <a href="/state" class="btn btn-info">Application status</a>
         <a href="/api" class="btn btn-info">How to use API</a>
     </div>
 

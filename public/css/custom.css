@@ -4,6 +4,8 @@
 }
 
 body {
+    /* background: rgb(205,99,33);
+    background: radial-gradient(circle, rgb(206, 134, 28) 46%, rgba(46,29,0,0.9969402067467612) 100%); */
     background: linear-gradient(to right, rgb(255, 167, 35), rgb(255, 97, 35));
     display: flex;
     justify-content: center;

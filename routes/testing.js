@@ -8,4 +8,4 @@ router.post('/test', controller.testFunction)
 router.post('/test-content-type', controller.testFunction2)
 
 
-module.exports = router
+module.exports = router 

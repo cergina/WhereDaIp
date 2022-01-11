@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+
+    <div class="container">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Presentation module</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Presentation</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info mb-4">
+            <p>
+                Not only does this module  group outputs (individual/fused) of geolocation, it shows statistics 
+                in form of graphs and maps in form of Earth globe, where specific points of interest are shown.
+            </p>
+        </div>
+
+        <a href="/requests" class="btn btn-info">Individual outputs</a>
+        <a href="/requests/filtered" class="btn btn-info">Fused outputs</a>
+        <a href="/graphs" class="btn btn-dark">Graphs</a>
+        <a href="/maps" class="btn btn-primary">Maps</a>
+    </div>
+
+</body>
+</html>
+
+
