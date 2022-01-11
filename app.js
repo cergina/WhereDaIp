@@ -9,6 +9,7 @@ const path = require('path')
 const testingRoutes = require('./routes/testing')
 const generalRoutes = require('./routes/general')
 const providersRoutes = require('./routes/providers/providers')
+const covertRoutes = require('./routes/covert/covert')
 const ipsRequests = require('./routes/requests/ips')
 const bodyParser = require('body-parser')
 const { logDebug, logInfo, logRaw } = require('./services/helper.js')
@@ -29,11 +30,14 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs')
 app.use(express.urlencoded( {extended: false} ))
 
+// register routers
 app.use(`${configuration.WWW_ROOT}`, testingRoutes)
 app.use(`${configuration.WWW_ROOT}`, generalRoutes)
 app.use(`${configuration.WWW_GEODB_HOME}`, providersRoutes)
+app.use(`${configuration.WWW_COVER_HOME}`, covertRoutes)
 app.use(`${configuration.WWW_REQ_HOME}`, ipsRequests)
 
+// put on port
 const listener = app.listen(configuration.PORT, () => {
     logRaw(`\n\n-------------------------\n\n`)
     logRaw(`${(new Date()).toLocaleTimeString()} -- ${(new Date()).toLocaleDateString()}`)

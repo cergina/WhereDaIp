@@ -27,11 +27,11 @@ function logError(textToLog) {
 }
 
 function log(title, textToLog) {
-    console.log(`-- ${title} --`)
+    console.log(`\n-- ${title} --`)
     console.log(`${(new Date()).toLocaleTimeString()} -- ${(new Date()).toLocaleDateString()}`)
     console.log(``)
     console.log('  ' + textToLog)
-    console.log(`$$`)
+    console.log(`$$ END OF LOG $$\n`)
 }
 
 function yyyymmdd() {

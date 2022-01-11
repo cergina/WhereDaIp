@@ -2,7 +2,7 @@
 const express = require('express')
 
 const router = express.Router()
-const controller = require('../../controllers/ips')
+const controller = require('../../controllers/ipsCtrl')
 
 // get
 router.get('/', controller.showAllIps)

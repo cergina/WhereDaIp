@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body onload="afterLoaded()">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    <div class="container">
+        <div class="alert alert-info">
+            <!-- <h1 class="mb-4 display-4">Name: </h1> -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/covert">Covert</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                List of IP addresses from this source are on the bottom of this page
+            </p>
+        </div>
+
+        <!-- this is to output raw html instead of converting to String -->
+        <form action="/covert/edit/<%= source.slug %> " method="POST">
+            <%- include('_form_fields_covert_list') %>
+        </form>
+
+        <!-- IP address list -->
+        <div class="bd-callout bd-callout-info mt-4">
+            <p>
+                In the following part you can see if list was already obtained and is in 
+                the system or you can get it manually or if you wish clear the whole list.
+            </p>
+        </div>
+        <!-- akcne tlacidla -->
+        <form action="/covert/obtain/<%= source.slug %> " method="POST">
+          <button type="submit" class="btn btn-success mb-4">Obtain list</button>
+        </form>
+        <form action="/covert/clear/<%= source.slug %> " method="POST">
+          <button type="submit" class="btn btn-danger mb-4">Reset list</button>
+        </form>
+
+
+        <!-- test tabulka START -->
+        <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th class="th-sm">IP Address</th>
+                <th class="th-sm">Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% source.list.forEach( address => { %>
+                <tr>
+                  <td><%= address.ip %> </td>
+                  <td><%= address.type === 0 ? 'IPv4' : 'IPv6' %> </td>
+                </tr>
+              <% }) %> 
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>IP Address</th>
+                <th>Type</th>
+              </tr>
+            </tfoot>
+        </table>
+        <!-- test tabulka END -->
+    </div>
+
+    <!-- toto sa zobrazi po nacitani stranky a hladam v tom parameter changed, ktory sa posle len po uspesnom ulozeni a redirecte na toto -->
+    <script>
+        function afterLoaded() {
+            var queryString = window.location.search
+            var urlParams = new URLSearchParams(queryString)
+
+            if (urlParams.get('changed') == '1') {
+                swal({icon: 'success', title: 'Saved!', button: false, timer: 1500})
+            }
+        }
+    </script>
+</body>
+</html>

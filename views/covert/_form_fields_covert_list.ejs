@@ -1,0 +1,136 @@
+
+<h5 class="display-5 mt-4">Information relevant to this system only</h5>
+
+<!-- System notes -->
+<div class="form-group">
+    <div class="row">
+        <!-- label -->
+        <div class="col-md-3">
+            <label class="col-form-label" for="name">Name of the service in this system *</label>
+        </div>
+        <!-- value -->
+        <div class="col-md-4">
+            <input required value="<%= source.name %>" type="text" name="name" id="name" class="form-control">        
+        </div>
+
+        <!-- Test switch (Enable source) -->
+        <div class="col-md-2 custom-control custom-switch align-self-center justify-content-center">
+            <input type="checkbox" class="custom-control-input" name="source_enabled" id="source_enabled" <%= source.isActive ? "checked" : "" %>>
+            <label class="custom-control-label" for="source_enabled">Enable source?</label>
+        </div>
+        
+    </div>
+</div>
+
+<!-- dropdowny -->
+<div class="form-group">
+    <div class="row">
+        <!-- miesto pre dropdown-->
+        <div class="col-md-4">
+            <label class="col-form-label" for="source_type">List type</label>
+            
+            <select class="form-control" name="source_type" id="source_type">
+                <% var options = ["VPN servers", "TOR exit nodes"] %>
+                <% var selected_method = source.type %>
+                <% for(var i = 0; i < options.length; i++) { %>
+                    <% var selected = (selected_method == i) ? 'selected' : '' %> 
+                    <option  <%= selected %>  value='<%= i %>'><%= options[i] %></option>
+                <% } %>
+            </select>
+        </div>
+    </div>
+    <small class="form-text text-muted mb-4">Name of this source will be used in case of VPN servers as VPN service name</small>
+</div>
+
+
+<div class="form-group">
+    <label for="description">Your own description and notes on the source</label>
+    <textarea name="description" id="description" class="form-control"><%= source.description %></textarea>
+</div>
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="added_date">Date added (if new, current date shows up)</label>
+        </div>
+        <div class="col-md-6">
+            <label for="last_edit_at">Last edit at (if new, current date shows up)</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <input disabled value="<%= source.addedAt %>" type="text" name="added_date" id="added_date" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <input disabled value="<%= source.lastEditAt %>" type="text" name="last_edit_at" id="last_edit_at" class="form-control">
+        </div>
+    </div>
+</div>
+
+<div class="bd-callout bd-callout-info">
+    <p>
+        These are information, necessary for a succesful request and reply.
+    </p>
+</div>
+<h5 class="display-5 mt-4">Source's request fields (see service's documentation)</h5>
+<!-- informacie potrebne k uspesnemu odoslaniu poziadavky -->
+
+<div class="form-group">
+    <label for="api_url">Source's url *</label>
+    <input required value="<%= source.baseUrl %>" placeholder="http://serviceurl.com/tor_exit_nodes_list/" type="text" name="api_url" id="api_url" class="form-control">
+    <small class="form-text text-muted mb-4">See in documentation. The url has to comply with rules set in Request method dropdown</small>
+</div>
+
+
+
+<!-- dropdowny -->
+<div class="form-group">
+    <div class="row">
+        <!-- miesto pre dropdown-->
+        <div class="col-md-4">
+            <label class="col-form-label" for="api_method">Request method</label>
+            
+            <select class="form-control" name="api_method" id="api_method">
+                <% var options = ["GET= url"] %>
+                <% var selected_method = source.restMethod %>
+                <% for(var i = 0; i < options.length; i++) { %>
+                    <% var selected = (selected_method == i) ? 'selected' : '' %> 
+                    <option  <%= selected %>  value='<%= i %>'><%= options[i] %></option>
+                <% } %>
+            </select>
+        </div>
+    </div>
+    <small class="form-text text-muted mb-4">Mind that incorrect set-up of this will lead to non working requests</small>
+</div>
+
+
+
+<div class="bd-callout bd-callout-info mt-4">
+    <p>
+        In the following part you specify what kind of response is received from the source.
+    </p>
+</div>
+<h5 class="display-5 mt-4">Service's output (see service's documentation - if present)</h5>
+<!-- to co budeme spracovavat ako odpoved od sluzby -->
+
+<div class="form-group">
+    <label for="response_format">Response format type</label>
+
+    <select name="response_format" id="response_format" class="form-control">
+        <% var options = ["PLAIN-TEXT"] %>
+        <% var selected_response_format = source.format %>
+        <% for(var i = 0; i < options.length; i++) { %>
+            <% var selected = (selected_response_format == i) ? 'selected' : '' %> 
+            <option  <%= selected %>  value='<%= i %>'><%= options[i] %></option>
+        <% } %>
+    </select>
+    <small class="form-text text-muted mb-4">Plaintext divided by \n\r only</small>
+</div>
+
+
+
+<small class="form-text text-muted mb-4">Inputs marked with * are required.</small>
+
+<!-- akcne tlacidla -->
+<a href="/" class="btn btn-secondary">Cancel</a>
+<button type="submit" class="btn btn-primary">Save</button>

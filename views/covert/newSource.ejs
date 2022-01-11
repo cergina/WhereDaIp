@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+    <div class="container">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Add new source</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/covert">Covert</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">New</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Here it's possible to add a new source that provides list of IP addresses that may be part 
+                of TOR exit nodes or VPN provider.
+            </p>
+        </div>
+         
+        <form action="/covert" method="POST">
+            <!-- this is to output raw html instead of conerting to String -->
+            <%- include('_form_fields_covert_list') %>
+        </form>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+
+    <div class="container">
+        <!-- navbar + info  -->
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Covert module</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Covert</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info mb-4">
+            <p>
+                This module encapsulates functionality over VPN lists and TOR exit nodes lists.
+                You can add sources (URLs) of this kind of lists here, see tem, delete them.
+                They will ultimately be used during geolocation.
+            </p>
+        </div>
+
+        <!-- akcne tlacidlo -->
+        <a href="/covert/new" class="btn btn-success">Add New Source</a>
+
+
+        <!-- zoznam -->
+        <% sources.forEach(source => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <!-- ci je aktivny -->
+                    <div class="float-right"><span class="badge badge-primary badge-pill"><%= source.isActive == 1 ? 'ACTIVE' : 'DISABLED' %> </span></div>
+                    <!-- nadpis -->
+                    <h4 class="card-title"><%= source.name %></h4>
+                    <!-- tenke sede pismo -->
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= source.addedAt.toLocaleString() %>
+                    </div>
+                    <!-- skrateny popis -->
+                    <div class="card-text mb-2"><%= source.description %></div>
+                    <!-- tlacidla -->
+                    <a href="covert/<%= source.slug %>" class="btn btn-primary">Read More</a>
+                    <form action="/covert/delete/<%= source.id %>?_method=DELETE" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %> 
+    </div>
+
+</body>
+</html>
+
+ 

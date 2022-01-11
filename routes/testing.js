@@ -2,7 +2,7 @@
 const express = require('express')
 
 const router = express.Router()
-const controller = require('../controllers/testing')
+const controller = require('../controllers/testingCtrl')
 
 router.post('/test', controller.testFunction)
 router.post('/test-content-type', controller.testFunction2)

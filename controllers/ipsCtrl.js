@@ -4,7 +4,7 @@
 const configuration = require('../config/config-nonRestricted.js')
 const responseData = require("../models/responseData")
 const net = require('net')
-const { getAllUsableProviders } = require('./providers.js')
+const { getAllUsableProviders } = require('./providersCtrl.js')
 const { logDebug, logInfo, logError, yyyymmdd } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
@@ -13,7 +13,19 @@ const { request } = require('express')
 
 // GETs
 const showAllIps = async (req, res) => {
-    const requests = await responseData.find().sort({ addedAt: 'desc'})
+    const requests = await responseData.find({}, {
+        "success": 1,
+        "ipRequested": 1,
+        "addedAt": 1,
+        "city": 1,
+        "country": 1,
+        "provider": 1
+    }).sort({ addedAt: 'desc'})
+
+    // not optimized
+    //const requests = await responseData.find().sort({ addedAt: 'desc'})
+    
+    
     const providers = await locationProvider.find()
 
     // create shortened json to send to frontend 
@@ -31,7 +43,18 @@ const showAllIps = async (req, res) => {
 }
 
 const showFilteredIps = async (req, res) => {
-    const requests = await responseData.find().sort({ addedAt: 'desc'})
+    const requests = await responseData.find({}, {
+        "success": 1,
+        "ipRequested": 1,
+        "addedAt": 1,
+        "city": 1,
+        "country": 1,
+        "provider": 1
+    }).sort({ addedAt: 'desc'})
+
+    // not optimized
+    // const requests = await responseData.find().sort({ addedAt: 'desc'})
+    
     const providers = await locationProvider.find()
     
     // create shortened json to send to frontend 
@@ -124,13 +147,13 @@ const showFusedResponse = async (req, res) => {
         customizedProviders[providers[i]._id] = item
     }
 
-    console.log(customizedProviders + '\nhaha\n')
+    // console.log(customizedProviders + '\nhaha\n')
     
-    for(var a in customizedProviders) {
-        console.log(a)
-        console.log(customizedProviders[a])
-        console.log('ende\n')
-    }
+    // for(var a in customizedProviders) {
+    //     console.log(a)
+    //     console.log(customizedProviders[a])
+    //     console.log('ende\n')
+    // }
 
     res.render('requests/showFusedResponse.ejs', {
         response: response, // only used for general info
@@ -154,9 +177,7 @@ const showResponse = async (req, res) => {
 // POSTs
 // show file explorer, choose location, save
 const extractResponses = async (req, res) => {
-    console.log("extraction attempt")
-
-
+    logError("Extraction not implemented yet")
 }
 
 const deleteExistingResponse = async (req, res) => {
@@ -189,18 +210,18 @@ const acceptRequestController = async (req, res) => {
 
         // for every address send
         addresses.forEach(address => {
-            console.log(providers)
+            logDebug(providers)
             providers.forEach(provider => {
                 sendPromise(address, provider) // this one is real
                 //sendFakePromise(address, provider)
                     .then(async res => {
-                        console.log(res)
+                        logDebug(res)
 
                         let extractedData = extractDataFromResponse(address, res, provider)
 
                         await extractedData.save()
                     })
-                    .catch(err => console.log(err))
+                    .catch(err => logError(err))
             })
         })
 
@@ -221,7 +242,6 @@ function extractDataFromResponse(address, originalResponse, provider) {
 
     // console.log('kluce su')
     // console.log(Object.keys(originalResponse))
-
     //console.log(provider.response.continentPath)
 
     // success, type, country, city, latitude, longitude, isp is necessary

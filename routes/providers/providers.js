@@ -1,6 +1,6 @@
 // route is route
 const express = require('express')
-const controller = require('../../controllers/providers')
+const controller = require('../../controllers/providersCtrl')
 const router = express.Router()
 
 //

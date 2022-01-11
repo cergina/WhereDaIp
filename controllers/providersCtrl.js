@@ -11,13 +11,23 @@ async function getAllUsableProviders() {
 
     var providers = await locationProvider.find({ isActive: 1})
     
-    return providers
+    return providers 
 }
 
 
 // for GETs
 const showAllProviders = async (req, res) => {
-    const providers = await locationProvider.find().sort({ addedAt: 'desc'})
+    const providers = await locationProvider.find({}, {
+        "isActive": 1,
+        "name": 1,
+        "addedAt": 1,
+        "description": 1,
+        "slug": 1
+    }).sort({ addedAt: 'desc'})
+    
+    // is not slow but optimalization is better
+    //const providers = await locationProvider.find().sort({ addedAt: 'desc'})
+    
     res.render('providers/fullList.ejs', { providers: providers, siteTitle: 'GeoDB provider list' })
 }
 
@@ -35,7 +45,7 @@ const editProvider = async (req, res) => {
 }
 
 const downloadProviders = async (req, res) => {
-    console.log('Downloading providers')
+    logInfo('Downloading providers')
 
     // make sure to know when was it downloaded
     const date = new Date()
