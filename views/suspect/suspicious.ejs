@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+
+    <div class="container">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Suspicions module</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Suspicious</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info mb-4">
+            <p>
+                This module covers functionality over addition of IP address lists to the system.
+                These lists should have a tag representing, what kind of activity are they related
+                to. They will be used during geolocation of other IPs, but they can be also used as 
+                primary source of investigation. The default view of this page are tags in use.
+            </p>
+        </div>
+
+        <h5 class="display-5 mt-4">Tags in system</h5>
+        <div class="bd-callout bd-callout-warning mb-4">
+            <p>Gathered from lists in the database.</p>
+        </div>
+
+        <!-- akcne tlacidlo -->
+        <a href="/suspect/providers" class="btn btn-primary mb-4">Providers</a>
+
+        <!-- zoznam -->
+        <!-- test tabulka START -->
+        <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+            <thead>
+              <tr>
+                <th class="th-sm">Name</th>
+                <th class="th-sm">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% tags.forEach( tag => { %>
+                <tr>
+                  <td><%= tag.name %> </td>
+                  <td><%= tag.count %> </td>
+                </tr>
+              <% }) %> 
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Name</th>
+                <th>Count</th>
+              </tr>
+            </tfoot>
+        </table>
+        <!-- test tabulka END -->
+
+    </div>
+</body>
+</html>
+
+

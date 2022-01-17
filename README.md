@@ -63,8 +63,6 @@ Run instructions
 
 ## Code explanation
 
-/api: [dunno yet]
-
 /config: environment variables and files init
 
 /controllers: separated logic corresponding to routerss

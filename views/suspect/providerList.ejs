@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+
+    <div class="container">
+        <!-- navbar + info  -->
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Providers</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/suspect">Suspicious</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Providers</li>
+                </ol>
+              </nav>
+        </div>
+        <div class="bd-callout bd-callout-info mb-4">
+            <p>
+                List of providers/lists down here and a button to add a new provider/list of suspicious
+                IPs manually.
+            </p>
+        </div> 
+
+        <!-- akcne tlacidlo -->
+        <a href="/suspect/providers/new" class="btn btn-success">Add New Source</a>
+        <!-- <a href="/suspect/providers/update" class="btn btn-success">Update sources</a> -->
+        <a href="/suspect/list/add" class="btn btn-success">Manually add list</a>
+
+
+        <!-- zoznam -->
+        
+    </div>
+
+</body>
+</html>
+
+ 

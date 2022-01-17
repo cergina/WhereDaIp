@@ -7,6 +7,8 @@ const { sendPromise } = require('../services/simpleCommunicator.js')
 const coverSource = require("../models/coverSource")
 const net = require('net')
 
+const baseViewFolder = `${configuration.WWW_COVER_HOME}`
+
 // for Internal
 async function getAllUsableSources() {
 
@@ -30,11 +32,11 @@ const showAllSources = async (req, res) => {
     // slow returns everything
     //const sources = await coverSource.find().sort({ addedAt: 'desc'})
     
-    res.render('covert/covert.ejs', { sources: sources, siteTitle: 'Cover Sources list' })
+    res.render(`${baseViewFolder.slice(1)}` + '/covert.ejs', { sources: sources, siteTitle: 'Cover Sources list' })
 }
 
 const newSource = (req, res) => {
-    res.render('covert/newSource.ejs', { source: new coverSource(), siteTitle: 'New source' })
+    res.render(`${baseViewFolder.slice(1)}` + '/newSource.ejs', { source: new coverSource(), siteTitle: 'New source' })
 }
 
 const editSource = async (req, res) => {
@@ -43,7 +45,7 @@ const editSource = async (req, res) => {
     if (source == null)
         res.redirect(`${configuration.WWW_ROOT}`)
 
-    res.render('covert/showSource.ejs', { source: source, siteTitle: 'Edit source' })
+    res.render(`${baseViewFolder.slice(1)}` + '/showSource.ejs', { source: source, siteTitle: 'Edit source' })
 }
 
 
@@ -107,7 +109,7 @@ const clearSourceList = async (req, res, next) => {
 
 const deleteExistingSource = async (req, res) => {
     await coverSource.findByIdAndDelete(req.params.id)
-    res.redirect(`${configuration.WWW_COVER_HOME}`)
+    res.redirect(`${baseViewFolder}`)
 }
 
 // helper - znovupouzitelnost
@@ -135,9 +137,9 @@ function saveAndRedirect(viewName) {
         try {
             source = await source.save()
             logInfo(`Successfull Creating/Editing ${source.name}`)
-            res.redirect(`${configuration.WWW_COVER_HOME}/${source.slug}/?changed=1`)
+            res.redirect(`${baseViewFolder}` + `/${source.slug}/?changed=1`)
         } catch (e) {
-            res.render(`${configuration.WWW_COVER_HOME}/${viewName}`, { source: source })
+            res.render(`${baseViewFolder.slice(1)}` + `/${viewName}`, { source: source })
         }
     } 
 }
@@ -156,9 +158,9 @@ function appendAndRedirect(viewName) {
         try {
             source = await source.save()
             logInfo(`Successfully changed list size of source ${source.name} is ${source.list.length}`)
-            res.redirect(`${configuration.WWW_COVER_HOME}/${source.slug}/?changed=1`)
+            res.redirect(`${baseViewFolder}` + `/${source.slug}/?changed=1`)
         } catch (e) {
-            res.render(`${configuration.WWW_COVER_HOME}/${viewName}`, { source: source })
+            res.render(`${baseViewFolder.slice(1)}` + `/${viewName}`, { source: source })
         }
     } 
 }
