@@ -30,7 +30,27 @@
 
 
         <!-- zoznam -->
-        
+        <% providers.forEach(provider => { %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <!-- ci je aktivny -->
+                    <div class="float-right"><span class="badge badge-primary badge-pill"><%= provider.isActive == 1 ? 'ACTIVE' : 'DISABLED' %> </span></div>
+                    <!-- nadpis -->
+                    <h4 class="card-title"><%= provider.name %></h4>
+                    <!-- tenke sede pismo -->
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= provider.addedAt.toLocaleString() %>
+                    </div>
+                    <!-- skrateny popis -->
+                    <div class="card-text mb-2"><%= provider.description %></div>
+                    <!-- tlacidla -->
+                    <a href="/suspect/providers/<%= provider.slug %>" class="btn btn-primary">Read More</a>
+                    <form action="/suspect/providers/delete/<%= provider.slug %>?_method=DELETE" method="POST" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %> 
     </div>
 
 </body>

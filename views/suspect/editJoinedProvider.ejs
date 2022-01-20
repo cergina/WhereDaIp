@@ -8,22 +8,22 @@
     
     <div class="container">
         <div class="alert alert-info">
-            <h1 class="mb-4 display-4">Add new list</h1>
+            <h1 class="mb-4 display-4">Edit provider/list</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="/">Home</a></li>
                   <li class="breadcrumb-item"><a href="/suspect">Suspicious</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">New list</li>
+                  <li class="breadcrumb-item active" aria-current="page">Edit</li>
                 </ol>
               </nav>
         </div>
         <div class="bd-callout bd-callout-info">
             <p>
-                Add list of IPs manually and tag them.
+                Edit provider or a list you've entered previously.
             </p>
         </div>
          
-        <form action="/suspect/list" method="POST">
+        <form action="/suspect/edit/<%= provider.slug %>" method="POST">
             <!-- this is to output raw html instead of conerting to String -->
             <%- include('_form_fields_suspect_list') %>
         </form>

@@ -54,6 +54,7 @@ configuration.WWW_GEODB_NEW = "/providers/new"
 configuration.WWW_COVER_HOME = "/covert"
 configuration.WWW_COVER_NEW = "/covert/new"
 configuration.WWW_SUSPECT_HOME = "/suspect"
+configuration.WWW_SUSPECT_NEW = "/suspect/list/add"
 configuration.WWW_REQ_HOME = "/requests"
 configuration.WWW_REQ_NEW = "/requests/new"
 

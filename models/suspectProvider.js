@@ -15,15 +15,16 @@ const suspectProviderSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    // if URL is empty its manual added list
     baseUrl: {
         type: String,
-        required: true
+        required: false
     },
     restMethod: {
         type: Number,
         required: true,
         default: 0,
-        _options: ["GET= url"]
+        _options: ["GET= url", "NONE"]
     },
     isActive: {
         type: Number,
@@ -40,7 +41,23 @@ const suspectProviderSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
-    }
+    },
+    tagList: [{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'TagSchema'
+    }],
+    ipList: [
+        {
+            ip: String,
+            type: {
+                type: Number,
+                required: true,
+                default: 0,
+                _options: ["IPv4", "IPv6"]
+            },
+        }
+    ]
 })
 
 // anytime save, update, create and delete
