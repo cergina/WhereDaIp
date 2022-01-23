@@ -31,15 +31,15 @@ const showTags = async (req, res) => {
 } 
 
 const showAllProviders = async (req, res) => {
-    // dont return whole object
-    // const providers = await suspectProvider.find({}, {
-    //     "isActive": 1,
-    //     "name" : 1,
-    //     "addedAt": 1,
-    //     "description": 1,
-    //     "slug": 1
-    // }).sort({ addedAt: 'desc'})
-    const providers = await suspectProvider.find({}).sort({addetAt: 'desc'})
+    //dont return whole object
+    const providers = await suspectProvider.find({}, {
+        "isActive": 1,
+        "name" : 1,
+        "addedAt": 1,
+        "description": 1,
+        "slug": 1
+    }).sort({ addedAt: 'desc'})
+    //const providers = await suspectProvider.find({}).sort({addedAt: 'desc'})
 
     console.log(providers)
 
@@ -70,11 +70,18 @@ const editProvider = async (req, res) => {
     }
     provider.ipAddresses = text
 
-    res.render(`${baseViewFolder.slice(1)}` + '/editJoinedProvider.ejs', { provider: provider, siteTitle: 'Edit' })
+    // if list show list rest NONE else its GET then show provider
+    if (provider.restMethod === 1) {
+        res.render(`${baseViewFolder.slice(1)}` + '/editJoinedProvider.ejs', { provider: provider, siteTitle: 'Edit existing list' })
+    } else if (provider.restMethod === 0) {
+        res.render(`${baseViewFolder.slice(1)}` + '/editSourceProvider.ejs', { provider: provider, siteTitle: 'Edit existing provider' })
+    } else {
+        // TODO error not found
+    }
 }
 
 const deleteExistingSource = async (req, res) => {
-    console.log(req.params)
+    //console.log(req.params)
 
     let found = await suspectProvider.findOne({slug: req.params.slug})
     
@@ -108,7 +115,7 @@ const acceptNewList = async (req, res, next) => {
 
     // supports IPv4 and IPv6, but accepts only minimal like 192.168.0.1 and no 192.168.0.001
     if (! addresses.every( currentValue => net.isIP(currentValue))) {
-        res.redirect(`${configuration.WWW_SUSPECT_NEW}/?invalid=1`)
+        res.redirect(`${configuration.WWW_SUSPECT_LIST_NEW}/?invalid=1`)
         return
     }
     
@@ -127,16 +134,44 @@ const acceptNewList = async (req, res, next) => {
 
 
 const acceptEditExisting = async (req, res, next) => {
-    logInfo('list edit requested')
+    logInfo('edit requested')
+    
+    req.provider = await suspectProvider.findOne({ slug: req.params.slug })
 
-    var addresses = req.body.ip_addresses.split("\r\n").filter(item => item)
+    if (!req.provider)
+        return
+    
+
+    var addresses = []
+    
+    if (req.provider.restMethod === 1)
+        addresses = req.body.ip_addresses.split("\r\n").filter(item => item)
+    
     if (! addresses.every( currentValue => net.isIP(currentValue))) {
         res.redirect(`${configuration.WWW_SUSPECT_HOME}/providers/${req.params.slug}/?invalid=1`)
         return
     }
 
-    req.provider = await suspectProvider.findOne({ slug: req.params.slug })
     req.tmpAddresses = addresses
+
+    next()
+}
+
+const acceptNewProvider = async (req, res, next) => {
+    logInfo('provider addition requested')
+
+    req.provider = new suspectProvider()
+
+    // get  IP addresses IRL
+    req.tmpAddresses = []
+
+    // this is provider addition: baseUrl "html form id: api_url", restMethod: 0, isActive: yes
+    req.provider.isActive = 1
+    req.provider.baseUrl = req.body.api_url
+    req.provider.restMethod = 0
+
+
+    // bug: zmazanie listu co je provider nezmaze tagy
 
     next()
 }
@@ -270,6 +305,7 @@ module.exports = {
     getAllUsableProviders,
     showTags, showAllProviders, newSource, addNewList,
     editProvider,
-    acceptNewList, acceptEditExisting, deleteExistingSource, removeAllTagsTestOnly,
+    acceptNewList, acceptEditExisting, acceptNewProvider, 
+    deleteExistingSource, removeAllTagsTestOnly,
     saveAndRedirect
 }

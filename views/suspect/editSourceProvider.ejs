@@ -8,7 +8,7 @@
     
     <div class="container">
         <div class="alert alert-info">
-            <h1 class="mb-4 display-4">Edit list</h1>
+            <h1 class="mb-4 display-4">Edit provider</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -19,29 +19,19 @@
         </div>
         <div class="bd-callout bd-callout-info">
             <p>
-                Edit a list you've entered previously.
+                Edit provider you've entered previously.
             </p>
         </div>
          
         <form action="/suspect/edit/<%= provider.slug %> " method="POST">
             <!-- this is to output raw html instead of converting to String -->
-            <%- include('_form_fields_suspect_list') %>
+            <%- include('_form_fields_suspect_source') %>
         </form>
 
     </div>
 </body>
 
-<!-- toto sa zobrazi po nacitani stranky -->
-<script>
-    function afterLoaded() {
-        var queryString = window.location.search
-        var urlParams = new URLSearchParams(queryString)
 
-        if (urlParams.get('invalid') == '1') {
-            swal({icon: 'error', title: 'Ooops!', text: 'One or more IPs are invalid.', button: false, timer: 1500})
-        }
-    }
-</script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js" integrity="sha512-VvWznBcyBJK71YKEKDMpZ0pCVxjNuKwApp4zLF3ul+CiflQi6aIJR+aZCP/qWsoFBA28avL5T5HA+RE+zrGQYg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput-angular.min.js" integrity="sha512-KT0oYlhnDf0XQfjuCS/QIw4sjTHdkefv8rOJY5HHdNEZ6AmOh1DW/ZdSqpipe+2AEXym5D0khNu95Mtmw9VNKg==" crossorigin="anonymous"></script>

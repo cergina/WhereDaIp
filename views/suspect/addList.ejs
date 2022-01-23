@@ -8,11 +8,12 @@
     
     <div class="container">
         <div class="alert alert-info">
-            <h1 class="mb-4 display-4">Add new list</h1>
+            <h1 class="mb-4 display-4">Manual list addition</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="/">Home</a></li>
                   <li class="breadcrumb-item"><a href="/suspect">Suspicious</a></li>
+                  <li class="breadcrumb-item"><a href="/suspect/providers">Sources</a></li>
                   <li class="breadcrumb-item active" aria-current="page">New list</li>
                 </ol>
               </nav>
@@ -24,7 +25,7 @@
         </div>
          
         <form action="/suspect/list" method="POST">
-            <!-- this is to output raw html instead of conerting to String -->
+            <!-- this is to output raw html instead of converting to String -->
             <%- include('_form_fields_suspect_list') %>
         </form>
 

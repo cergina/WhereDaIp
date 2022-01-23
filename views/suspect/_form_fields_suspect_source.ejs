@@ -1,0 +1,75 @@
+<!-- System notes -->
+<div class="form-group">
+    <div class="row">
+        <!-- label -->
+        <div class="col-md-3">
+            <label class="col-form-label" for="name">Name of the provider in this system *</label>
+        </div>
+        <!-- value -->
+        <div class="col-md-4">
+            <input required value="<%= provider.name %>" type="text" name="name" id="name" class="form-control"> 
+        </div>
+    </div>
+</div>
+
+<!-- Description -->
+<div class="form-group">
+    <label for="description">Your own description and notes on the provider</label>
+    <textarea name="description" id="description" class="form-control"><%= provider.description %></textarea>
+</div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="added_date">Date added (if new, current date shows up)</label>
+        </div>
+        <div class="col-md-6">
+            <label for="last_edit_at">Last edit at (if new, current date shows up)</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <input disabled value="<%= provider.addedAt %>" type="text" name="added_date" id="added_date" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <input disabled value="<%= provider.lastEditAt %>" type="text" name="last_edit_at" id="last_edit_at" class="form-control">
+        </div>
+    </div>
+</div>
+<!-- restMethod default vpisana ako 0 cize GET url -->
+<div class="form-group">
+    <label for="api_url">Provider's url *</label>
+    <input required value="<%= provider.baseUrl %>" placeholder="http://serviceurl.com/suspicious_ips_list/" type="text" name="api_url" id="api_url" class="form-control">
+    <small class="form-text text-muted mb-4">This URL has to provide IP addresses in response to the system.</small>
+</div>
+
+<!-- vpisanie tagov -->
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <strong>Suspicious of</strong>
+            </div>
+            <div class="card-body">
+                <label>This providers's list tags :</label> 
+                <input id="tags" type="text" data-role="tagsinput" name="tags" class="form-control" value="<%= provider.tagListOnlyNames %>">
+                <small id="help_tag_enter" class="mt-4 mb-4 text-muted">To confirm tag addition press </small><kbd>ENTER</kbd>
+                <small id="help_tag_comma" class=" text-muted"> or separate with </small><kbd>"," : comma</kbd>
+                <br>
+                <small id="help_tag_enter" class="mt-4 mb-4 text-muted">To remove latest tag press </small><kbd>BACKSPACE</kbd>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- zoznam adries -->
+<div class="form-group">
+    <label for="ip_addresses">IP addresses received from provider</label>
+    <textarea disabled class="form-control" name="ip_addresses" id="ip_addresses" rows="10"><%= provider.ipAddresses %></textarea>
+    <small id="help_ip_addresses" class="form-text text-muted">Not editable. Pure output shown.</small>
+</div>
+<small class="form-text text-muted mb-4">Inputs marked with * are required.</small>
+
+<!-- akcne tlacidla -->
+<a href="/suspect/providers" class="btn btn-secondary">Cancel</a>
+<button type="submit" class="btn btn-primary">Upload provider</button>
