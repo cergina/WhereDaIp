@@ -29,7 +29,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs')
-app.use(express.urlencoded( {extended: false} ))
+app.use(express.urlencoded( {extended: false, limit: '25mb'} ))
+app.use(express.json({limit: '25mb'}))
 
 // register routers
 app.use(`${configuration.WWW_ROOT}`, testingRoutes)

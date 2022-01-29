@@ -1,4 +1,5 @@
 const configuration = require("../config/config-nonRestricted")
+const URL = require("url").URL;
 
 function logRaw(textToLog) {
     if (configuration.PRODUCTION === false) {
@@ -44,8 +45,23 @@ function yyyymmdd() {
     var yyyymmdd = y + m + d;
     return yyyymmdd;
 }
+const stringIsAValidUrl = (s) => {
+    try {
+      new URL(s);
+      return true;
+    } catch (err) {
+      return false;
+    }
+};
+
+function uniq(a) {
+    return a.sort().filter(function(item, pos, ary) {
+        return !pos || item != ary[pos - 1];
+    });
+}
 
 module.exports = {
     logInfo, logDebug, logRaw, logError,
+    stringIsAValidUrl, uniq,
     yyyymmdd
 }

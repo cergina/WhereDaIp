@@ -31,6 +31,18 @@
     </div>
 </body>
 
+<script>
+    function afterLoaded() {
+        var queryString = window.location.search
+        var urlParams = new URLSearchParams(queryString)
+
+        if (urlParams.get('invalid') == '1') {
+            swal({icon: 'error', title: 'Ooops!', text: 'One or more IPs are invalid.', button: false, timer: 1500})
+        } else if (urlParams.get('urlinvalid') == '1') {
+            swal({icon: 'error', title: 'Ooops!', text: 'URL is invalid.', button: false, timer: 1500})
+        }
+    }
+</script>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js" integrity="sha512-VvWznBcyBJK71YKEKDMpZ0pCVxjNuKwApp4zLF3ul+CiflQi6aIJR+aZCP/qWsoFBA28avL5T5HA+RE+zrGQYg==" crossorigin="anonymous"></script>

@@ -2,8 +2,9 @@
 // to handle requests. 
 
 const configuration = require("../config/config-nonRestricted")
-const { logDebug, logError, logInfo, logRaw, yyyymmdd } = require('../services/helper.js')
+const { logDebug, logError, logInfo, logRaw, yyyymmdd, stringIsAValidUrl, uniq } = require('../services/helper.js')
 const { findTagById, findIdByTag, getCountOfTag, addTag, removeTag, decreaseTag, getAllTags, removeAllTags } = require('../services/tagSupport.js')
+const { sendPromise } = require('../services/simpleCommunicator.js')
 
 const suspectProvider = require("../models/suspectProvider")
 const net = require('net')
@@ -112,6 +113,7 @@ const acceptNewList = async (req, res, next) => {
     logInfo('list addition requested')
 
     var addresses = req.body.ip_addresses.split("\r\n").filter(item => item)
+    addresses = uniq(addresses)
 
     // supports IPv4 and IPv6, but accepts only minimal like 192.168.0.1 and no 192.168.0.001
     if (! addresses.every( currentValue => net.isIP(currentValue))) {
@@ -144,15 +146,29 @@ const acceptEditExisting = async (req, res, next) => {
 
     var addresses = []
     
-    if (req.provider.restMethod === 1)
+    // REST METHOD === 1 === NONE
+    if (req.provider.restMethod === 1) {
         addresses = req.body.ip_addresses.split("\r\n").filter(item => item)
+        addresses = uniq(addresses)
     
-    if (! addresses.every( currentValue => net.isIP(currentValue))) {
-        res.redirect(`${configuration.WWW_SUSPECT_HOME}/providers/${req.params.slug}/?invalid=1`)
-        return
-    }
+        
+        if (! addresses.every( currentValue => net.isIP(currentValue))) {
+            res.redirect(`${configuration.WWW_SUSPECT_HOME}/providers/${req.params.slug}/?invalid=1`)
+            return
+        }
 
-    req.tmpAddresses = addresses
+        req.tmpAddresses = addresses
+        
+    } else if (req.provider.restMethod === 0) {
+        // REST METHOD === 0 === GET
+        // checked in next() saveAndRedirecTest
+        // just check if URL is valid
+        console.log(`URL: req.body.baseUrl ${req.body.api_url}`)
+        if (! stringIsAValidUrl(req.body.api_url)) {
+            res.redirect(`${configuration.WWW_SUSPECT_HOME}/providers/${req.params.slug}/?urlinvalid=1`)
+            return
+        }
+    }
 
     next()
 }
@@ -176,6 +192,212 @@ const acceptNewProvider = async (req, res, next) => {
     next()
 }
 
+
+function saveAndRedirectTest(viewName) {
+    return async (req, res) => {
+        let provider = req.provider
+        
+        
+        /* // */
+        // Basics - current name is later overwritten - used for finding (evade tag bug when changing name)
+        provider.name = (provider.name) ? provider.name : req.body.name
+        provider.baseUrl = req.body.api_url
+
+        /* // */
+        // Tags
+        // - if exist in DB
+        //      - add missing
+        //      - remove deleted
+        // - if not in DB
+        //      - add every tag
+        var tags = req.body.tags.split(",").filter(item => item)
+        tags = tags.map(item => item.replace(/[^a-zA-Z0-9 ]/g, ''))
+        tags = tags.map(item => item.trim())
+        tags = tags.filter((entry, index) => tags.indexOf(entry) === index);
+
+        let previousProvider = await suspectProvider.findOne({name: provider.name})
+        provider.tagList = []
+
+        // IF EXISTS ALREADY
+        if (previousProvider) {
+            // get current tags
+            var oldTags = []
+            for (let temp of previousProvider.tagList) {
+                var tempTag = await findTagById(temp)
+                oldTags.push(tempTag)   // that we have
+            }
+
+            // add missing tags
+            var missingTags = []
+            for (let tag of tags) {
+                if (!oldTags.includes(tag)) {
+                    missingTags.push(tag)
+                }
+            }
+            
+            for (let tag of missingTags) {
+                await addTag(tag)
+            }
+
+            // Remove tags not present
+            var obsoleteTags = []
+            for (let tag of oldTags) {
+                if (!tags.includes(tag)) {
+                    obsoleteTags.push(tag)
+                }
+            }
+
+            for (let tag of obsoleteTags) {
+                await decreaseTag(tag)
+            }
+
+            // Make sure tagList is up to date
+            for (let tag of tags) {
+                let temp = await findIdByTag(tag)
+                provider.tagList.push(temp._id)
+            }
+        // DOES NOT EXIST IN DB
+        } else {
+            for (let i=0; i < tags.length; i++) {
+                let temp = await addTag(tags[i])
+                provider.tagList.push(temp._id)
+            }
+        }
+
+        provider.tagListOnlyNames = []
+        for (let i=0; i < provider.tagList.length; i++) {
+            var tempName = await findTagById(provider.tagList[i])
+            provider.tagListOnlyNames.push(tempName)
+        }
+
+        /* // */
+        // IP lists
+        if (provider.restMethod === 0) {            // if 0 => has source, get from URL
+            try {
+                let acquiredList = await sendPromise(provider.baseUrl)
+                
+                // check every IP for type and save
+                acquiredList = acquiredList.split(/\r?\n/)
+                acquiredList = uniq(acquiredList)
+                let newList = []
+
+                acquiredList.forEach(address => {
+                    var res = net.isIP(address)
+
+                    if (res === 0)
+                        return
+
+                    newList.push(address)
+                })
+
+                // non zero length array should be considered okay
+                // ! NO else ! old list has to exist if new is empty
+                if (newList.length > 0)
+                    req.tmpAddresses = newList
+            } catch(e) {
+                logError(e)
+            }
+        } else if (provider.restMethod === 1){      // if 1 => list is present in the form
+            // checked in first acceptEdit/acceptCreateList
+        }
+
+        provider.ipList = []
+        if (req.tmpAddresses) {
+            req.tmpAddresses.forEach(element => {
+                provider.ipList.push({
+                    ip: element,
+                    type: net.isIPv4(element) ? 0 : 1
+                })
+            });
+        }
+
+        
+        /* // */
+        // Basics - has to be here, because search happens with older name if present before
+        provider.name = req.body.name
+        provider.description = req.body.description
+        provider.lastEditAt = new Date()
+
+        /* // */
+        // DATABASE
+        try {
+            const newProvider = await provider.save()
+            if (newProvider === provider) {
+                console.log("Succesfully saved")
+            } else {
+                console.log("Not sucesfully saved")
+            }
+            
+            res.redirect(`/${baseViewFolder.slice(1)}` + `/providers/${provider.slug}/?changed=1`)
+        } catch (e) {
+            res.render(`${baseViewFolder.slice(1)}` + `/${viewName}`, { provider: provider, siteTitle: 'Manually add new list' })
+        }
+    }
+}
+
+
+
+module.exports = {
+    getAllUsableProviders,
+    showTags, showAllProviders, newSource, addNewList,
+    editProvider,
+    acceptNewList, acceptEditExisting, acceptNewProvider, 
+    deleteExistingSource, removeAllTagsTestOnly,
+    saveAndRedirectTest
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// BKP
 // helper - znovupouzitelnost
 function saveAndRedirect(viewName) {
     return async (req, res) => {
@@ -203,6 +425,7 @@ function saveAndRedirect(viewName) {
         let previousProvider = await suspectProvider.findOne({name: provider.name})
         provider.tagList = []
 
+        // IF EXISTS ALREADY
         if (previousProvider) {
             //console.log('exists')
 
@@ -255,6 +478,7 @@ function saveAndRedirect(viewName) {
             }
             //console.log(`final tagList [${provider.tagList}]`)
             
+        // DOES NOT EXIST IN DB
         } else {
             //console.log('not exists')
 
@@ -273,6 +497,43 @@ function saveAndRedirect(viewName) {
             provider.tagListOnlyNames.push(tempName)
         }
         
+        // ZISKANIE IP ADRIES ak je to REST API GET
+        // restMethod == 0 GET a restMethod == 1 NONE
+        if (provider.restMethod === 0) {
+
+            try {
+                let acquiredList
+                acquiredList = await sendPromise(req.baseUrl)
+                
+                // check every IP for type and save
+                acquiredList = acquiredList.split(/\r?\n/);
+        
+                let newList = []
+                acquiredList.forEach(address => {
+                    var res = net.isIP(address)
+        
+                    // 0 means invalid string - return should work as continue C# equivavelnt for foreach
+                    if (res === 0) {
+                        return;
+                    }
+        
+                    newList.push(address)
+                });
+        
+                console.log(`newList: ${newList}`)
+                
+                // non zero length array should be considered okay
+                if (newList.length > 0)
+                    req.tmpAddresses = newList
+        
+            } catch (e) {
+                logError(e)
+            }
+
+        }
+
+        
+        console.log(`req.tmpAddresses: ${req.tmpAddresses}`)
         //
         // IPs
         provider.ipList = []
@@ -299,13 +560,4 @@ function saveAndRedirect(viewName) {
             res.render(`${baseViewFolder.slice(1)}` + `/${viewName}`, { provider: provider, siteTitle: 'Manually add new list' })
         }
     } 
-}
-
-module.exports = {
-    getAllUsableProviders,
-    showTags, showAllProviders, newSource, addNewList,
-    editProvider,
-    acceptNewList, acceptEditExisting, acceptNewProvider, 
-    deleteExistingSource, removeAllTagsTestOnly,
-    saveAndRedirect
 }

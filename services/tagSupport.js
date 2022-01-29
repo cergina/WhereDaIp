@@ -11,12 +11,12 @@ const findTagById = async (xid) => {
     try {
         var tagFound = await tagDb.findById(xid)
 
-        console.log(`\nvypis setkych`)
+        //console.log(`\nvypis setkych`)
         console.log(await tagDb.findOne({}))
-        console.log(`\nende vypis setkych\n`)
+        //console.log(`\nende vypis setkych\n`)
 
-        console.log(`In db: ${tagFound}`)
-        console.log(`In db name: ${tagFound.name}`)
+        //console.log(`In db: ${tagFound}`)
+        //console.log(`In db name: ${tagFound.name}`)
 
         return tagFound.name
     } catch (e) {
