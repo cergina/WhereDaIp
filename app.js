@@ -8,9 +8,12 @@ const favicon = require('serve-favicon')
 const path = require('path')
 const testingRoutes = require('./routes/testing')
 const generalRoutes = require('./routes/general')
+const outputRoutes = require('./routes/output.js')
+const outputMapRoutes = require('./routes/outputMap.js')
 const providersRoutes = require('./routes/providers/providers')
 const covertRoutes = require('./routes/covert/covert')
 const suspectRoutes = require('./routes/suspect/suspect')
+const apiRoutes = require('./routes/api/api')
 const ipsRequests = require('./routes/requests/ips')
 const bodyParser = require('body-parser')
 const { logDebug, logInfo, logRaw } = require('./services/helper.js')
@@ -26,6 +29,7 @@ var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.set('views', path.join(__dirname, 'views'));
 
+// eg.: public/accessible/testing.json accesible on URLBASE:port/accessible/testing.json
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs')
@@ -39,6 +43,9 @@ app.use(`${configuration.WWW_GEODB_HOME}`, providersRoutes)
 app.use(`${configuration.WWW_COVER_HOME}`, covertRoutes)
 app.use(`${configuration.WWW_SUSPECT_HOME}`, suspectRoutes)
 app.use(`${configuration.WWW_REQ_HOME}`, ipsRequests)
+app.use(`${configuration.WWW_GRAPH}`, outputRoutes)
+app.use(`${configuration.WWW_MAP}`, outputMapRoutes)
+app.use(`${configuration.WWW_API}`, apiRoutes)
 
 // put on port
 const listener = app.listen(configuration.PORT, () => {

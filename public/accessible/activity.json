@@ -1,0 +1,62 @@
+{
+    "type": "bar",
+    "data": {
+        "labels": [
+            "November 2021",
+            "December 2021",
+            "January 2022",
+            "February 2022",
+            "March 2022",
+            "April 2022",
+            "May 2022",
+            "June 2022"
+        ],
+        "datasets": [
+            {
+                "label": "Count of IPs",
+                "data": [
+                    230,
+                    290,
+                    371, 
+                    460,
+                    1348,
+                    2600,
+                    2950,
+                    3157
+                ],
+                "backgroundColor": [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 206, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)",
+                    "rgba(255, 159, 64, 0.2)",
+                    "rgba(155, 159, 64, 0.2)",
+                    "rgba(55, 159, 64, 0.2)"
+                ],
+                "borderWidth": 1,
+                "borderColor": "#777",
+                "hoverBorderColor": "#000"
+            }
+        ]
+    },
+    "options": {
+        "layout": {
+            "padding": {
+                "left": 0,
+                "right": 0,
+                "bottom": 0,
+                "top": 0
+            }
+        },
+        "plugins": {
+            "title": {
+                "display": true,
+                "text": "Activity"
+            },
+            "legend": {
+                "display": false
+            }
+        }
+    }
+}

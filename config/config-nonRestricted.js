@@ -58,6 +58,10 @@ configuration.WWW_SUSPECT_LIST_NEW = "/suspect/list/add"
 configuration.WWW_SUSPECT_PROVIDER_NEW = "/suspect/providers/new"
 configuration.WWW_REQ_HOME = "/requests"
 configuration.WWW_REQ_NEW = "/requests/new"
+configuration.WWW_TEST = "/test"
+configuration.WWW_GRAPH = "/graphs"
+configuration.WWW_MAP = "/maps"
+configuration.WWW_API = "/api"
 
 
 ////////////////////////////////////////////////////////////////////////

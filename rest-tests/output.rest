@@ -1,0 +1,26 @@
+// just basic graph test
+GET http://localhost:13000/graphs/test
+
+###
+GET http://localhost:13000/graphs/top/origin
+
+###
+GET http://localhost:13000/graphs/top/types
+
+###
+GET http://localhost:13000/graphs/top/ports
+
+###
+GET http://localhost:13000/graphs/top/as
+
+###
+GET http://localhost:13000/graphs/compared/online
+
+###
+GET http://localhost:13000/graphs/compared/covered
+
+###
+GET http://localhost:13000/graphs/compared/domain
+
+###
+GET http://localhost:13000/graphs/activity

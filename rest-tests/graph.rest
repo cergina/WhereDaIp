@@ -1,0 +1,33 @@
+###
+
+// just basic graph test
+GET http://localhost:13000/api/graphs/test
+
+###
+GET http://localhost:13000/api/graphs/top/origin
+
+###
+GET http://localhost:13000/api/graphs/top/types
+
+###
+GET http://localhost:13000/api/graphs/top/ports
+
+###
+GET http://localhost:13000/api/graphs/top/as
+
+###
+GET http://localhost:13000/api/graphs/compared/online
+
+###
+GET http://localhost:13000/api/graphs/compared/covered
+
+###
+GET http://localhost:13000/api/graphs/compared/domain
+
+###
+GET http://localhost:13000/api/graphs/activity
+
+// FAKEs
+###
+//
+GET http://localhost:13000/api/graphs/fake

@@ -45,6 +45,20 @@ function yyyymmdd() {
     var yyyymmdd = y + m + d;
     return yyyymmdd;
 }
+
+function date_plus_time() {
+    let date_ob = new Date();
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+
+    let hours = date_ob.getHours();
+    let minutes = date_ob.getMinutes();
+    let seconds = date_ob.getSeconds();
+    
+    return year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds;
+}
+
 const stringIsAValidUrl = (s) => {
     try {
       new URL(s);
@@ -63,5 +77,5 @@ function uniq(a) {
 module.exports = {
     logInfo, logDebug, logRaw, logError,
     stringIsAValidUrl, uniq,
-    yyyymmdd
+    yyyymmdd, date_plus_time
 }

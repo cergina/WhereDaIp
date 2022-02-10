@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_headerGraph') %> 
+<body>
+    <% var countGraphs = 2 %> 
+
+    <div class="container">
+        <!-- alert at top -->
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Graphs</h1> 
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
+                    <li class="breadcrumb-item"><a href="/graphs">Graphs</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Online</li>
+                </ol>
+              </nav>
+        </div>
+        <!-- info -->
+        <div class="bd-callout bd-callout-info">
+            <p>
+                Here are some graphs.
+            </p>
+        </div>
+
+        <!-- main content -->
+        <div class="form-group">
+            <div class="row" style="justify-content: center; align-items: center;">
+                <div class="col-md-4">
+                    <canvas id="chart0"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <canvas id="chart1"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chartCtx0 = document.getElementById('chart0').getContext('2d')
+        let chartCtx1 = document.getElementById('chart1').getContext('2d')
+        let chartCtx2 = document.getElementById('chart2').getContext('2d')
+    </script>
+
+    <script>
+        fetch("/accessible/comparedOnline.json")
+            .then(response => response.json())
+            .then(data => {
+                let chart0 = new Chart(chartCtx0, data)
+            })
+
+        fetch("/accessible/comparedOnline.json")
+            .then(response => response.json())
+            .then(data => {
+                data.type = 'polarArea'
+                let chart1 = new Chart(chartCtx1, data)
+            })
+
+        fetch("/accessible/comparedOnline.json")
+            .then(response => response.json())
+            .then(data => {
+                // bar, pie, horizontalBar, line, doughnut, radar, polarArea
+                data.type = 'pie'
+                let chart2 = new Chart(chartCtx2, data)
+            })
+    </script>
+    
+  
+</body>
+</html>
+
+
