@@ -1,0 +1,40 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/callout.css">
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.1/chart.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- mapa -->
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+      function initialize() {
+        // zisk url parametrov
+        var queryString = window.location.search
+        var urlParams = new URLSearchParams(queryString)
+
+        var lat = parseFloat(urlParams.get('latitude'))
+        var lon = parseFloat(urlParams.get('longitude'))
+        var ip = urlParams.get('target')
+
+        // zobrazenie lokacie
+        var earth = new WE.map('earth_div');
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+
+        var marker = WE.marker([lat, lon]).addTo(earth);
+        marker.bindPopup("<b>Location marked!</b><br>Target found<br/><span style='font-size:10px;color:#999'>" + ip + "</span>", {maxWidth: 300, closeButton: true}).openPopup();
+
+        var markerCustom = WE.marker([lat, lon], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
+
+        earth.setView([lat, lon], 3);
+      }
+    </script>
+
+    <!-- remember to pass in during render in controller -->
+    <title><%= siteTitle %> </title>
+</head>

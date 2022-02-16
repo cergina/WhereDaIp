@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- head -->
-<%- include('../_headerGraph') %> 
+<%- include('../../_headerGraph') %> 
 <body>
     <% var countGraphs = 2 %> 
 
@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
                     <li class="breadcrumb-item"><a href="/graphs">Graphs</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Hidden</li>
+                    <li class="breadcrumb-item active" aria-current="page">Activity</li>
                 </ol>
               </nav>
         </div>
@@ -28,14 +28,8 @@
         <!-- main content -->
         <div class="form-group">
             <div class="row" style="justify-content: center; align-items: center;">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <canvas id="chart0"></canvas>
-                </div>
-                <div class="col-md-4">
-                    <canvas id="chart1"></canvas>
-                </div>
-                <div class="col-md-4">
-                    <canvas id="chart2"></canvas>
                 </div>
             </div>
         </div>
@@ -43,30 +37,14 @@
 
     <script>
         let chartCtx0 = document.getElementById('chart0').getContext('2d')
-        let chartCtx1 = document.getElementById('chart1').getContext('2d')
-        let chartCtx2 = document.getElementById('chart2').getContext('2d')
     </script>
 
     <script>
-        fetch("/accessible/comparedCovered.json")
+        fetch("/accessible/activity.json")
             .then(response => response.json())
             .then(data => {
+                data.type = 'line'
                 let chart0 = new Chart(chartCtx0, data)
-            })
-
-        fetch("/accessible/comparedCovered.json")
-            .then(response => response.json())
-            .then(data => {
-                data.type = 'polarArea'
-                let chart1 = new Chart(chartCtx1, data)
-            })
-
-        fetch("/accessible/comparedCovered.json")
-            .then(response => response.json())
-            .then(data => {
-                // bar, pie, horizontalBar, line, doughnut, radar, polarArea
-                data.type = 'pie'
-                let chart2 = new Chart(chartCtx2, data)
             })
     </script>
     

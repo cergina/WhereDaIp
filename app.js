@@ -33,6 +33,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs')
+app.disable('view cache')
+
 app.use(express.urlencoded( {extended: false, limit: '25mb'} ))
 app.use(express.json({limit: '25mb'}))
 

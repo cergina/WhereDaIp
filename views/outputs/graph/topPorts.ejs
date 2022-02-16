@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- head -->
-<%- include('../_headerGraph') %> 
+<%- include('../../_headerGraph') %> 
 <body>
     <% var countGraphs = 2 %> 
 
@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
                     <li class="breadcrumb-item"><a href="/graphs">Graphs</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Types</li>
+                    <li class="breadcrumb-item active" aria-current="page">Ports</li>
                 </ol>
               </nav>
         </div>
@@ -44,13 +44,13 @@
     </script>
 
     <script>
-        fetch("/accessible/topTypes.json")
+        fetch("/accessible/topPorts.json")
             .then(response => response.json())
             .then(data => {
                 let chart0 = new Chart(chartCtx0, data)
             })
 
-        fetch("/accessible/topTypes.json")
+        fetch("/accessible/topPorts.json")
             .then(response => response.json())
             .then(data => {
                 // bar, pie, horizontalBar, line, doughnut, radar, polarArea

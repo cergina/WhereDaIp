@@ -1,55 +1,57 @@
 // controller is usually a callback function that corresponds to routers
 // to handle requests. 
-const configuration = require('../config/config-nonRestricted.js')
+const configuration = require(`../config/config-nonRestricted.js`)
+
+const basePath = `outputs/graph/`
 
 const test = (req, res) => {
-    res.render('outputs/graphicalTest.ejs', { siteTitle: 'Graph test'})
+    res.render(`${basePath}test.ejs`, { siteTitle: `Graph test`})
 }
 
-// real
+// real graphs
 const crossroad = (req, res) => {
-    res.render('outputs/graphCrossroad.ejs', { siteTitle: 'Graphs crossroad'})
+    res.render(`${basePath}graphCrossroad.ejs`, { siteTitle: `Graphs crossroad`})
 }
 
 const topOrigin = (req, res) => {
 
-
-    res.render('outputs/topCountries.ejs', { siteTitle: 'Leading threat origins'})
+ 
+    res.render(`${basePath}topCountries.ejs`, { siteTitle: `Leading threat origins`})
 }
 
 const topTypes = (req, res) => {
     
-    res.render('outputs/topTypes.ejs', { siteTitle: 'Leading threat types'})
+    res.render(`${basePath}topTypes.ejs`, { siteTitle: `Leading threat types`})
 }
 
 const topPorts = (req, res) => {
     
-    res.render('outputs/topPorts.ejs', { siteTitle: 'Most often used ports'})
+    res.render(`${basePath}topPorts.ejs`, { siteTitle: `Most often used ports`})
 }
 
 const topAs = (req, res) => {
     
-    res.render('outputs/topAs.ejs', { siteTitle: 'Leading AS\'s used'})
+    res.render(`${basePath}topAs.ejs`, { siteTitle: `Leading AS\`s used`})
 }
 
 const comparedOnline = (req, res) => {
     
-    res.render('outputs/comparedOnline.ejs', { siteTitle: 'IPs online/offline'})
+    res.render(`${basePath}comparedOnline.ejs`, { siteTitle: `IPs online/offline`})
 }
 
 const comparedCovered = (req, res) => {
     
-    res.render('outputs/comparedCovered.ejs', { siteTitle: 'Detected protection'})
+    res.render(`${basePath}comparedCovered.ejs`, { siteTitle: `Detected protection`})
 }
 
 const comparedDomain = (req, res) => {
     
-    res.render('outputs/comparedDomain.ejs', { siteTitle: 'Comparation of IPs with(out) domain'})
+    res.render(`${basePath}comparedDomain.ejs`, { siteTitle: `Comparation of IPs with(out) domain`})
 }
 
 const activity = (req, res) => {
     
-    res.render('outputs/activity.ejs', { siteTitle: 'Historical activity'})
+    res.render(`${basePath}activity.ejs`, { siteTitle: `Historical activity`})
 }
 
 module.exports = {

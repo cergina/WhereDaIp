@@ -2,12 +2,19 @@
 // to handle requests. 
 const configuration = require('../config/config-nonRestricted.js')
 
-// real
-const crossroad = (req, res) => {
-    res.render('outputs/mapCrossroad.ejs', { siteTitle: 'Maps crossroad'})
+const basePath = `outputs/maps/`
+
+const test = (req, res) => {
+    res.render(`${basePath}test.ejs`, { siteTitle: 'Map test'})
 }
 
+// real
+const crossroad = (req, res) => {
+    res.render(`${basePath}mapCrossroad.ejs`, { siteTitle: 'Maps crossroad'})
+} 
+ 
 
 module.exports = {
+    test,
     crossroad
 }
