@@ -63,6 +63,10 @@ configuration.WWW_GRAPH = "/graphs"
 configuration.WWW_MAP = "/maps"
 configuration.WWW_API = "/api"
 
+// Events
+configuration.EVENT_TEST = "event_test"
+configuration.EVENT_GRAPH = "event_graph_update"
+configuration.EVENT_MAPS = "event_maps_update"
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////// EXPORT FOR OUTSIDE USAGE ////////////////////////////

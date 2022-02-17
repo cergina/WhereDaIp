@@ -16,7 +16,7 @@ const suspectRoutes = require('./routes/suspect/suspect')
 const apiRoutes = require('./routes/api/api')
 const ipsRequests = require('./routes/requests/ips')
 const bodyParser = require('body-parser')
-const { logDebug, logInfo, logRaw } = require('./services/helper.js')
+const { logDebug, logInfo, logRaw, date_plus_time } = require('./services/helper.js')
 const { config } = require('dotenv')
 
 ////////////////////////////
@@ -49,6 +49,33 @@ app.use(`${configuration.WWW_GRAPH}`, outputRoutes)
 app.use(`${configuration.WWW_MAP}`, outputMapRoutes)
 app.use(`${configuration.WWW_API}`, apiRoutes)
 
+// Global emitter
+const EventEmitter = require('events')
+const eventEmitter = new EventEmitter()
+
+eventEmitter.on(configuration.EVENT_GRAPH, () => {
+    console.log(`Event GRAPH raised on: ${date_plus_time()}`);
+});
+
+eventEmitter.on(configuration.EVENT_MAPS, () => {
+    console.log(`Event MAPS raised on: ${date_plus_time()}`);
+});
+
+eventEmitter.on(configuration.EVENT_TEST, () => {
+    console.log(`Event TEST raised on: ${date_plus_time()}`);
+});
+
+setInterval( () => {
+    eventEmitter.emit(configuration.EVENT_GRAPH);
+}, 5000)
+
+setInterval( () => {
+    eventEmitter.emit(configuration.EVENT_MAPS);
+}, 10000)
+
+setInterval( () => {
+    eventEmitter.emit(configuration.EVENT_TEST);
+}, 1000)
 // put on port
 const listener = app.listen(configuration.PORT, () => {
     logRaw(`\n\n-------------------------\n\n`)

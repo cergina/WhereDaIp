@@ -13,6 +13,15 @@ const testFunction = (req, res, next) => {
     res.json({message: 'Test works correctly'})
 }
 
+const showTimeTest = (req, res, next) => {
+    res.json({message: 'Time test'})
+    //intervalId
+}
+
+// var intervalId = setInterval(function() {
+//     console.log(`its ${date_plus_time()}`)
+//   }, 5000);
+
 // to make sure content-type works as well
 const testFunction2 = (req, res, next) => {
     res.json({
@@ -40,6 +49,6 @@ const changeTestFile = (req, res, next) => {
 }
 
 module.exports = {
-    testFunction, testFunction2,
+    showTimeTest, testFunction, testFunction2,
     changeTestFile
 }
