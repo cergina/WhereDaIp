@@ -48,7 +48,25 @@ const changeTestFile = (req, res, next) => {
     logRaw(`\nchangeTestFile() exiting\n`)
 }
 
+
+// FROM CODE ONLY
+const onPremiseChangeTestFile = (req, res, next) => {
+    logRaw(`\nchangeTestFile() called\n`)
+
+    console.log(file)
+    file.cas = date_plus_time()
+
+    fs.writeFileSync(folderWrite + fileName, JSON.stringify(file, null, 4), function (err) {
+        if (err) return console.log(err);
+        console.log(JSON.stringify(file));
+        console.log('writing to ' + folderWrite + fileName);
+      });
+ 
+    logRaw(`\nchangeTestFile() exiting\n`)
+}
+
 module.exports = {
     showTimeTest, testFunction, testFunction2,
-    changeTestFile
+    changeTestFile, 
+    onPremiseChangeTestFile
 }

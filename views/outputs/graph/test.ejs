@@ -20,9 +20,7 @@
         </div>
 
         <!-- main test -->
-        <canvas id="myChart">
-
-        </canvas>
+        <textarea name="haha" id="haha" cols="50" rows="5"></textarea>
         <div class="form-group">
             <div class="row">
                 <div class="col-md-6">
@@ -38,6 +36,7 @@
     <script>
         let chartCtx0 = document.getElementById('chart0').getContext('2d')
         let chartCtx1 = document.getElementById('chart1').getContext('2d')
+        let changeableTextArea = document.getElementById('haha')
 
         let chart0 = new Chart(chartCtx0, {
             type: 'bar', // bar, pie, horizontalBar, line, doughnut, radar, polarArea
@@ -86,11 +85,12 @@
     </script>
 
     <script>
-        fetch("/accessible/topOrigin.json")
+        fetch("/accessible/testing.json")
             .then(response => response.json())
             .then(data => {
                 console.log(data)
                 let chart1 = new Chart(chartCtx1, data)
+                changeableTextArea.textContent = data.cas
             })
     </script>
     

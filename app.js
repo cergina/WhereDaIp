@@ -6,6 +6,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const favicon = require('serve-favicon')
 const path = require('path')
+const orchestrator = require('./services/orchestrator.js')
 const testingRoutes = require('./routes/testing')
 const generalRoutes = require('./routes/general')
 const outputRoutes = require('./routes/output.js')
@@ -49,33 +50,9 @@ app.use(`${configuration.WWW_GRAPH}`, outputRoutes)
 app.use(`${configuration.WWW_MAP}`, outputMapRoutes)
 app.use(`${configuration.WWW_API}`, apiRoutes)
 
-// Global emitter
-const EventEmitter = require('events')
-const eventEmitter = new EventEmitter()
+// Global events for files for graphs, ...
+orchestrator.setUp()
 
-eventEmitter.on(configuration.EVENT_GRAPH, () => {
-    console.log(`Event GRAPH raised on: ${date_plus_time()}`);
-});
-
-eventEmitter.on(configuration.EVENT_MAPS, () => {
-    console.log(`Event MAPS raised on: ${date_plus_time()}`);
-});
-
-eventEmitter.on(configuration.EVENT_TEST, () => {
-    console.log(`Event TEST raised on: ${date_plus_time()}`);
-});
-
-setInterval( () => {
-    eventEmitter.emit(configuration.EVENT_GRAPH);
-}, 5000)
-
-setInterval( () => {
-    eventEmitter.emit(configuration.EVENT_MAPS);
-}, 10000)
-
-setInterval( () => {
-    eventEmitter.emit(configuration.EVENT_TEST);
-}, 1000)
 // put on port
 const listener = app.listen(configuration.PORT, () => {
     logRaw(`\n\n-------------------------\n\n`)
