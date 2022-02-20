@@ -15,6 +15,71 @@ const res = require("express/lib/response")
 const baseViewFolder = `${WWW_SUSPECT_HOME}`
 
 // for Internal
+const getJsonWithCountedListTags = async (req, res) => {
+    var ro = []
+
+    const tags = await getAllTags()
+
+    // init known tags with 0 counts
+    for (var x of tags) {
+        var tempObj = {
+            "tagId": x._id.toString(),
+            "tagName": x.name,
+            "numOfIps": 0
+        }
+
+        ro.push(tempObj)
+    }
+
+    //
+    const providers = await suspectProvider.find({}, {
+        "name": 1,
+        "tagList": 1,
+        "ipList": 1
+    })
+    
+    for (var provider of providers) {
+        //console.log(`provider ${provider.name} `)
+        //console.log(`tagy ze : ${provider.tagList}`)
+        //console.log(`a je ${provider.ipList.length} adries\n`)
+        //console.log(`provider ${provider.name} ma tagy ze : ${provider.tagList} a je ${provider.ipList.length} adries`)
+
+        var countOfIps = provider.ipList.length
+
+        for (var tag of ro) {
+            if (provider.tagList.includes(tag.tagId)) {
+                tag.numOfIps += countOfIps
+            }
+        }
+    }
+
+    ro.sort((a, b) => (a.numOfIps < b.numOfIps) ? 1 : -1)
+
+
+    // 
+    // for chart.js
+    var retObj = {}
+    retObj.list = ro
+    
+    //
+    // create table for grid.js
+    retObj.table = []
+    var order = 1
+    
+    for (var tmp of ro) {
+
+        var x = []
+        x.push((order++).toString())
+        x.push(tmp.tagName)
+        x.push(tmp.numOfIps.toString())
+        
+        retObj.table.push(x)
+    }
+
+
+    return retObj
+}
+
 async function getAllUsableProviders() {
 }
 
@@ -343,7 +408,8 @@ module.exports = {
     editProvider,
     acceptNewList, acceptEditExisting, acceptNewProvider, 
     deleteExistingSource, removeAllTagsTestOnly,
-    saveAndRedirectTest
+    saveAndRedirectTest,
+    getJsonWithCountedListTags
 }
 
 

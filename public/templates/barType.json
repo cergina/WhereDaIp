@@ -2,31 +2,18 @@
     "type": "bar",
     "data": {
         "labels": [
-            "Haha",
-            "Hehe",
-            "Rwrw",
-            "Hdhd",
-            "Gsvs",
-            "New URur"
         ],
         "datasets": [
             {
-                "_label": "Covid-19",
+                "label": "Covered",
                 "data": [
-                    5,
-                    2,
-                    1,
-                    11,
-                    8,
-                    0
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
                     "rgba(255, 206, 86, 0.2)",
                     "rgba(75, 192, 192, 0.2)",
-                    "rgba(153, 102, 255, 0.2)",
-                    "rgba(255, 159, 64, 0.2)"
+                    "rgba(153, 102, 255, 0.2)"
                 ],
                 "borderWidth": 1,
                 "borderColor": "#777",
@@ -46,12 +33,11 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Test fake"
+                "text": "Cover in use"
             },
             "legend": {
                 "display": false
             }
         }
-    },
-    "cas": "2022-02-20 19:30:42"
+    }
 }

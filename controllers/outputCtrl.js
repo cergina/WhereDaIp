@@ -34,6 +34,11 @@ const topAs = (req, res) => {
     res.render(`${basePath}topAs.ejs`, { siteTitle: `Leading AS\`s used`})
 }
 
+const topTags = (req, res) => {
+    
+    res.render(`${basePath}topTags.ejs`, { siteTitle: `IP addresses with most tags`})
+}
+
 const comparedOnline = (req, res) => {
     
     res.render(`${basePath}comparedOnline.ejs`, { siteTitle: `IPs online/offline`})
@@ -56,7 +61,7 @@ const activity = (req, res) => {
 
 module.exports = {
     test, 
-    crossroad, topOrigin, topTypes, topPorts, topAs,
+    crossroad, topOrigin, topTypes, topPorts, topAs, topTags,
     comparedOnline, comparedCovered,  comparedDomain,
     activity
 }

@@ -32,9 +32,9 @@ const testFunction2 = (req, res, next) => {
 
 // change a test file 
 const changeTestFile = (req, res, next) => {
-    logRaw(`\nchangeTestFile() called\n`)
+    //logRaw(`\nchangeTestFile() called\n`)
 
-    console.log(file)
+    //console.log(file)
     file.cas = date_plus_time()
 
     fs.writeFileSync(folderWrite + fileName, JSON.stringify(file, null, 4), function (err) {
@@ -45,15 +45,15 @@ const changeTestFile = (req, res, next) => {
     
     res.sendStatus(200)
  
-    logRaw(`\nchangeTestFile() exiting\n`)
+    //logRaw(`\nchangeTestFile() exiting\n`)
 }
 
 
 // FROM CODE ONLY
 const onPremiseChangeTestFile = (req, res, next) => {
-    logRaw(`\nchangeTestFile() called\n`)
+    //logRaw(`\nchangeTestFile() called\n`)
 
-    console.log(file)
+    //console.log(file)
     file.cas = date_plus_time()
 
     fs.writeFileSync(folderWrite + fileName, JSON.stringify(file, null, 4), function (err) {
@@ -62,7 +62,7 @@ const onPremiseChangeTestFile = (req, res, next) => {
         console.log('writing to ' + folderWrite + fileName);
       });
  
-    logRaw(`\nchangeTestFile() exiting\n`)
+    //logRaw(`\nchangeTestFile() exiting\n`)
 }
 
 module.exports = {

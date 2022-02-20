@@ -60,3 +60,8 @@ table.dataTable thead .sorting_desc_disabled:before {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,
     border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+.center {
+    display: flex;
+    justify-content: center;
+    }

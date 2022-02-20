@@ -1,0 +1,88 @@
+{
+    "type": "bar",
+    "data": {
+        "labels": [
+            "bots",
+            "mail",
+            "strong",
+            "old",
+            "spam"
+        ],
+        "datasets": [
+            {
+                "label": "Top 5 tags",
+                "data": [
+                    8007,
+                    7967,
+                    802,
+                    802,
+                    40
+                ],
+                "backgroundColor": [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 206, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)"
+                ],
+                "borderWidth": 1,
+                "borderColor": "#777",
+                "hoverBorderColor": "#000"
+            }
+        ]
+    },
+    "options": {
+        "layout": {
+            "padding": {
+                "left": 0,
+                "right": 0,
+                "bottom": 0,
+                "top": 0
+            }
+        },
+        "plugins": {
+            "title": {
+                "display": true,
+                "text": "Top 5 tags"
+            },
+            "legend": {
+                "display": false
+            }
+        }
+    },
+    "forGridJs": {
+        "tableNames": [
+            "Order",
+            "Name",
+            "Value"
+        ],
+        "tableValues": [
+            [
+                "1",
+                "bots",
+                "8007"
+            ],
+            [
+                "2",
+                "mail",
+                "7967"
+            ],
+            [
+                "3",
+                "strong",
+                "802"
+            ],
+            [
+                "4",
+                "old",
+                "802"
+            ],
+            [
+                "5",
+                "spam",
+                "40"
+            ]
+        ]
+    },
+    "time": "2022-02-20 19:30:42"
+}

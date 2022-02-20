@@ -16,6 +16,9 @@ GET http://localhost:13000/api/graphs/top/ports
 GET http://localhost:13000/api/graphs/top/as
 
 ###
+GET http://localhost:13000/api/graphs/top/tags
+
+###
 GET http://localhost:13000/api/graphs/compared/online
 
 ###

@@ -2,23 +2,23 @@
     "type": "bar",
     "data": {
         "labels": [
-            "Haha",
-            "Hehe",
-            "Rwrw",
-            "Hdhd",
-            "Gsvs",
-            "New URur"
+            "USA",
+            "China",
+            "Russia",
+            "Germany",
+            "Brazil",
+            "North Korea"
         ],
         "datasets": [
             {
-                "_label": "Covid-19",
+                "label": "Origin",
                 "data": [
-                    5,
-                    2,
-                    1,
-                    11,
-                    8,
-                    0
+                    230,
+                    98,
+                    76, 
+                    51,
+                    43,
+                    27
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -46,12 +46,11 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Test fake"
+                "text": "Top 5 originating countries"
             },
             "legend": {
                 "display": false
             }
         }
-    },
-    "cas": "2022-02-20 19:30:42"
+    }
 }
