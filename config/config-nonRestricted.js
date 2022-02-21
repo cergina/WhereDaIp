@@ -25,6 +25,7 @@ configuration.PASS=process.env.PASS         // set-up your own password, so no o
 configuration.FAKEIPV6=process.env.FAKEIPV6 // example IPv6 address used for fake requests (if enabled)
 configuration.FAKEIPV4=process.env.FAKEIPV4 // example IPv6 address used for fake requests (if enabled)
 
+configuration.IPSTART=process.env.IPSTART
 configuration.PORT=process.env.PORT
 configuration.USER=process.env.USER
 
@@ -35,9 +36,12 @@ if (typeof configuration.USER != 'string' || configuration.USER.length < 1) {
 if (typeof configuration.PORT != 'number' || configuration.PORT < 0 || configuration.PORT > 65536) {
         configuration.PORT=13000
 }
+
 if (typeof configuration.SKUSOBNA != 'string' || configuration.SKUSOBNA.length < 1) {
         configuration.SKUSOBNA="Make sure a file '.env' is created according to instructions"
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////// AVAILABLE FOR PUBLIC ////////////////////////////////

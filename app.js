@@ -16,9 +16,7 @@ const covertRoutes = require('./routes/covert/covert')
 const suspectRoutes = require('./routes/suspect/suspect')
 const apiRoutes = require('./routes/api/api')
 const ipsRequests = require('./routes/requests/ips')
-const bodyParser = require('body-parser')
-const { logDebug, logInfo, logRaw, date_plus_time, getLocalIp } = require('./services/helper.js')
-const { config } = require('dotenv')
+const { logRaw, getLocalIp } = require('./services/helper.js')
 
 ////////////////////////////
 // On error see ".manual" //
@@ -55,8 +53,7 @@ orchestrator.setUp()
 
 
 // IP, PORT
-//const ip = getLocalIp()
-const ip = '0.0.0.0'
+const ip = '0.0.0.0' // 0.0.0.0 is also localhost and also device addresses
 const port = configuration.PORT
 
 // put on port

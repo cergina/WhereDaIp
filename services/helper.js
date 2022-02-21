@@ -78,9 +78,11 @@ function uniq(a) {
 function getLocalIp() {
     const os = require('os')
 
+    const lookFor = configuration.IPSTART
+
     for (let addresses of Object.values(os.networkInterfaces())) {
         for (let add of addresses) {
-            if (add.address.startsWith('192.168.0')) {
+            if (add.address.startsWith(lookFor)) {
                 return add.address;
             }
         }
