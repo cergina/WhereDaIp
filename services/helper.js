@@ -74,8 +74,24 @@ function uniq(a) {
     });
 }
 
+
+function getLocalIp() {
+    const os = require('os')
+
+    for (let addresses of Object.values(os.networkInterfaces())) {
+        for (let add of addresses) {
+            if (add.address.startsWith('192.168.0')) {
+                return add.address;
+            }
+        }
+    }
+
+    return '0.0.0.0'
+}
+
 module.exports = {
     logInfo, logDebug, logRaw, logError,
     stringIsAValidUrl, uniq,
-    yyyymmdd, date_plus_time
+    yyyymmdd, date_plus_time,
+    getLocalIp
 }

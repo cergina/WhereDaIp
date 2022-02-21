@@ -17,7 +17,7 @@ const suspectRoutes = require('./routes/suspect/suspect')
 const apiRoutes = require('./routes/api/api')
 const ipsRequests = require('./routes/requests/ips')
 const bodyParser = require('body-parser')
-const { logDebug, logInfo, logRaw, date_plus_time } = require('./services/helper.js')
+const { logDebug, logInfo, logRaw, date_plus_time, getLocalIp } = require('./services/helper.js')
 const { config } = require('dotenv')
 
 ////////////////////////////
@@ -53,12 +53,19 @@ app.use(`${configuration.WWW_API}`, apiRoutes)
 // Global events for files for graphs, ...
 orchestrator.setUp()
 
+
+// IP, PORT
+//const ip = getLocalIp()
+const ip = '0.0.0.0'
+const port = configuration.PORT
+
 // put on port
-const listener = app.listen(configuration.PORT, () => {
+const listener = app.listen(port, ip, () => {
     logRaw(`\n\n-------------------------\n\n`)
     logRaw(`${(new Date()).toLocaleTimeString()} -- ${(new Date()).toLocaleDateString()}`)
     logRaw(`Config file test: ${configuration.SKUSOBNA}`)
-    logRaw(`Server on port: ${configuration.PORT}`)
+    logRaw(`Server on IP:PORT = ${ip}:${port} | localhost:${port} | ${getLocalIp()}:${port}`)
+
     configuration.STARTEDAT=`${(new Date()).toLocaleDateString()} @ ${(new Date()).toLocaleTimeString()}`
 
     logRaw(`\n\n-------------------------\n\n`)
