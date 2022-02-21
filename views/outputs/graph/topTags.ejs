@@ -3,8 +3,6 @@
 <!-- head -->
 <%- include('../../_headerGraph') %> 
 <body>
-    <% var countGraphs = 2 %> 
-
     <div class="container">
         <!-- alert at top -->
         <div class="alert alert-info">
@@ -18,45 +16,8 @@
                 </ol>
               </nav>
         </div>
-        <!-- info -->
-        <div class="bd-callout bd-callout-info">
-            <p>
-                Here are some graphs showing TOP 5 values, under them there is a full list.
-            </p>
-        </div>
-
-        <!-- main content -->
-        <div class="form-group mb-2">
-            <div class="row" style="justify-content: center; align-items: center;">
-                <div class="col-md-6">
-                    <canvas id="chart0"></canvas>
-                </div>
-                <div class="col-md-6">
-                    <canvas id="chart1"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- change graph type button -->
-        <div class="form-group">
-            <div class="row center">
-                <div class="col-md-6">
-                    <button class="btn btn-secondary btn-lg btn-block" onclick="updateConfigByMutatingFirst()">Change 1st graph type</button>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-secondary btn-lg btn-block" onclick="updateConfigByMutatingSecond()">Change 2nd graph type</button>        
-                </div>
-            </div>
-        </div>
-
-
-        <!-- text can be too small, so table is here as well -->
-        <div id="wrapper"></div>
-
         
-        <div class="center">
-            <small class="form-text text-muted" id="datetime">Data gotten at [time here].</small>
-        </div>
+        <%- include('_graphsTwo.ejs') %>
     </div>
 
     <script>
@@ -69,66 +30,30 @@
     </script>
 
     <script>
-        fetch("/accessible/topTags.json")
-            .then(response => response.json())
-            .then(data => {"?"
-                chart0 = new Chart(chartCtx0, data)
-                data0 = data
-            })
+    fetch("/accessible/topTags.json")
+        .then(response => response.json())
+        .then(data => {
+            // Perform Deep copy
+            data0 = JSON.parse(JSON.stringify(data))
+            data1 = JSON.parse(JSON.stringify(data))
+            let time = data.time
 
-        fetch("/accessible/topTags.json")
-            .then(response => response.json())
-            .then(data => {
-                // bar, pie, horizontalBar, line, doughnut, radar, polarArea
-                data.type = 'polarArea'
-                chart1 = new Chart(chartCtx1, data)
-                data1 = data
-            })
-        
-        fetch("/accessible/topTags.json")
-            .then(response => response.json())
-            .then(data => {
-                let time = data.time
-                new gridjs.Grid({ 
-                    columns: data.forGridJs.tableNames,
-                    data: data.forGridJs.tableValues
-                }).render(document.getElementById('wrapper'))
-                
-                document.getElementById('datetime').textContent = `Data calculated at ${time}`
-            })
-            
-    </script>
-    
-    <script>
-        function updateConfigByMutatingFirst() {
-            if (data0.type === 'bar')
-                data0.type = 'line'
-            else if (data0.type === 'line') {
-                data0.type = 'bubble'
-            } else {
-                data0.type = 'bar'
-            }
-
-            chart0.destroy()
+            // ChartJS 0
             chart0 = new Chart(chartCtx0, data0)
-        }
 
-        function updateConfigByMutatingSecond() {
-            if (data1.type === 'polarArea')
-                data1.type = 'pie'
-            else if (data1.type === 'pie') {
-                data1.type = 'doughnut'
-            } else if (data1.type === 'doughnut'){
-                data1.type = 'radar'
-            } else {
-                data1.type = 'polarArea'
-            }
-
-            chart1.destroy()
+            // ChartJS 1
+            // bar, pie, horizontalBar, line, doughnut, radar, polarArea
+            data1.type = 'polarArea'
             chart1 = new Chart(chartCtx1, data1)
-        }
 
-        
+            // GridJS
+            new gridjs.Grid({ 
+                columns: data.forGridJs.tableNames,
+                data: data.forGridJs.tableValues
+            }).render(document.getElementById('wrapper'))
+            
+            document.getElementById('datetime').textContent = `Data calculated at ${time}`
+        })
     </script>
   
 </body>

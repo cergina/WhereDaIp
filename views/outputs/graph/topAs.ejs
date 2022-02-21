@@ -18,45 +18,45 @@
                 </ol>
               </nav>
         </div>
-        <!-- info -->
-        <div class="bd-callout bd-callout-info">
-            <p>
-                Here are some graphs.
-            </p>
-        </div>
-
-        <!-- main content -->
-        <div class="form-group">
-            <div class="row" style="justify-content: center; align-items: center;">
-                <div class="col-md-6">
-                    <canvas id="chart0"></canvas>
-                </div>
-                <div class="col-md-6">
-                    <canvas id="chart1"></canvas>
-                </div>
-            </div>
-        </div>
+        
+        <!-- info, graphs, table -->
+        <%- include('_graphsTwo.ejs') %>
     </div>
 
     <script>
         let chartCtx0 = document.getElementById('chart0').getContext('2d')
         let chartCtx1 = document.getElementById('chart1').getContext('2d')
+        var chart0
+        var chart1
+        let data0
+        let data1
     </script>
 
     <script>
-        fetch("/accessible/topAs.json")
-            .then(response => response.json())
-            .then(data => {
-                let chart0 = new Chart(chartCtx0, data)
-            })
+    fetch("/accessible/topAs.json")
+        .then(response => response.json())
+        .then(data => {
+            // Perform Deep copy
+            data0 = JSON.parse(JSON.stringify(data))
+            data1 = JSON.parse(JSON.stringify(data))
+            let time = data.time
 
-        fetch("/accessible/topAs.json")
-            .then(response => response.json())
-            .then(data => {
-                // bar, pie, horizontalBar, line, doughnut, radar, polarArea
-                data.type = 'polarArea'
-                let chart1 = new Chart(chartCtx1, data)
-            })
+            // ChartJS 0
+            chart0 = new Chart(chartCtx0, data0)
+
+            // ChartJS 1
+            // bar, pie, horizontalBar, line, doughnut, radar, polarArea
+            data1.type = 'polarArea'
+            chart1 = new Chart(chartCtx1, data1)
+
+            // GridJS
+            new gridjs.Grid({ 
+                columns: data.forGridJs.tableNames,
+                data: data.forGridJs.tableValues
+            }).render(document.getElementById('wrapper'))
+            
+            document.getElementById('datetime').textContent = `Data calculated at ${time}`
+        })
     </script>
     
   

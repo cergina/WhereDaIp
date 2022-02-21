@@ -1,0 +1,38 @@
+<!-- info -->
+<div class="bd-callout bd-callout-info">
+    <p>
+        Here are some graphs showing TOP 5 values, there is a full list of values under them.
+    </p>
+</div>
+
+<!-- main content -->
+<div class="form-group mb-2">
+    <div class="row" style="justify-content: center; align-items: center;">
+        <div class="col-md-6">
+            <canvas id="chart0"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="chart1"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- change graph type button -->
+<div class="form-group">
+    <div class="row center">
+        <div class="col-md-6">
+            <button class="btn btn-secondary btn-lg btn-block" onclick="updateConfigByMutatingFirst()">Change 1st graph type</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-secondary btn-lg btn-block" onclick="updateConfigByMutatingSecond()">Change 2nd graph type</button>        
+        </div>
+    </div>
+</div>
+
+<!-- text can be too small, so table is here as well -->
+<div id="wrapper"></div>
+
+        
+<div class="center">
+    <small class="form-text text-muted" id="datetime">Data gotten at [time here].</small>
+</div>
