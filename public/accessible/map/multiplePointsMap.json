@@ -1,0 +1,59 @@
+{
+    "options": {
+        "zoom": 2,
+        "tilting": true,
+        "dragging": true,
+        "zooming": true
+    },
+    "points": [
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>192.168.0.1</span>",
+            "lat": 48.17,
+            "lon": 17.15
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>192.168.0.2</span>",
+            "lat": 40.17,
+            "lon": 17.15
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>192.168.0.3</span>",
+            "lat": 20.17,
+            "lon": 17.15
+        }
+    ],
+    "forGridJs": {
+        "tableNames": [
+            "IP",
+            "Reason",
+            "AS",
+            "Secured",
+            "City"
+        ],
+        "tableValues": [
+            [
+                "192.168.0.1",
+                "bots",
+                "AS-RANDOM",
+                "UNKNOWN",
+                "Bratislava"
+            ],
+            [
+                "192.168.0.2",
+                "mail",
+                "AS-RANDOM",
+                "UNKNOWN",
+                "Prague"
+            ],
+            [
+                "192.168.0.3",
+                "strong",
+                "AS-RANDOM",
+                "UNKNOWN",
+                "Nitra"
+
+            ]
+        ]
+    },
+    "time": "2022-02-22 00:20:15"
+}

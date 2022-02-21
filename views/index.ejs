@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- head -->
-<%- include('_header') %> 
-<body>
+<%- include('_headerIntro') %> 
+<body onload="initialize()">
 
     <div class="container">
         <div class="alert alert-info">
@@ -19,23 +19,23 @@
             </p>
         </div>
 
-        <a href="/state" class="btn btn-info">Application status</a>
-        <a href="/geolocation" class="btn btn-primary">Geolocation</a>
-        <a href="/covert" class="btn btn-secondary">Covert module</a>
-        <a href="/suspect" class="btn btn-secondary">Suspicious module</a>
-        <a href="/presentation" class="btn btn-danger">Results</a>
-        <a href="/faq" class="btn btn-warning">FAQ</a>
+        <!-- links -->
+        <div class="row mb-2">
+            <div class="col text-center">
+                <a href="/state" class="btn btn-info">Application status</a>
+                <a href="/geolocation" class="btn btn-primary">Geolocation</a>
+                <a href="/covert" class="btn btn-secondary">Covert module</a>
+                <a href="/suspect" class="btn btn-secondary">Suspicious module</a>
+                <a href="/presentation" class="btn btn-danger">Results</a>
+                <a href="/faq" class="btn btn-warning">FAQ</a>
+            </div>
+        </div>
+
+        <!-- main test -->
+        <div class="mt-2 mb-2" id="earth_div"></div>
         
 
-        <br>
-        <!-- Old layout buttons under <br>
-        <a href="/providers" class="btn btn-info">List of GeoDB providers in system</a>
-        <a href="/requests" class="btn btn-info">List of IP responses in Database</a>
-        <a href="/state" class="btn btn-info">Application status</a> -->
-
-        <a href="/time-test" class="btn btn-info">Test</a>
     </div>
-
 </body>
 </html>
 

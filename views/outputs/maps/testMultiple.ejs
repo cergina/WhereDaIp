@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- head -->
-<%- include('../../_headerMap') %> 
+<%- include('../../_headerMapMultiple') %> 
 <body onload="initialize()">
     
     <div class="container"> 
@@ -19,12 +19,14 @@
         </div>
 
         <!-- main test -->
-        <div id="earth_div"></div>
+        <div class="center mw-80" style="border:1px solid gray; padding:2px;" id="earth_div"></div>
         
-        <canvas id="myMap">
-            <div id="earth_div"></div>
-        </canvas>
-        
+        <!-- GridJS -->
+        <div id="wrapper"></div>
+
+        <div class="center">
+            <small class="form-text text-muted" id="datetime">Data gotten at [time here].</small>
+        </div>
     </div>
 
 </body>

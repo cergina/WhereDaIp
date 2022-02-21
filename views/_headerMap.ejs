@@ -7,8 +7,6 @@
     <link rel="stylesheet" type="text/css" href="/css/custom.css">
     <link rel="stylesheet" type="text/css" href="/css/callout.css">
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.1/chart.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- mapa -->
     <script src="http://www.webglearth.com/v2/api.js"></script>
@@ -28,8 +26,6 @@
 
         var marker = WE.marker([lat, lon]).addTo(earth);
         marker.bindPopup("<b>Location marked!</b><br>Target found<br/><span style='font-size:10px;color:#999'>" + ip + "</span>", {maxWidth: 300, closeButton: true}).openPopup();
-
-        var markerCustom = WE.marker([lat, lon], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
 
         earth.setView([lat, lon], 3);
       }

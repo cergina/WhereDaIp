@@ -1,0 +1,41 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/callout.css">
+
+    <!-- mapa -->
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+      var earth;
+      function initialize() {
+        earth = new WE.map('earth_div', {'zooming': false, 'sky': false, 'atmosphere': true, 'dragging': false, 'tilting': false});
+
+        var marker = WE.marker([48.1536937470204, 17.0717551926883]).addTo(earth);
+        var markerCustom = WE.marker([48, 18], '/favicon.ico', 32, 32).addTo(earth);
+        marker.bindPopup("<b>FIIT STU!</b><br>Alma mater<br/><span style='font-size:15px;color:#999'>" + "The Faculty of Informatics and Information Technology is one of the faculties of the Slovak University of Technology in Bratislava" + "</span>", {maxWidth: 300, closeButton: true}).openPopup();
+
+        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(earth);
+
+        earth.setView([48.1536937470204, 17.0717551926883], 3);
+
+        // Start a simple rotation animation
+        var before = null;
+        requestAnimationFrame(function animate(now) {
+            var c = earth.getPosition();
+            var elapsed = before? now - before: 0;
+            before = now;
+            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+            requestAnimationFrame(animate);
+        });
+      }
+    </script>
+
+    <!-- remember to pass in during render in controller -->
+    <title><%= siteTitle %> </title>
+</head>
