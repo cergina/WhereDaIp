@@ -3,8 +3,9 @@
 
 const configuration = require("../config/config-nonRestricted")
 const locationProvider = require("../models/locationProvider")
-const { logDebug, logInfo, logRaw, yyyymmdd } = require('../services/helper.js')
+const { logInfo, yyyymmdd } = require('../services/helper.js')
 
+const basePath = `providers/`
 
 // for Internal
 async function getAllUsableProviders() {
@@ -28,11 +29,11 @@ const showAllProviders = async (req, res) => {
     // is not slow but optimalization is better
     //const providers = await locationProvider.find().sort({ addedAt: 'desc'})
     
-    res.render('providers/fullList.ejs', { providers: providers, siteTitle: 'GeoDB provider list' })
+    res.render(`${basePath}fullList.ejs`, { providers: providers, siteTitle: 'GeoDB provider list' })
 }
 
 const newProvider = (req, res) => {
-    res.render('providers/newProvider.ejs', { provider: new locationProvider(), siteTitle: 'New provider' })
+    res.render(`${basePath}newProvider.ejs`, { provider: new locationProvider(), siteTitle: 'New provider' })
 }
 
 const editProvider = async (req, res) => {

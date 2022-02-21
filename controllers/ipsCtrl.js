@@ -10,6 +10,7 @@ const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js
 const locationProvider = require('../models/locationProvider.js')
 const { request } = require('express')
 
+const basePath = `requests/`
 
 // GETs
 const showAllIps = async (req, res) => {
@@ -37,7 +38,7 @@ const showAllIps = async (req, res) => {
         customizedProviders[providers[i]._id] = item
     }
 
-    res.render('requests/ips.ejs', { requests: requests, 
+    res.render(`${basePath}ips.ejs`, { requests: requests, 
         providers: customizedProviders,
         siteTitle: 'List of IPs'})
 }
@@ -86,13 +87,13 @@ const showFilteredIps = async (req, res) => {
         summedRequests.push(item)
     }
 
-    res.render('requests/filteredIps.ejs', { summedRequests: summedRequests, 
+    res.render(`${basePath}filteredIps.ejs`, { summedRequests: summedRequests, 
         providers: customizedProviders,
         siteTitle: 'Fused IP information'})
 }
 
 const showTestMap = (req, res) => {
-    res.render('requests/mapTest.ejs')
+    res.render(`${basePath}mapTest.ejs`)
 }
 
 const downloadResponses = async (req, res) => {
@@ -116,7 +117,7 @@ const downloadResponses = async (req, res) => {
 }
 
 const makeRequestController = (req, res) => {
-    res.render('requests/makeRequest.ejs', { siteTitle: 'New request'})
+    res.render(`${basePath}makeRequest.ejs`, { siteTitle: 'New request'})
 }
 
 /* this needs to contain fused data and providers array, low chance of some fields being empty */
@@ -155,7 +156,7 @@ const showFusedResponse = async (req, res) => {
     //     console.log('ende\n')
     // }
 
-    res.render('requests/showFusedResponse.ejs', {
+    res.render(`${basePath}showFusedResponse.ejs`, {
         response: response, // only used for general info
         providers: customizedProviders, 
         siteTitle: 'Fused Response'})
@@ -170,7 +171,7 @@ const showResponse = async (req, res) => {
 
     const provider = await locationProvider.findById(response.provider)
 
-    res.render('requests/showResponse.ejs', { response: response, provider: provider, siteTitle: 'Response details' })
+    res.render(`${basePath}showResponse.ejs`, { response: response, provider: provider, siteTitle: 'Response details' })
 }
 
 

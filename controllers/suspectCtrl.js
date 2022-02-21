@@ -2,8 +2,8 @@
 // to handle requests. 
 
 const configuration = require("../config/config-nonRestricted")
-const { logDebug, logError, logInfo, logRaw, yyyymmdd, stringIsAValidUrl, uniq } = require('../services/helper.js')
-const { findTagById, findIdByTag, getCountOfTag, addTag, removeTag, decreaseTag, getAllTags, removeAllTags } = require('../services/tagSupport.js')
+const { logError, logInfo, stringIsAValidUrl, uniq } = require('../services/helper.js')
+const { findTagById, findIdByTag, addTag, decreaseTag, getAllTags, removeAllTags } = require('../services/tagSupport.js')
 const { sendPromise } = require('../services/simpleCommunicator.js')
 
 const suspectProvider = require("../models/suspectProvider")

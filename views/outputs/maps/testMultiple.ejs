@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../../_headerMap') %> 
+<body onload="initialize()">
+    
+    <div class="container"> 
+        <!-- alert at top -->
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Maps</h1> 
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
+                    <li class="breadcrumb-item"><a href="/maps">Maps</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Test (Multiple points)</li>
+                </ol>
+              </nav>
+        </div>
+
+        <!-- main test -->
+        <div id="earth_div"></div>
+        
+        <canvas id="myMap">
+            <div id="earth_div"></div>
+        </canvas>
+        
+    </div>
+
+</body>
+</html>
+
+
