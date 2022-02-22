@@ -15,7 +15,7 @@ const tagSchema = new mongoose.Schema({
 
 // anytime save, update, create and delete
 tagSchema.pre('validate', function(next) {
-    console.log(`tag validation: ${this.name} ${this.count}`)
+    //console.log(`tag validation: ${this.name} ${this.count}`)
 
     next()
 })

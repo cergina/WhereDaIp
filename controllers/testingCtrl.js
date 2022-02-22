@@ -39,8 +39,8 @@ const changeTestFile = (req, res, next) => {
 
     fs.writeFileSync(folderWrite + fileName, JSON.stringify(file, null, 4), function (err) {
         if (err) return console.log(err);
-        console.log(JSON.stringify(file));
-        console.log('writing to ' + folderWrite + fileName);
+        //console.log(JSON.stringify(file));
+        //console.log('writing to ' + folderWrite + fileName);
       });
     
     res.sendStatus(200)
@@ -58,8 +58,8 @@ const onPremiseChangeTestFile = (req, res, next) => {
 
     fs.writeFileSync(folderWrite + fileName, JSON.stringify(file, null, 4), function (err) {
         if (err) return console.log(err);
-        console.log(JSON.stringify(file));
-        console.log('writing to ' + folderWrite + fileName);
+        //JSON.stringify(file));
+        //console.log('writing to ' + folderWrite + fileName);
       });
  
     //logRaw(`\nchangeTestFile() exiting\n`)

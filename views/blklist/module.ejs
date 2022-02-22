@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- head -->
-<%- include('../_header') %> 
+<%- include('../_headerModal') %> 
 <body>
 
     <div class="container">
@@ -16,20 +16,25 @@
         </div>
         <div class="bd-callout bd-callout-info mb-4">
             <p>
-
             </p>
         </div>
 
         <!-- akcne tlacidlo -->
-        <a href="/suspect/providers" class="btn btn-primary mb-4">Lists</a>
+        <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary mb-4">Modal</a>
 
         <!-- zoznam -->
-        
         <!-- test tabulka END -->
+        
+        
+        
+
 
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %> 
+        
     </div>
+
+    <%- include('../www_modals/example') %>
 </body>
 </html>
 

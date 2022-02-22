@@ -107,7 +107,7 @@ const showAllProviders = async (req, res) => {
     }).sort({ addedAt: 'desc'})
     //const providers = await suspectProvider.find({}).sort({addedAt: 'desc'})
 
-    console.log(providers)
+    //console.log(providers)
 
     res.render(`${baseViewFolder.slice(1)}` + '/providerList.ejs', { providers: providers, siteTitle: 'Suspicious activity providers' })
 }
@@ -228,7 +228,7 @@ const acceptEditExisting = async (req, res, next) => {
         // REST METHOD === 0 === GET
         // checked in next() saveAndRedirecTest
         // just check if URL is valid
-        console.log(`URL: req.body.baseUrl ${req.body.api_url}`)
+        //console.log(`URL: req.body.baseUrl ${req.body.api_url}`)
         if (! stringIsAValidUrl(req.body.api_url)) {
             res.redirect(`${configuration.WWW_SUSPECT_HOME}/providers/${req.params.slug}/?urlinvalid=1`)
             return
@@ -467,8 +467,8 @@ module.exports = {
 // helper - znovupouzitelnost
 function saveAndRedirect(viewName) {
     return async (req, res) => {
-        console.log(``)
-        console.log(``)
+        //console.log(``)
+        //console.log(``)
 
         let provider = req.provider
 
@@ -586,7 +586,7 @@ function saveAndRedirect(viewName) {
                     newList.push(address)
                 });
         
-                console.log(`newList: ${newList}`)
+                //console.log(`newList: ${newList}`)
                 
                 // non zero length array should be considered okay
                 if (newList.length > 0)
@@ -599,7 +599,7 @@ function saveAndRedirect(viewName) {
         }
 
         
-        console.log(`req.tmpAddresses: ${req.tmpAddresses}`)
+        //console.log(`req.tmpAddresses: ${req.tmpAddresses}`)
         //
         // IPs
         provider.ipList = []

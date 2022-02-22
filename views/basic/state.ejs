@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- head -->
-<%- include('../_header') %> 
+<%- include('../_headerModal') %> 
 <body>
 
     <div class="container">
@@ -35,10 +35,14 @@
             </p>
         </div>
 
+        <!-- to-do list -->
+        <a href="#" data-toggle="modal" data-target="#todoModalCenter" class="btn btn-lg btn-warning btn-block mb-4">TODO List</a>
 
-
+        <!-- www, ... -->
         <%- include('../_footer') %> 
     </div>
+
+    <%- include('../www_modals/todoList') %>
 </body>
 </html>
 
