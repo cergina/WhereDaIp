@@ -19,22 +19,25 @@
             </p>
         </div>
 
-        <!-- links -->
-        <div class="row mb-2">
-            <div class="col text-center">
-                <a href="/state" class="btn btn-info">Application status</a>
-                <a href="/geolocation" class="btn btn-primary">Geolocation</a>
-                <a href="/covert" class="btn btn-secondary">Covert module</a>
-                <a href="/suspect" class="btn btn-secondary">Suspicious module</a>
-                <a href="/presentation" class="btn btn-danger">Results</a>
-                <a href="/faq" class="btn btn-warning">FAQ</a>
+        
+        <div class="row">
+            <div class="col-md-2">
+                <!-- links -->
+                <a href="/state" class="btn btn-info btn-block">Application status</a>
+                <a href="/geolocation" class="btn btn-primary btn-block">Geolocation</a>
+                <a href="/covert" class="btn btn-secondary btn-block">Covert module</a>
+                <a href="/suspect" class="btn btn-secondary btn-block">Suspicious module</a>
+                <a href="/blklist" class="btn btn-secondary btn-block">Blocklist module</a>
+                <a href="/presentation" class="btn btn-danger btn-block">Results</a>
+                <a href="/faq" class="btn btn-warning btn-block">FAQ</a>
+            </div>
+            <div class="col-md-10">
+                <!-- main test -->
+                <div class="mt-2 mb-2" id="earth_div"></div>
             </div>
         </div>
 
-        <!-- main test -->
-        <div class="mt-2 mb-2" id="earth_div"></div>
-        
-
+        <%- include('_footer') %> 
     </div>
 </body>
 </html>
