@@ -10,25 +10,22 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Blocklists</li>
+                    <li class="breadcrumb-item"><a href="/blklist/">Blocklists</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">New source</li>
                 </ol>
               </nav>
         </div>
         <div class="bd-callout bd-callout-info mb-4">
             <p>
-                In progress
+                In work
             </p>
         </div>
 
-        <!-- akcne tlacidlo -->
-        <a href="/blklist/new" class="btn btn-success">Add New Source</a>
-
-        <!-- zoznam -->
-        <!-- test tabulka END -->
-        
-        
-        
-
+        <!-- main content -->
+        <form action="/blklist" method="POST">
+            <!-- this is to output raw html instead of conerting to String -->
+            <%- include('_form_fields_provider') %>
+        </form>
 
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %> 

@@ -7,6 +7,7 @@ const router = express.Router()
 
 // GETs
 router.get('/', controller.showModule)
+router.get('/new', controller.addNewSource)
 
 // POSTs
 
