@@ -30,7 +30,8 @@
 
         <!-- akcne tlacidlo -->
         <a href="/suspect/providers" class="btn btn-primary mb-4">Lists</a>
-        <a href="/suspect/list/delete/all" class="btn btn-warning mb-4">Remove all tags</a>
+        <!-- <a href="/suspect/list/delete/all" class="btn btn-warning mb-4">Remove all tags</a> -->
+        <a href="" class="btn btn-warning mb-4" data-toggle="modal" data-target="#exampleModalCenter">Remove all tags</a>
 
         <!-- zoznam -->
         <!-- test tabulka START -->
@@ -61,6 +62,8 @@
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %> 
     </div>
+
+    <%- include('../www_modals/youSure') %>
 </body>
 </html>
 

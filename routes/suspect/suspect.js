@@ -2,7 +2,7 @@
 const express = require('express')
 const controller = require('../../controllers/suspectCtrl')
 const router = express.Router()
-
+ 
 //
 
 // GETs
