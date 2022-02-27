@@ -21,6 +21,8 @@
                 replies, because all of them might call different fields with different words.
             </p>
         </div>
+
+        <%- include('../_errorCheck') %> 
          
         <form action="/providers" method="POST">
             <!-- this is to output raw html instead of conerting to String -->
@@ -30,5 +32,8 @@
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %> 
     </div>
+
+
+
 </body>
 </html>

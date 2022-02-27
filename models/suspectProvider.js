@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const slugify = require('slugify')
+const { stringIsAValidUrl } = require('../services/helper')
 
 const suspectProviderSchema = new mongoose.Schema({
     slug: {

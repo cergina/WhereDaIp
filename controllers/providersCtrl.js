@@ -95,6 +95,7 @@ function saveAndRedirect(viewName) {
         provider.isActive = req.body.service_enabled === 'on' ? 1 : 0
 
         provider.baseUrl = req.body.api_url
+
         provider.restMethod = req.body.api_method
         provider.request.ipAddress = req.body.api_req_param_ip
         provider.request.authentication = req.body.api_req_param_auth
@@ -123,7 +124,7 @@ function saveAndRedirect(viewName) {
             provider = await provider.save()
             res.redirect(`${configuration.WWW_GEODB_HOME}/${provider.slug}/?changed=1`)
         } catch (e) {
-            res.render(`${configuration.WWW_GEODB_HOME}/${viewName}`, { provider: provider })
+            res.render(`${configuration.WWW_GEODB_HOME.slice(1)}\\${viewName}`, { siteTitle: "Provider (correction)", provider: provider, error: 1  })
         }
     }
 }

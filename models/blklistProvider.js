@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const slugify = require('slugify')
 const { stringIsAValidUrl } = require('../services/helper')
 
-const coverSourceSchema = new mongoose.Schema({
+const blklistProviderSchema = new mongoose.Schema({
     slug: {
         type: String,
         required: true,
@@ -20,7 +20,7 @@ const coverSourceSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0,
-        _options: ["PLAIN-TEXT"]
+        _options: ["JSON", "XML"]
     },
     baseUrl: {
         type: String,
@@ -48,28 +48,19 @@ const coverSourceSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    // response list
-    type: {
-        type: Number,
-        required: true,
-        default: 0,
-        _options: ["VPN servers", "TOR exit nodes"]
-    },
-    list: [
-        {
-            ip: String,
-            type: {
-                type: Number,
-                required: true,
-                default: 0,
-                _options: ["IPv4", "IPv6"]
-            },
-        }
-    ]
+    response: {
+        externalId: String,
+        externalDate: String,
+        url:String,
+        urlStatus:String,
+        lastOnline:String,
+        tags:String,
+        externalUrl:String
+    }
 })
 
 // anytime save, update, create and delete
-coverSourceSchema.pre('validate', function(next) {
+blklistProviderSchema.pre('validate', function(next) {
     if (this.name) {
         this.slug = slugify(this.name, {lower: true, strict: true })
     }
@@ -86,4 +77,4 @@ coverSourceSchema.pre('validate', function(next) {
     next()
 })
 
-module.exports = mongoose.model('CoverSourceSchema', coverSourceSchema)
+module.exports = mongoose.model('BlklistProviderSchema', blklistProviderSchema)

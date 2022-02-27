@@ -160,7 +160,7 @@ function appendAndRedirect(viewName) {
             logInfo(`Successfully changed list size of source ${source.name} is ${source.list.length}`)
             res.redirect(`${baseViewFolder}` + `/${source.slug}/?changed=1`)
         } catch (e) {
-            res.render(`${baseViewFolder.slice(1)}` + `/${viewName}`, { source: source })
+            res.render(`${baseViewFolder.slice(1)}\\${viewName}`, { siteTitle: "Correction", source: source, error: 1 })
         }
     } 
 }

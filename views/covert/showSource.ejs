@@ -22,6 +22,9 @@
             </p>
         </div>
 
+        <%- include('../_errorCheck') %> 
+
+
         <!-- this is to output raw html instead of converting to String -->
         <form action="/covert/edit/<%= source.slug %> " method="POST">
             <%- include('_form_fields_covert_list') %>

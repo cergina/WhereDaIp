@@ -7,48 +7,39 @@
 
     <div class="container">
         <div class="alert alert-info">
-            <h1 class="mb-4 display-4">Name: <%= provider.name %></h1>
+            <h1 class="mb-4 display-4">Blocklist module</h1>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/">Home</a></li>
-                  <li class="breadcrumb-item"><a href="/providers">Providers</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/blklist/">Blocklists</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">New source</li>
                 </ol>
               </nav>
         </div>
-        <div class="bd-callout bd-callout-info">
+        <div class="bd-callout bd-callout-info mb-4">
             <p>
-                Here you can view the details of already stored geolocation service in the database.
-                It's possible to change some fields and save them. Be warned, that changing these
-                fields may result in the service not working. See service's API documentation.
+                In work
             </p>
         </div>
-
-        <%- include('../_errorCheck') %> 
         
-        <% if (typeof error !== 'undefined') { %> 
-            <div class="bd-callout bd-callout-warning">
-                <p>
-                    Check fields
-                </p>
-            </div>
-        <% } %> 
- 
-        <form action="/providers/edit/<%= provider.id %> " method="POST">
+        <%- include('../_errorCheck') %> 
+
+        <!-- main content -->
+        <form action="/blklist/edit/<%= provider.id %>" method="POST">
             <!-- this is to output raw html instead of conerting to String -->
             <%- include('_form_fields_provider') %>
         </form>
 
         <!-- footer with name, year, FIIT, www -->
-        <%- include('../_footer') %> 
+        <%- include('../_footer') %>
     </div>
+
 
     <!-- toto sa zobrazi po nacitani stranky a hladam v tom parameter changed, ktory sa posle len po uspesnom ulozeni a redirecte na toto -->
     <script>
         function afterLoaded() {
             var queryString = window.location.search
-            var urlParams = new URLSearchParams(queryString)
-
+            var urlParams = new URLSearchParams(queryString)   
             if (urlParams.get('changed') == '1') {
                 swal({icon: 'success', title: 'Saved!', button: false, timer: 1500})
             } else if (urlParams.get('invalid') == '1') {
@@ -58,3 +49,5 @@
     </script>
 </body>
 </html>
+
+

@@ -16,6 +16,173 @@
 </div>
 <h5 class="display-5 mt-4">Service's request fields (see service's documentation)</h5>
 
+
+<!-- System notes -->
+<div class="form-group">
+    <div class="row">
+        <!-- label -->
+        <div class="col-md-3">
+            <label class="col-form-label" for="name">Name of the service in this system *</label>
+        </div>
+        <!-- value -->
+        <div class="col-md-4">
+            <input required value="<%= provider.name %>" type="text" name="name" id="name" class="form-control">        
+        </div>
+
+        <!-- Test switch (Enable service) -->
+        <div class="col-md-2 custom-control custom-switch align-self-center justify-content-center">
+            <input type="checkbox" class="custom-control-input" name="service_enabled" id="service_enabled" <%= provider.isActive ? "checked" : "" %>>
+            <label class="custom-control-label" for="service_enabled">Enable service?</label>
+        </div>
+        
+    </div>
+</div>
+<!-- popis -->
+<div class="form-group">
+    <label for="description">Your own description and notes on the service</label>
+    <textarea name="description" id="description" class="form-control"><%= provider.description %></textarea>
+</div>
+<!-- datumy -->
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="added_date">Date added (if new, current date shows up)</label>
+        </div>
+        <div class="col-md-6">
+            <label for="last_edit_at">Last edit at (if new, current date shows up)</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <input disabled value="<%= provider.addedAt %>" type="text" name="added_date" id="added_date" class="form-control">
+        </div>
+        <div class="col-md-6">
+            <input disabled value="<%= provider.lastEditAt %>" type="text" name="last_edit_at" id="last_edit_at" class="form-control">
+        </div>
+    </div>
+</div>
+
+
+<!-- informacie potrebne k uspesnemu odoslaniu poziadavky -->
+<div class="bd-callout bd-callout-info">
+    <p>
+        These are information, necessary for the remote API to understand our request.
+        
+        Some APIs are free, some are payed. All of them have different URLs under which they are accessible.
+        Sometimes they can be accessed via pure url + '192.168.0.1', but sometimes you need to create
+        POST request and put information into the body.
+    </p>
+</div>
+<h5 class="display-5 mt-4">Service's request fields (see service's documentation)</h5>
+<div class="form-group"> 
+    <label for="api_url">Service's API url *</label>
+    <input required value="<%= provider.baseUrl %>" placeholder="http://example-blocklist.com/getAll/" type="text" name="api_url" id="api_url" class="form-control">
+    <small class="form-text text-muted mb-4">See in documentation. The url has to comply with rules set in Request method dropdown</small>
+</div>
+
+<!-- dropdowny -->
+<div class="form-group">
+    <div class="row">
+        <!-- miesto pre dropdown-->
+        <div class="col-md-4">
+            <label class="col-form-label" for="api_method">Request method</label>
+            
+            <select class="form-control" name="api_method" id="api_method">
+                <% var options = ["GET= url"] %>
+                <% var selected_method = provider.restMethod %>
+                <% for(var i = 0; i < options.length; i++) { %>
+                    <% var selected = (selected_method == i) ? 'selected' : '' %> 
+                    <option  <%= selected %>  value='<%= i %>'><%= options[i] %></option>
+                <% } %>
+            </select>
+        </div>
+    </div>
+    <small class="form-text text-muted mb-4">Mind that incorrect set-up of this will lead to non working requests</small>
+</div>
+
+
+
+<!-- to co budeme spracovavat ako odpoved od sluzby -->
+<div class="bd-callout bd-callout-info mt-4">
+    <p>
+        In the following part you specify what kind of name is used in the json/xml/... 
+        part of the object returned from the service. Placeholders contain examples which
+        are used in iphois in format eg.: 'example', where you write just words inside ''
+    </p>
+</div>
+<h5 class="display-5 mt-4">Service's response fields (see service's documentation)</h5>
+
+<div class="form-group">
+    <label for="response_format">Response format type</label>
+
+    <select name="response_format" id="response_format" class="form-control">
+        <% var options = ["JSON", "XML"] %>
+        <% var selected_response_format = provider.format %>
+        <% for(var i = 0; i < options.length; i++) { %>
+            <% var selected = (selected_response_format == i) ? 'selected' : '' %> 
+            <option  <%= selected %>  value='<%= i %>'><%= options[i] %></option>
+        <% } %>
+    </select>
+    <small class="form-text text-muted mb-4">XML not implemmented yet</small>
+</div>
+<div class="d-grid gap-3">
+    <div class="form-group p-2 bg-light border">
+        <div class="row">
+            <div class="col-md-12"><label for="blk_resp_tags">Path to "tags"</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><input value="<%= provider.response.tags %>" placeholder="eg.: 'tags'" type="text" name="blk_resp_tags" id="blk_resp_tags" class="form-control"></div>
+        </div>
+    </div>
+</div>
+<div class="d-grid gap-3">
+    <div class="form-group p-2 bg-light border">
+        <div class="row">
+            <div class="col-md-6"><label for="blk_resp_externalId">Path to "external ID"</label></div>
+            <div class="col-md-6"><label for="blk_resp_externalDate">Path to "external date discovered"</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><input value="<%= provider.response.externalId %>" placeholder="eg.: 'id'" type="text" name="blk_resp_externalId" id="blk_resp_externalId" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.externalDate %>" placeholder="eg.: 'dateadded'" type="text" name="blk_resp_externalDate" id="blk_resp_externalDate" class="form-control"></div>
+        </div>
+    </div>
+</div>
+<div class="d-grid gap-3">
+    <div class="form-group p-2 bg-light border">
+        <div class="row">
+            <div class="col-md-6"><label for="blk_resp_url">Path to "dangerous url/ip"</label></div>
+            <div class="col-md-6"><label for="blk_resp_urlStatus">Path to "its availability status"</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><input value="<%= provider.response.url %>" placeholder="eg.: 'url'" type="text" name="blk_resp_url" id="blk_resp_url" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.urlStatus %>" placeholder="eg.: 'url_status'" type="text" name="blk_resp_urlStatus" id="blk_resp_urlStatus" class="form-control"></div>
+        </div>
+    </div>
+</div>
+<div class="d-grid gap-3">
+    <div class="form-group p-2 bg-light border">
+        <div class="row">
+            <div class="col-md-6"><label for="blk_resp_lastOnline">Path to "last time online"</label></div>
+            <div class="col-md-6"><label for="blk_resp_externalUrl">Path to "URL on external service"</label></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><input value="<%= provider.response.lastOnline %>" placeholder="eg.: 'last_online'" type="text" name="blk_resp_lastOnline" id="blk_resp_lastOnline" class="form-control"></div>
+            <div class="col-md-6"><input value="<%= provider.response.externalUrl %>" placeholder="eg.: 'urlhaus_link'" type="text" name="blk_resp_externalUrl" id="blk_resp_externalUrl" class="form-control"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- poznamka -->
 <small class="form-text text-muted mb-4">Inputs marked with * are required.</small>
 
 <!-- akcne tlacidla -->
