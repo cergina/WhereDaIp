@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../_header') %> 
+<body>
+    <div class="container">
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Testing</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Just testing</li>
+                </ol>
+              </nav>
+        </div>
+
+        <textarea class="form-control mt-2 mb-2" name="ips" id="ips" rows="20" disabled><%= (typeof textArea !== 'undefined') ? textArea : '' %></textarea>
+
+        <!-- footer with name, year, FIIT, www -->
+        <%- include('../_footer') %>
+    </div>
+
+</body>
+</html>
+
+

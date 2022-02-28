@@ -30,6 +30,8 @@
             <%- include('_form_fields_provider') %>
         </form>
 
+        <textarea class="form-control mt-2 mb-2" name="ips" id="ips" rows="20" disabled><%= (typeof provider.ipAddresses !== 'undefined') ? provider.ipAddresses : '' %></textarea>
+
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %>
     </div>

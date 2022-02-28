@@ -12,15 +12,9 @@ const basePath = `${configuration.WWW_BLKLIST_HOME}`
 // GETs
 const showModule = async (req, res) => {
     const providers = await blklistProvider.find().sort({ addedAt: 'desc'})
-
-    console.log('mame')
-    console.log(providers)
-    console.log('\n')
-
     res.render(`${basePath.slice(1)}/module.ejs`, { siteTitle: 'Blocklist Module', providers: providers})
 } 
 const addNewSource = async (req, res) => {
-
     res.render(`${basePath.slice(1)}/addNewSource.ejs`, { provider: new blklistProvider(), siteTitle: 'Form to add new blocklist source'})
 }
 const editSource = async (req, res) => {
@@ -30,6 +24,12 @@ const editSource = async (req, res) => {
         res.redirect(`${configuration.WWW_ROOT}`)
 
     res.render('blklist/showSource.ejs', { provider: provider, siteTitle: 'Edit source' })
+}
+const showList = async (req, res) => {
+    const providers = await blklistProvider.find().sort({ addedAt: 'desc'})
+
+
+    res.render('basic/pureTextArea.ejs', { textArea: providers, siteTitle: 'Test' })
 }
 
 // POSTs
@@ -75,6 +75,10 @@ function saveAndRedirect(viewName) {
         try {
             provider = await provider.save()
             console.log('ok')
+
+
+
+            console.log('done')
             res.redirect(`${configuration.WWW_BLKLIST_HOME}/${provider.slug}/?changed=1`)
         } catch (e) {
             console.log(`chyba ${e}`)
@@ -84,7 +88,7 @@ function saveAndRedirect(viewName) {
 }
 
 module.exports = {
-    showModule, addNewSource, editSource,
+    showModule, addNewSource, editSource, showList,
     createNewProvider, editExistingProvider, deleteExistingProvider,
     saveAndRedirect
 }

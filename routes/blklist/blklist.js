@@ -8,7 +8,9 @@ const router = express.Router()
 // GETs
 router.get('/', controller.showModule)
 router.get('/new', controller.addNewSource)
+router.get('/list/:slug', controller.showList)
 router.get('/:slug', controller.editSource)
+
 
 // POSTs
 router.post('/', controller.createNewProvider, controller.saveAndRedirect('addNewSource'))
