@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- head -->
-<%- include('../_header') %> 
+<%- include('../_headerNew') %> 
 <body>
-    <div class="container">
-        <div class="alert alert-info">
-            <h1 class="mb-4 display-4">Testing</h1>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Just testing</li>
-                </ol>
-              </nav>
-        </div>
+    <div class="container">   
+        <!-- head -->
+        <%-include('../_breadcrumb')  %> 
+
+        <!-- get new list button -->
+        <a href="/blklist/refresh/<%= slug %>" class="btn btn-info btn-block">Refresh list (Get if empty)</a>
 
         <textarea class="form-control mt-2 mb-2" name="ips" id="ips" rows="20" disabled><%= (typeof textArea !== 'undefined') ? textArea : '' %></textarea>
 

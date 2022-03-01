@@ -10,6 +10,7 @@ router.get('/', controller.showModule)
 router.get('/new', controller.addNewSource)
 router.get('/list/:slug', controller.showList)
 router.get('/:slug', controller.editSource)
+router.get('/refresh/:slug', controller.refreshProviderList)
 
 
 // POSTs

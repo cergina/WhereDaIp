@@ -5,6 +5,9 @@
 /* imports */
 const configuration = require("../config/config-nonRestricted")
 const blklistProvider = require("../models/BlklistProvider")
+const blklistResponse = require("../models/ResponseBlklist")
+const { sendPromise } = require('../services/simpleCommunicator.js')
+const { logError } = require('../services/helper.js')
 
 /* settings */
 const basePath = `${configuration.WWW_BLKLIST_HOME}`
@@ -25,11 +28,71 @@ const editSource = async (req, res) => {
 
     res.render('blklist/showSource.ejs', { provider: provider, siteTitle: 'Edit source' })
 }
-const showList = async (req, res) => {
-    const providers = await blklistProvider.find().sort({ addedAt: 'desc'})
+const showList = async (req, res) => {    
+    const provider = await blklistProvider.findOne({ slug: req.params.slug })
+
+    if (provider == null)
+        res.redirect(`${configuration.WWW_ROOT}`)
+
+    
+    const list = await blklistResponse.findOne({provider: provider._id})
 
 
-    res.render('basic/pureTextArea.ejs', { textArea: providers, siteTitle: 'Test' })
+    renderList(req, res, list)
+}
+const refreshProviderList = async (req, res) => {
+    const provider = await blklistProvider.findOne({ slug: req.params.slug })
+
+    if (provider == null)
+        res.redirect(`${configuration.WWW_ROOT}`)
+
+    console.log('refreshujem list')
+    try {
+        
+        let acquiredList = await sendPromise(provider.baseUrl)
+        
+        // check every IP for type and save
+        acquiredList = acquiredList.split(/\r?\n/)
+        let newList = []
+
+        acquiredList.forEach(address => {
+            var res = address.startsWith('#')
+
+            if (res === true)
+                return
+
+            // now we know its not a comment
+            let addParsed = address.split("\",\"")
+
+            let temp = {}
+            temp.checked = "false"
+            temp.externalId = addParsed[0]
+            temp.externalDate = addParsed[1]
+            temp.url = addParsed[2]
+            temp.urlStatus = addParsed[3]
+            temp.lastOnline = addParsed[4]
+            temp.tags = addParsed[6]
+            temp.externalUrl = addParsed[7]
+
+            newList.push(temp)
+        })
+
+        // will only work on urlhaus
+        let objParsed = new blklistResponse()
+        objParsed.checked = false
+
+        objParsed.provider = provider._id
+        objParsed.total = newList.length
+        objParsed.list =  newList
+
+        // SAVE
+        await objParsed.save()
+    } catch(e) {
+        logError(e)
+    }
+    console.log('end of list refresh')
+
+    renderList(req, res, provider)
 }
 
 // POSTs
@@ -47,6 +110,18 @@ const deleteExistingProvider = async (req, res) => {
 }
 
 
+// Private methods
+function renderList(req, res, provider) {
+    res.render('basic/pureTextArea.ejs', { 
+        textArea: provider,
+        slug: req.params.slug,
+        site: { 
+            siteTitle: 'View list',
+            title: 'Blocklist list',
+            crumbs: [{url: "/", name: 'Home'}, {url: "/blklist", name: 'Blocklist'}, {name: 'List view'}]
+        }
+     })
+}
 
 // helper - znovupouzitelnost
 function saveAndRedirect(viewName) {
@@ -89,7 +164,7 @@ function saveAndRedirect(viewName) {
 
 module.exports = {
     showModule, addNewSource, editSource, showList,
-    createNewProvider, editExistingProvider, deleteExistingProvider,
+    createNewProvider, editExistingProvider, deleteExistingProvider, refreshProviderList,
     saveAndRedirect
 }
 
