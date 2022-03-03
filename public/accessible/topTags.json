@@ -1,23 +1,11 @@
 {
     "type": "bar",
     "data": {
-        "labels": [
-            "bots",
-            "mail",
-            "strong",
-            "old",
-            "spam"
-        ],
+        "labels": [],
         "datasets": [
             {
                 "label": "Top 5 tags",
-                "data": [
-                    8007,
-                    7967,
-                    802,
-                    802,
-                    40
-                ],
+                "data": [],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -56,33 +44,7 @@
             "Name",
             "Value"
         ],
-        "tableValues": [
-            [
-                "1",
-                "bots",
-                "8007"
-            ],
-            [
-                "2",
-                "mail",
-                "7967"
-            ],
-            [
-                "3",
-                "strong",
-                "802"
-            ],
-            [
-                "4",
-                "old",
-                "802"
-            ],
-            [
-                "5",
-                "spam",
-                "40"
-            ]
-        ]
+        "tableValues": []
     },
-    "time": "2022-03-01 02:53:55"
+    "time": "2022-03-03 15:41:06"
 }

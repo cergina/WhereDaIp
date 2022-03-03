@@ -2,14 +2,15 @@ const configuration = require('../config/config-nonRestricted.js')
 const { date_plus_time } = require('./helper.js')
 const EventEmitter = require('events')
 const { onPremiseChangeTestFile } = require('../controllers/testingCtrl.js')
+const {  } = require('../controllers/.js')
 const { onEventRun } = require('./workers/top.js')
 const eventEmitter = new EventEmitter()
 
 
 const setUp = (req, res) => {
-    // setInterval( () => {
-    //     eventEmitter.emit(configuration.EVENT_GRAPH);
-    // }, configuration.TIMER_EVENT_GRAPH)
+    setInterval( () => {
+        eventEmitter.emit(configuration.EVENT_GRAPH);
+    }, configuration.TIMER_EVENT_GRAPH)
     
     // setInterval( () => {
     //     eventEmitter.emit(configuration.EVENT_MAPS);
