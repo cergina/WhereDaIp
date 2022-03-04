@@ -6,12 +6,16 @@
 const { getJsonWithCountedListTags } = require("../../controllers/suspectCtrl");
 
 var fs = require('fs');
-const { date_plus_time } = require("../helper");
+const helper = require('../helper');
+
+
 var folderRead = '../../public/templates/'  // starts from here
-var folderWrite = './public/accessible/'    // starts from project root
 var fileNameRead = 'barType.json';      // inspiration
+var fileBar = require(folderRead + fileNameRead);
+
+var folderWrite = './public/accessible/'    // starts from project root
 var fileNameWrite = 'topTags.json';     // created
-var file = require(folderRead + fileNameRead);
+
 
 // public
 const onEventRun = async (req, res) => {
@@ -27,21 +31,7 @@ const onEventRun = async (req, res) => {
 const seeTags = async (req, res) => {
     const retObj = await getJsonWithCountedListTags()
     const list = retObj.list    // chart.js
-    //console.log("HA")
-
-    // zorad tags podla  tag.numOfIps
-    //list.sort((a, b) => (a.numOfIps < b.numOfIps) ? 1 : -1)
-
-    //console.log("HB")
-    // .type
-    // .data.labels[ napisy ]
-    // .data.datasets[0].label
-    // .data.datasets[0].data[ cisla ]
-    // .options.plugins.title.text
-
-    // .table
-
-    // .time
+ 
     // pridaj do  fileu, ktory zoberies z template udaje
     var graphLabels = []
     var graphLabel = "Top 5 tags"
@@ -56,33 +46,30 @@ const seeTags = async (req, res) => {
         }
     }
 
-    //console.log("HC")
+
+    var fileWr = JSON.parse(JSON.stringify(fileBar))
 
     // Chart.js
-    file.data.labels = graphLabels
-    file.data.datasets[0].label = graphLabel
-    file.data.datasets[0].data = graphValues
-    file.options.plugins.title.text = graphOptionsLabel
+    fileWr.data.labels = graphLabels
+    fileWr.data.datasets[0].label = graphLabel
+    fileWr.data.datasets[0].data = graphValues
+    fileWr.options.plugins.title.text = graphOptionsLabel
 
     // Grid.js
-    file.forGridJs = {}
-    file.forGridJs.tableNames = ["Order", "Name", "Value"]
-    file.forGridJs.tableValues = retObj.table
+    fileWr.forGridJs = {}
+    fileWr.forGridJs.tableNames = ["Order", "Name", "Value"]
+    fileWr.forGridJs.tableValues = retObj.table
 
-    // misc
-    file.time = date_plus_time()
+    fileWr.time = helper.date_plus_time()
+    fileWr.nazov = 'top.js - seeTags'
 
-    //console.log("HD")
-    // uloz do public accessible
-    saveChangesToFile()
-
-    //console.log("HE")
-    // vytvor daco co dokaze odtial citat udaje o tagoch
-
+    saveChangesToFile(folderWrite, fileNameWrite, fileWr)
 }
 
-const saveChangesToFile = (req, res, next) => {
-    fs.writeFileSync(folderWrite + fileNameWrite, JSON.stringify(file, null, 4), function (err) {
+
+
+function saveChangesToFile(whereFolder, whereName, tempFile) {
+    fs.writeFileSync(whereFolder + whereName, JSON.stringify(tempFile, null, 4), function (err) {
         if (err) return console.log(err);
       });
 }
