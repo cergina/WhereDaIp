@@ -40,12 +40,14 @@ const seeTags = async (req, res) => {
 
     var graphLimit = 5
     for (var tmp of list) {
+        // neustale pocitame dlzku zoznamu do ktoreho pridavame a ak je este miesto pridame dalsi
         if (graphLabels.length < graphLimit) {
             graphLabels.push(tmp.tagName)
             graphValues.push(tmp.numOfIps)
         }
     }
 
+    
 
     var fileWr = JSON.parse(JSON.stringify(fileBar))
 
@@ -60,7 +62,6 @@ const seeTags = async (req, res) => {
     fileWr.forGridJs.tableNames = ["Order", "Name", "Value"]
     fileWr.forGridJs.tableValues = retObj.table
 
-    fileWr.time = helper.date_plus_time()
     fileWr.nazov = 'top.js - seeTags'
 
     saveChangesToFile(folderWrite, fileNameWrite, fileWr)
@@ -69,6 +70,7 @@ const seeTags = async (req, res) => {
 
 
 function saveChangesToFile(whereFolder, whereName, tempFile) {
+    tempFile.time = helper.date_plus_time()
     fs.writeFileSync(whereFolder + whereName, JSON.stringify(tempFile, null, 4), function (err) {
         if (err) return console.log(err);
       });

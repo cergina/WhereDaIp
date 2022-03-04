@@ -26,3 +26,15 @@ function updateConfigByMutatingSecond() {
     chart1 = new Chart(chartCtx1, data1)
 }
 
+function updateConfigByMutatingThird() {
+    if (data2.type === 'pie')
+        data2.type = 'doughnut'
+    else if (data2.type === 'doughnut') {
+        data2.type = 'pie'
+    } else {
+        data2.type = 'pie'
+    }
+
+    chart2.destroy()
+    chart2 = new Chart(chartCtx2, data2)
+}

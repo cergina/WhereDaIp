@@ -123,6 +123,72 @@ function renderList(req, res, provider) {
      })
 }
 
+/* */
+// For EVENTS
+const getJsonWithCountedOnline = async (req, res) => {
+    var ro = []
+
+    // ziskat cely zoznam {urlStatus}
+    // zisk vsetkych poskytovatelov
+    const providers = await blklistProvider.find({}, {
+        "isActive": 1,
+        "slug": 1
+    })
+
+    
+    ro.push({"name": "online", "count": 0})
+    ro.push({"name": "offline", "count": 0})
+    ro.push({"name": "unknown", "count": 0})
+
+    var countOn = 0
+    var countOff = 0
+    var countNA = 0
+
+    for (var provider of providers) {
+         var tmpResp = await blklistResponse.findOne({provider: provider._id},
+            {
+                "addedAt": 1,
+                "analyzed": 1,
+                "list.urlStatus": 1
+            })
+
+
+        for (var stat of tmpResp.list) {
+            if (stat.urlStatus === 'online')
+                countOn++
+            else if (stat.urlStatus === 'offline')
+                countOff++
+            else
+                countNA++
+        }
+    }
+
+    ro[0].count = countOn
+    ro[1].count = countOff
+    ro[2].count = countNA
+
+    // sort them
+    ro.sort((a, b) => (a.count < b.count) ? 1 : -1)
+
+    var retObj = {}
+    retObj.list = ro
+
+    // GridJs
+    retObj.table = []
+    var order = 1
+    
+    for (var tmp of ro) {
+        retObj.table.push([order++, tmp.name, tmp.count])
+    }
+
+    return retObj
+}
+/* */
+
+
+
+
+
 // helper - znovupouzitelnost
 function saveAndRedirect(viewName) {
     return async (req, res) => {
@@ -162,9 +228,11 @@ function saveAndRedirect(viewName) {
     }
 }
 
+
 module.exports = {
     showModule, addNewSource, editSource, showList,
     createNewProvider, editExistingProvider, deleteExistingProvider, refreshProviderList,
+    getJsonWithCountedOnline,
     saveAndRedirect
 }
 

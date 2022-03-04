@@ -1,11 +1,19 @@
 {
     "type": "bar",
     "data": {
-        "labels": [],
+        "labels": [
+            "offline",
+            "online",
+            "unknown"
+        ],
         "datasets": [
             {
-                "label": "Covered",
-                "data": [],
+                "label": "Online status",
+                "data": [
+                    46709,
+                    5991,
+                    1
+                ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -31,7 +39,7 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Cover in use"
+                "text": "Threat actor status"
             },
             "legend": {
                 "display": false
@@ -39,5 +47,29 @@
         }
     },
     "nazov": "compGen - comparedOnline",
-    "time": "2022-03-04 11:47:13"
+    "forGridJs": {
+        "tableNames": [
+            "Order",
+            "Name",
+            "Value"
+        ],
+        "tableValues": [
+            [
+                1,
+                "offline",
+                46709
+            ],
+            [
+                2,
+                "online",
+                5991
+            ],
+            [
+                3,
+                "unknown",
+                1
+            ]
+        ]
+    },
+    "time": "2022-03-04 17:26:21"
 }

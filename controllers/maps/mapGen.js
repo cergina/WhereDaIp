@@ -17,7 +17,7 @@ const onEventGenerateFiles = async (req, res) => {
         await generateMapTest()
         // dalsie
     } catch (e) {
-        logError(`Error in mapGen occured during event ${e}`)
+        helper.logError(`Error in mapGen occured during event ${e}`)
     }
 }
 
@@ -26,12 +26,13 @@ const generateMapTest = async (req, res) => {
     var fileMapTest = JSON.parse(JSON.stringify(fileBar))
 
     fileMapTest.nazov = 'mapGen - generateMapTest'
-    fileMapTest.time = helper.date_plus_time()
     
     saveChangesToFile(folderWrite, fileNameWriteOnline, fileMapTest)
 }
 
 function saveChangesToFile(whereFolder, whereName, tempFile) {
+    tempFile.time = helper.date_plus_time()
+
     fs.writeFileSync(whereFolder + whereName, JSON.stringify(tempFile, null, 4), function (err) {
         if (err) return console.log(err);
       });

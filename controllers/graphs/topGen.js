@@ -16,7 +16,7 @@ const onEventGenerateFiles = async (req, res) => {
     try {
         await generateTopHaha()
     } catch (e) {
-        logError(`Error in topGen occured during event ${e}`)
+        helper.logError(`Error in topGen occured during event ${e}`)
     }
 }
 
@@ -25,12 +25,12 @@ const generateTopHaha = async (req, res) => {
     var fileTopHaha = JSON.parse(JSON.stringify(fileBar))
 
     fileTopHaha.nazov = 'topGen - topHaha'
-    fileTopHaha.time = helper.date_plus_time()
     
     saveChangesToFile(folderWrite, fileNameWriteOnline, fileTopHaha)
 }
 
 function saveChangesToFile(whereFolder, whereName, tempFile) {
+    tempFile.time = helper.date_plus_time()
     fs.writeFileSync(whereFolder + whereName, JSON.stringify(tempFile, null, 4), function (err) {
         if (err) return console.log(err);
       });

@@ -5,7 +5,7 @@ const { stringIsAValidUrl } = require('../services/helper')
 const responseBlklistSchema = new mongoose.Schema({
     addedAt: {
         type: Date,
-        required: true,
+        required: true, 
         default: Date.now
     },
     provider: {

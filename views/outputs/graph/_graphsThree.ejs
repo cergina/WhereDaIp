@@ -1,18 +1,21 @@
 <!-- info -->
 <div class="bd-callout bd-callout-info">
     <p>
-        Here are some graphs showing TOP 5 values, there is a full list of values under them.
+        Here are some graphs showing TOP values, full list is under the graphs.
     </p>
 </div>
 
 <!-- main content -->
 <div class="form-group mb-2">
     <div class="row" style="justify-content: center; align-items: center;">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <canvas id="chart0"></canvas>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <canvas id="chart1"></canvas>
+        </div>
+        <div class="col-md-4">
+            <canvas id="chart2"></canvas>
         </div>
     </div>
 </div>
@@ -20,12 +23,15 @@
 <!-- change graph type button -->
 <div class="form-group">
     <div class="row center">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <button class="btn btn-secondary btn-lg btn-block" onclick="updateConfigByMutatingFirst()">Change 1st graph type</button>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <button class="btn btn-secondary btn-lg btn-block" onclick="updateConfigByMutatingSecond()">Change 2nd graph type</button>        
-        </div>
+        </div> 
+        <div class="col-md-4">
+            <button class="btn btn-secondary btn-lg btn-block" onclick="updateConfigByMutatingThird()">Change 3rd graph type</button>        
+        </div> 
     </div>
 </div>
 

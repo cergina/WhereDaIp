@@ -9,7 +9,6 @@ const { sendPromise } = require('../services/simpleCommunicator.js')
 const suspectProvider = require("../models/suspectProvider")
 const net = require('net')
 const { WWW_SUSPECT_HOME } = require("../config/config-nonRestricted")
-const { nextTick } = require("process")
 const res = require("express/lib/response")
 
 const baseViewFolder = `${WWW_SUSPECT_HOME}`
