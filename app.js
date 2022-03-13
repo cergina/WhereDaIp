@@ -3,6 +3,7 @@
 //////////////////////////
 const configuration = require('./config/config-nonRestricted.js')
 const express = require('express')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const favicon = require('serve-favicon')
 const path = require('path')
@@ -25,6 +26,7 @@ const { logRaw, getLocalIp } = require('./services/helper.js')
 
 mongoose.connect('mongodb://localhost/wdip')
 var app = express()
+app.use(cors())
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.set('views', path.join(__dirname, 'views'));
@@ -33,7 +35,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs')
-app.disable('view cache')
+//app.disable('view cache')
 
 app.use(express.urlencoded( {extended: false, limit: '25mb'} ))
 app.use(express.json({limit: '25mb'}))

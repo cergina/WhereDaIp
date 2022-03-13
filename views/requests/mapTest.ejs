@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <!-- <script src="http://www.webglearth.com/v2/api.js"></script> -->
+    <script src="/v2/api.js"></script>
     <script>
       function initialize() {
         // zisk url parametrov
@@ -14,7 +15,15 @@
 
         // zobrazenie lokacie
         var earth = new WE.map('earth_div');
-        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+        // WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+        WE.tileLayer('/{z}/{x}/{y}.jpg', {
+          tileSize: 256,
+          bounds: [[-85, -180], [85, 180]],
+          minZoom: 0,
+          maxZoom: 5,
+          attribution: 'WebGLEarth example',
+          tms: true
+        }).addTo(earth);
 
         var marker = WE.marker([lat, lon]).addTo(earth);
         marker.bindPopup("<b>Location marked!</b><br>Target found<br/><span style='font-size:10px;color:#999'>" + ip + "</span>", {maxWidth: 300, closeButton: true}).openPopup();

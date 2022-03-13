@@ -7,6 +7,7 @@ const basePath = `outputs/maps/`
 const test = (req, res) => {
     res.render(`${basePath}test.ejs`, { siteTitle: 'Map test'})
 }
+
 const testMultiple = (req, res) => {
     res.render(`${basePath}testMultiple.ejs`, { siteTitle: 'Map test with multiple points'})
 }

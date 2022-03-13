@@ -8,7 +8,8 @@
     <link rel="stylesheet" type="text/css" href="/css/callout.css">
 
     <!-- mapa -->
-    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <!-- <script src="http://www.webglearth.com/v2/api.js"></script> -->
+    <script src="/v2/api.js"></script>
     <script>
       var earth;
       function initialize() {
@@ -18,8 +19,14 @@
         var markerCustom = WE.marker([48, 18], '/favicon.ico', 32, 32).addTo(earth);
         marker.bindPopup("<b>FIIT STU!</b><br>Alma mater<br/><span style='font-size:15px;color:#999'>" + "The Faculty of Informatics and Information Technology is one of the faculties of the Slovak University of Technology in Bratislava" + "</span>", {maxWidth: 300, closeButton: true}).openPopup();
 
-        WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-          attribution: '© OpenStreetMap contributors'
+        // WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        WE.tileLayer('/{z}/{x}/{y}.jpg', {
+          tileSize: 256,
+          bounds: [[-85, -180], [85, 180]],
+          minZoom: 0,
+          maxZoom: 5,
+          attribution: 'WebGLEarth example',
+          tms: true
         }).addTo(earth);
 
         earth.setView([48.1536937470204, 17.0717551926883], 3);

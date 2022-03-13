@@ -9,6 +9,10 @@ var fileName = 'testing.json';
 var file = require(folderRead + fileName);
 
 // just test purpose
+const testGetChanging = (req, res, next) => {
+    res.render(`outputs/maps/webgltest.ejs`, { siteTitle: 'something test'})
+}
+
 const testFunction = (req, res, next) => {
     res.json({message: 'Test works correctly'})
 }
@@ -66,6 +70,7 @@ const onPremiseChangeTestFile = (req, res, next) => {
 }
 
 module.exports = {
+    testGetChanging,
     showTimeTest, testFunction, testFunction2,
     changeTestFile, 
     onPremiseChangeTestFile

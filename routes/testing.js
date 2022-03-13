@@ -5,6 +5,7 @@ const router = express.Router()
 const controller = require('../controllers/testingCtrl')
 
 // manual file change TODO make automated
+router.get('/test', controller.testGetChanging)
 router.get('/change-test-file', controller.changeTestFile)
 router.get('/time-test', controller.showTimeTest)
 
