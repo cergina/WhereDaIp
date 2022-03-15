@@ -85,4 +85,3 @@ app.js: specification of used engines, frameworks, view-engines, routes and list
 
 // note to myself:
 git log --all --decorate --oneline --graph
-http://examples.webglearth.com/#animation

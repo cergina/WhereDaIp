@@ -5,9 +5,11 @@ const configuration = require('../config/config-nonRestricted.js')
 const responseData = require("../models/responseData")
 const net = require('net')
 const { getAllUsableProviders } = require('./providersCtrl.js')
+const generalCtrl = require('./generalCtrl.js')
 const { logDebug, logInfo, logError, yyyymmdd } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
+const stateProvider = require('../models/stateProvider.js')
 const { request } = require('express')
 
 const basePath = `requests/`
@@ -116,6 +118,23 @@ const downloadResponses = async (req, res) => {
     res.send(text)
 }
 
+const analyseIps = async (req, res) => {
+    if ((await generalCtrl.getState(3)).isBusy === 0) {
+        await generalCtrl.setBusyFor(3, 1)
+        await generalCtrl.simulateWorkAndThenSetIdle(3, 1)
+    } else {
+        console.log("Analyse is already occupied")
+        res.redirect('/state')
+        return
+    }
+
+    // let's analyze
+
+    
+
+    res.redirect('/state')
+}
+
 const makeRequestController = (req, res) => {
     res.render(`${basePath}makeRequest.ejs`, { siteTitle: 'New request'})
 }
@@ -176,11 +195,6 @@ const showResponse = async (req, res) => {
 
 
 // POSTs
-// show file explorer, choose location, save
-const extractResponses = async (req, res) => {
-    logError("Extraction not implemented yet")
-}
-
 const deleteExistingResponse = async (req, res) => {
     await responseData.findByIdAndDelete(req.params.id)
     res.redirect(`${configuration.WWW_REQ_HOME}`)
@@ -309,8 +323,7 @@ function extractFromXML(extractedData, originalResponse, provider) {
 
 module.exports = {
     showAllIps, showFilteredIps, makeRequestController, showFusedResponse, showResponse,
-    showTestMap, downloadResponses,
-    extractResponses,
+    showTestMap, downloadResponses, analyseIps,
     acceptRequestController,
     deleteExistingResponse
 }

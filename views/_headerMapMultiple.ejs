@@ -28,7 +28,7 @@
 
               for (var point of data.points) {
                 var marker = WE.marker([point.lat, point.lon]).addTo(earth);
-                marker.bindPopup(point.htmlSnippet, {maxWidth: 300, closeButton: true}).openPopup();
+                marker.bindPopup(point.htmlSnippet, {maxWidth: 300, closeButton: true}).closePopup();
               }
               
               earth.setView([data.points[0].lat, data.points[0].lon], data.options.zoom);

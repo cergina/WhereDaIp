@@ -21,12 +21,12 @@
           bounds: [[-85, -180], [85, 180]],
           minZoom: 0,
           maxZoom: 5,
-          attribution: 'WebGLEarth example',
+          attribution: 'FIIT STU',
           tms: true
         }).addTo(earth);
 
         var marker = WE.marker([lat, lon]).addTo(earth);
-        marker.bindPopup("<b>Location marked!</b><br>Target found<br/><span style='font-size:10px;color:#999'>" + ip + "</span>", {maxWidth: 300, closeButton: true}).openPopup();
+        marker.bindPopup("<b>Location marked!</b><br>Target found<br/><span style='font-size:10px;color:#999'>" + ip + "</span>", {maxWidth: 300, closeButton: true}).closePopup();
 
         var markerCustom = WE.marker([lat, lon], '/img/logo-webglearth-white-100.png', 100, 24).addTo(earth);
 

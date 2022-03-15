@@ -29,13 +29,13 @@
                 bounds: [[-85, -180], [85, 180]],
                 minZoom: 0,
                 maxZoom: 5,
-                attribution: 'WebGLEarth example',
+                attribution: 'FIIT STU',
                 tms: true
               }).addTo(earth);
 
               for (var point of data.points) {
                 var marker = WE.marker([point.lat, point.lon]).addTo(earth);
-                marker.bindPopup(point.htmlSnippet, {maxWidth: 300, closeButton: true}).openPopup();
+                marker.bindPopup(point.htmlSnippet, {maxWidth: 300, closeButton: true}).closePopup();
               }
               
               earth.setView([data.points[0].lat, data.points[0].lon], data.options.zoom);
