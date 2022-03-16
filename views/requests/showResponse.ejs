@@ -89,6 +89,35 @@
         <%- include('_resp_fields', {fieldTitle: 'ISP: ', fieldValue: response.isp, useMb: 'mb-4'}) %>
 
 
+        
+        <!-- zoznam -->
+        <% response.findings.forEach(finding => { %>
+            <% var findArr = finding.text.split('|') %>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <!-- nadpis -->
+                    <% if ('SUSPECT' == findArr[0].trim()) { %><h4><a href="/suspect/providers/<%= findArr[2].trim() %>">[SUSPICIOUS LIST] <%= findArr[3].trim() %></a></h4> <% } %> 
+                    <% if ('COVER' == findArr[0].trim()) { %><h4><a href="/covert/<%= findArr[2].trim() %>">[COVERED LIST] <%= findArr[3].trim() %></a></h4> <% } %> 
+                    <% if ('BLKLIST' == findArr[0].trim()) { %><h4><a href="/blklist/<%= findArr[2].trim() %>">[BLOCKLIST] <%= findArr[3].trim() %></a></h4> <% } %> 
+                    
+                    
+                    <!-- tenke sede pismo -->
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= finding.foundAt.toLocaleString() %>
+                    </div>
+
+                    <!-- skrateny popis -->
+                    <!-- //TODO -->
+                    <div class="card-text mb-2"><%= finding.text %></div>
+
+                </div>
+            </div>
+        <% }) %>  
+
+        <div class="form-group">
+            <label>Findings</label>
+            <textarea disabled class="form-control" rows="15"><%= response.findings %></textarea>
+        </div>
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %> 
     </div>

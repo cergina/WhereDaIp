@@ -6,6 +6,9 @@ const responseData = require("../models/responseData")
 const net = require('net')
 const { getAllUsableProviders } = require('./providersCtrl.js')
 const generalCtrl = require('./generalCtrl.js')
+const covertCtrl = require('./covertCtrl.js')
+const suspectCtrl = require('./suspectCtrl.js')
+const blklistCtrl = require('./blklistCtrl.js')
 const { logDebug, logInfo, logError, yyyymmdd } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
@@ -27,8 +30,7 @@ const showAllIps = async (req, res) => {
 
     // not optimized
     //const requests = await responseData.find().sort({ addedAt: 'desc'})
-    
-    
+        
     const providers = await locationProvider.find()
 
     // create shortened json to send to frontend 
@@ -119,21 +121,64 @@ const downloadResponses = async (req, res) => {
 }
 
 const analyseIps = async (req, res) => {
-    if ((await generalCtrl.getState(3)).isBusy === 0) {
-        await generalCtrl.setBusyFor(3, 1)
-        await generalCtrl.simulateWorkAndThenSetIdle(3, 1)
-    } else {
-        console.log("Analyse is already occupied")
-        res.redirect('/state')
-        return
-    }
+    // if ((await generalCtrl.getState(3)).isBusy === 0) {
+    //     await generalCtrl.setBusyFor(3, 1)
+    //     await generalCtrl.simulateWorkAndThenSetIdle(3, 1)
+    // } else {
+    //     console.log("Analyse is already occupied")
+    //     res.redirect('/state')
+    //     return
+    // }
 
     // let's analyze
+    var responses = await responseData.find({}, {
+        "success": 1,
+        "ipRequested": 1,
+        "addedAt": 1,
+        "findings": 1
+    }).sort({ ipRequested: 'asc'})
 
-    
 
+    //var covFindings = await covertCtrl.reportFindingsHere(responses)
+    //var blkFindings = await blklistCtrl.reportFindingsHere(responses)
+    var susFindings = await suspectCtrl.reportFindingsHere(responses)
+
+    /* mame findingy. teraz ich treba priradit ku kazdemu response.findings arrayu */
+    try {
+        for (var x of responses) {
+            // sus
+            for (var s of susFindings) {
+                if (x.ipRequested === s.ipRequested) {
+                    x.findings.push({text: s.text, foundAt: s.foundAt})
+                }
+            }
+
+            //TODO
+            // cov
+            // for (var c of covFindings) {
+            //     if (x.ipRequested === c.ipRequested) {
+            //         x.findings.push({text: c.text, foundAt: c.foundAt})
+            //     }
+            // }
+
+            //TODO
+            // blk
+            // for (var b of blkFindings) {
+            //     if (x.ipRequested === b.ipRequested) {
+            //         x.findings.push({text: b.text, foundAt: b.foundAt})
+            //     }
+            // }
+
+            x.save()
+        }
+    } catch(e) {
+        console.log(e)
+    }
+
+   
     res.redirect('/state')
 }
+
 
 const makeRequestController = (req, res) => {
     res.render(`${basePath}makeRequest.ejs`, { siteTitle: 'New request'})

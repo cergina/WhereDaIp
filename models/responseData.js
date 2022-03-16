@@ -88,7 +88,17 @@ const responseDataSchema = new mongoose.Schema({
     hosting: {
         type: String,
         required: false
-    }
+    },
+    findings: [
+        {
+            text: String,
+            foundAt: {
+                type: Date,
+                required: false,
+                default: Date.now
+            }
+        }
+    ]
 })
 
 responseDataSchema.pre('validate', function(next) {

@@ -229,10 +229,50 @@ function saveAndRedirect(viewName) {
 }
 
 
+// TODO
+// const reportFindingsHere = async (arg) => {
+//     // get this only once
+//     var lists = await suspectProvider.find({}, {
+//         "name": 1,
+//         "slug": 1,
+//         "tagList": 1,
+//         "ipList": 1
+//     })
+
+//     var retArr = []
+
+//     // zoznam zo zoznamov
+//     for (var xList of lists) {
+//         var processed = null
+//         var previousIp = null
+
+//         // ip adresa zo zoznamu
+//         for (var xIp of arg) {
+//             // porovnavat iba ak uz neni v retArr taka ip adresa ( pozor, moze byt vo viac zoznamoch preto reset processed - zaujima nas iba pre 1 list aby nebola duplikacia )
+//             if (previousIp !== xIp.ipRequested) {
+//                 if (xList.ipList.some(e => e.ip === xIp.ipRequested)) {
+//                     previousIp = xIp.ipRequested
+//                     processed = {
+//                         ipRequested: xIp.ipRequested,
+//                         text: `SUSPECT | ${'tags here temp'} | ${xList.slug} | ${xList.name}`,
+//                         foundAt: Date.now()
+//                     }
+
+//                     retArr.push(processed)
+//                 }
+//             }
+
+//         }
+//     }
+
+//     return retArr
+// }
+
 module.exports = {
     showModule, addNewSource, editSource, showList,
     createNewProvider, editExistingProvider, deleteExistingProvider, refreshProviderList,
     getJsonWithCountedOnline,
-    saveAndRedirect
+    saveAndRedirect,
+    reportFindingsHere
 }
 
