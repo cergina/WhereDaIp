@@ -121,14 +121,15 @@ const downloadResponses = async (req, res) => {
 }
 
 const analyseIps = async (req, res) => {
-    // if ((await generalCtrl.getState(3)).isBusy === 0) {
-    //     await generalCtrl.setBusyFor(3, 1)
-    //     await generalCtrl.simulateWorkAndThenSetIdle(3, 1)
-    // } else {
-    //     console.log("Analyse is already occupied")
-    //     res.redirect('/state')
-    //     return
-    // }
+    // block for one minute
+    if ((await generalCtrl.getState(3)).isBusy === 0) {
+        await generalCtrl.setBusyFor(3, 1)
+        await generalCtrl.simulateWorkAndThenSetIdle(3, 1)
+    } else {
+        console.log("Analyse is already occupied")
+        res.redirect('/state')
+        return
+    }
 
     // let's analyze
     var responses = await responseData.find({}, {
@@ -146,6 +147,9 @@ const analyseIps = async (req, res) => {
     /* mame findingy. teraz ich treba priradit ku kazdemu response.findings arrayu */
     try {
         for (var x of responses) {
+
+            x.findings = []
+
             // sus
             for (var s of susFindings) {
                 if (x.ipRequested === s.ipRequested) {
@@ -159,7 +163,7 @@ const analyseIps = async (req, res) => {
             //     if (x.ipRequested === c.ipRequested) {
             //         x.findings.push({text: c.text, foundAt: c.foundAt})
             //     }
-            // }
+            // } 
 
             //TODO
             // blk
@@ -173,9 +177,11 @@ const analyseIps = async (req, res) => {
         }
     } catch(e) {
         console.log(e)
+    } finally {
+        //await generalCtrl.setFree(3, 1)
     }
 
-   
+
     res.redirect('/state')
 }
 

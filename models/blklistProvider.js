@@ -8,7 +8,7 @@ const blklistProviderSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    name: {
+    name: { 
         type: String,
         required: true
     },
@@ -45,7 +45,7 @@ const blklistProviderSchema = new mongoose.Schema({
     },
     lastEditAt: {
         type: Date,
-        required: true,
+        required: true, 
         default: Date.now
     },
     response: {

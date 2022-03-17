@@ -7,7 +7,7 @@ const responseBlklistSchema = new mongoose.Schema({
         type: Date,
         required: true, 
         default: Date.now
-    },
+    }, 
     provider: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

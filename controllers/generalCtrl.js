@@ -39,6 +39,7 @@ const setBusyFor = async (arg, howManyMinutes) => {
 
     if (retState === null) {
         retState = new stateProvider()
+        retState.type = arg
     }
     
     retState.isBusy = 1
@@ -64,8 +65,10 @@ const simulateWorkAndThenSetIdle = async (arg, howManyMinutes) => {
 
         if (retState === null) {
             retState = new stateProvider()
+            retState.type = arg
         }
 
+        console.log(`simulate finishing ${retState}`)
         retState.isBusy = 0
         retState.expectedEndAt = new Date()
 

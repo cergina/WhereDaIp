@@ -12,7 +12,7 @@ const suspectProviderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
+    description: { 
         type: String,
         required: false
     },

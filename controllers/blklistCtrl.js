@@ -229,44 +229,54 @@ function saveAndRedirect(viewName) {
 }
 
 
-// TODO
-// const reportFindingsHere = async (arg) => {
-//     // get this only once
-//     var lists = await suspectProvider.find({}, {
-//         "name": 1,
-//         "slug": 1,
-//         "tagList": 1,
-//         "ipList": 1
-//     })
+// TODO TODOREPORT
+const reportFindingsHere = async (arg) => {
+    // get this only once
+    var lists = await blklistProvider.find({}, {
+        "slug": 1,
+        "name": 1,
+        "tags": 1,
+    })
+    var responses = await blklistResponse.find({}, {
+        "provider": 1,
+        "list": 1
+    })
 
-//     var retArr = []
+    var retArr = []
 
-//     // zoznam zo zoznamov
-//     for (var xList of lists) {
-//         var processed = null
-//         var previousIp = null
+    // prejst responses
+        // konkretna response
 
-//         // ip adresa zo zoznamu
-//         for (var xIp of arg) {
-//             // porovnavat iba ak uz neni v retArr taka ip adresa ( pozor, moze byt vo viac zoznamoch preto reset processed - zaujima nas iba pre 1 list aby nebola duplikacia )
-//             if (previousIp !== xIp.ipRequested) {
-//                 if (xList.ipList.some(e => e.ip === xIp.ipRequested)) {
-//                     previousIp = xIp.ipRequested
-//                     processed = {
-//                         ipRequested: xIp.ipRequested,
-//                         text: `SUSPECT | ${'tags here temp'} | ${xList.slug} | ${xList.name}`,
-//                         foundAt: Date.now()
-//                     }
+    // zoznam odpovedi
+    for (var xResp of responses) {
+        var processed = null
+        var previousIp = null
 
-//                     retArr.push(processed)
-//                 }
-//             }
+        // ip adresa zo zoznamu
+        for (var xIp of arg) {
+            // porovnat iba ak uz neni v retArr ta ista IP
+            if (previousIp !== xIp.ipRequested) {
+                // ci obsiahnuta v zozname a vratit ktora to je
+                var found = xResp.list.filter(e => e.url.includes(xIp.ipRequested))
 
-//         }
-//     }
+                if (found.length > 0) {
+                    var tempName  = lists.find(l => l._id === xResp.provider)
 
-//     return retArr
-// }
+                    previousIp = xIp.ipRequested
+                    processed = {
+                        foundAt: Date.now(),
+                        ipRequested: xIp.ipRequested,
+                        text: `BLKLIST | ${xResp.tags} | ${tempName.slug} | ${tempName.name}`
+                    }
+
+                    retArr.push(processed)
+                }
+            }
+        }
+    }
+
+    return retArr
+}
 
 module.exports = {
     showModule, addNewSource, editSource, showList,

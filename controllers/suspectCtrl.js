@@ -403,7 +403,7 @@ const reportFindingsHere = async (arg) => {
     // get this only once
     var lists = await suspectProvider.find({}, {
         "name": 1,
-        "slug": 1,
+        "slug": 1, 
         "tagList": 1,
         "ipList": 1
     })
