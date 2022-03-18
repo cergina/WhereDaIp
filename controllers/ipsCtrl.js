@@ -131,6 +131,11 @@ const analyseIps = async (req, res) => {
         return
     }
 
+    // just test
+    res.redirect('/state')
+
+    console.log('test')
+
     // let's analyze
     var responses = await responseData.find({}, {
         "success": 1,
@@ -140,8 +145,8 @@ const analyseIps = async (req, res) => {
     }).sort({ ipRequested: 'asc'})
 
 
-    //var covFindings = await covertCtrl.reportFindingsHere(responses)
-    //var blkFindings = await blklistCtrl.reportFindingsHere(responses)
+    var covFindings = await covertCtrl.reportFindingsHere(responses)
+    var blkFindings = await blklistCtrl.reportFindingsHere(responses)
     var susFindings = await suspectCtrl.reportFindingsHere(responses)
 
     /* mame findingy. teraz ich treba priradit ku kazdemu response.findings arrayu */
@@ -157,21 +162,23 @@ const analyseIps = async (req, res) => {
                 }
             }
 
+            console.log('test middle')
+
             //TODO
             // cov
-            // for (var c of covFindings) {
-            //     if (x.ipRequested === c.ipRequested) {
-            //         x.findings.push({text: c.text, foundAt: c.foundAt})
-            //     }
-            // } 
+            for (var c of covFindings) {
+                if (x.ipRequested === c.ipRequested) {
+                    x.findings.push({text: c.text, foundAt: c.foundAt})
+                }
+            } 
 
             //TODO
             // blk
-            // for (var b of blkFindings) {
-            //     if (x.ipRequested === b.ipRequested) {
-            //         x.findings.push({text: b.text, foundAt: b.foundAt})
-            //     }
-            // }
+            for (var b of blkFindings) {
+                if (x.ipRequested === b.ipRequested) {
+                    x.findings.push({text: b.text, foundAt: b.foundAt})
+                }
+            }
 
             x.save()
         }
@@ -181,8 +188,10 @@ const analyseIps = async (req, res) => {
         //await generalCtrl.setFree(3, 1)
     }
 
-
-    res.redirect('/state')
+    console.log('test end')
+    await generalCtrl.setFree(3)
+    console.log('test freed')
+    
 }
 
 
