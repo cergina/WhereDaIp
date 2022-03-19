@@ -75,6 +75,27 @@ const setFree = async (arg) => {
     }
 }
 
+const setFreeAfterTime = async (arg, milis) =>  {
+    setTimeout(async function() {
+        var retState = await stateProvider.findOne({ type : arg })
+
+        if (retState === null) {
+            retState = new stateProvider()
+            retState.type = arg
+        }
+
+        if (retState.isBusy === 1) 
+            retState.expectedEndAt = new Date()
+        retState.isBusy = 0
+
+        try {
+            retState.save()
+        } catch (e) {
+            console.log(e)
+        }
+    }, milis)
+}
+
 const simulateWorkAndThenSetIdle = async (arg, howManyMinutes) => {
     console.log("Simulating work - started")
 
@@ -133,5 +154,5 @@ const getState = async (arg) => {
 
 module.exports = {
     welcome, state, geolocation, presentation, faq,
-    setBusyFor, getState, simulateWorkAndThenSetIdle, setFree
+    setBusyFor, getState, simulateWorkAndThenSetIdle, setFree, setFreeAfterTime
 }

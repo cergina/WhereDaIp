@@ -6,6 +6,7 @@ const compGen = require('../controllers/graphs/compGen.js')
 const topGen = require('../controllers/graphs/topGen.js')
 const mapGen = require('../controllers/maps/mapGen.js')
 const { onEventRun } = require('./workers/top.js')
+const { getState, setFree, setFreeAfterTime } = require('../controllers/generalCtrl.js')
 const eventEmitter = new EventEmitter()
 
 
@@ -57,8 +58,25 @@ const setUp = (req, res) => {
     });
 }
 
-
+const setTasksIdleNowOrDoSoWhenTimeExpired = async (req, res) => {
+    for (const x of Array(5).keys()) {
+        var tempState = await getState(x)
+        var tempCas = (new Date(tempState.expectedEndAt)).getTime()
+        
+        if (tempState.isBusy === 1) {
+            // nastav na IDLE, lebo cas prekroceny
+            if (tempCas <= Date.now()) {
+                await setFree(x)
+            }
+            // nastav kedy nastavi na IDLE
+            else {
+                await setFreeAfterTime(x, tempCas - Date.now())
+            }
+        } 
+    }
+    
+}
 
 module.exports = {
-    setUp
+    setUp, setTasksIdleNowOrDoSoWhenTimeExpired
 }

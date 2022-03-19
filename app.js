@@ -54,6 +54,7 @@ app.use(`${configuration.WWW_API}`, apiRoutes)
 
 // Global events for files for graphs, ...
 orchestrator.setUp()
+orchestrator.setTasksIdleNowOrDoSoWhenTimeExpired()
 
 
 // IP, PORT

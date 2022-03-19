@@ -257,6 +257,7 @@ const reportFindingsHere = async (arg) => {
             // porovnat iba ak uz neni v retArr ta ista IP
             if (previousIp !== xIp.ipRequested) {
                 // ci obsiahnuta v zozname a vratit ktora to je
+                // TODO cannot read propertz includes of undefined
                 var found = xResp.list.filter(e => e.url.includes(xIp.ipRequested))
 
                 if (found.length > 0) {
