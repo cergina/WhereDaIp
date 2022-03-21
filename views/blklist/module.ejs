@@ -39,7 +39,7 @@
                     <div class="card-text mb-2"><%= provider.description %></div>
                     <!-- tlacidla -->
                     <a href="/blklist/<%= provider.slug %>" class="btn btn-primary">Read More</a>
-                    <a href="/blklist/list/<%= provider.slug %>" class="btn btn-primary">Show list</a>
+                    <a href="/blklist/list/<%= provider.slug %>" class="btn btn-warning">Show list</a>
                     <form action="/blklist/delete/<%= provider.id %>?_method=DELETE" method="POST" class="d-inline">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
@@ -47,8 +47,6 @@
             </div>
         <% }) %>  
         <!-- test tabulka END -->
-        
-
 
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %> 

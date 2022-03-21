@@ -258,10 +258,27 @@ const reportFindingsHere = async (arg) => {
             if (previousIp !== xIp.ipRequested) {
                 // ci obsiahnuta v zozname a vratit ktora to je
                 // TODO cannot read propertz includes of undefined
-                var found = xResp.list.filter(e => e.url.includes(xIp.ipRequested))
+                var found = xResp.list.filter(e => {
+                    if (e.url === 'http://41.78.172.77:42550/Mozi.m' && xIp.ipRequested === '41.78.172.77')
+                        console.log('som tu')
+                    
+                    if (e.url === 'http://110.85.99.215:43230/Mozi.a' && xIp.ipRequested === '110.85.99.215')
+                        console.log('som tu 2')
+
+                    if (e.url)
+                        return e.url.includes(xIp.ipRequested)
+                    else
+                        return false
+                })
 
                 if (found.length > 0) {
-                    var tempName  = lists.find(l => l._id === xResp.provider)
+                    var tempName  = lists.find(l => {
+                        console.log(l)
+                        console.log(xResp)
+
+                        if (l._id.id.equals(xResp.provider.id))
+                            return l
+                    })
 
                     previousIp = xIp.ipRequested
                     processed = {

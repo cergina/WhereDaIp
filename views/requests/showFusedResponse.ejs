@@ -75,13 +75,22 @@
         <%- include('_resp_fields_fused', {fieldTitle: 'ISP: ', valueName: 'isp', useMb: 'mb-4'}) %>
 
 
-        <h2 class="mt-4">
-            Providers used
-        </h2>
-        <% for (var key in providers) { %> 
-            <%- include('_resp_provider_fields', {fieldTitle: 'Provider: ', fieldValue: providers[key].name, clickableLocalLink: '/providers/' + providers[key].slug, date: providers[key].date, rating: 'X/10'}) %>
-        <% } %> 
+        <div class="card mb-2">
+            <div class="card-header">
+                Providers used
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <% for (var key in providers) { %> 
+                    <%- include('_resp_provider_fields', {fieldTitle: 'Provider: ', fieldValue: providers[key].name, clickableLocalLink: '/providers/' + providers[key].slug, date: providers[key].date, rating: 'X/10'}) %>
+                <% } %> 
+                <footer class="blockquote-footer">Which geolocation data providers were used for getting information about this IP</footer>
+                </blockquote>
+            </div>
+          </div>
 
+        <!-- zoznam nalezov-->
+        <%- include('_blklist_findings') %> 
 
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %> 
