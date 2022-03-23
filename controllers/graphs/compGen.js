@@ -16,7 +16,7 @@ var fileNameWriteOnline = 'comparedOnline.json'
 const onEventGenerateFiles = async (req, res) => {
     try {
         await generateCompOnline()
-        // dalsie
+        // TODO dalsie
     } catch (e) {
         helper.logError(`Error in compGen occured during event ${e}`)
     }
@@ -28,7 +28,7 @@ const generateCompOnline = async (req, res) => {
     var fil = JSON.parse(JSON.stringify(fileBar))
     fil.nazov = 'compGen - comparedOnline'
 
-    const retObj = await getJsonWithCountedOnline() // not implemented
+    const retObj = await getJsonWithCountedOnline()
 
     // Chart.js
     var list = retObj.list

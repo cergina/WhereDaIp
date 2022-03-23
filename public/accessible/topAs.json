@@ -1,23 +1,11 @@
 {
     "type": "bar",
     "data": {
-        "labels": [
-            "AS4134",
-            "AS16509",
-            "AS45609",
-            "AS7713",
-            "AS36947"
-        ],
+        "labels": [],
         "datasets": [
             {
-                "label": "AS",
-                "data": [
-                    230,
-                    98,
-                    76, 
-                    51,
-                    43
-                ],
+                "label": "Covered",
+                "data": [],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -43,11 +31,13 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Top 5 originating AS"
+                "text": "Cover in use"
             },
             "legend": {
                 "display": false
             }
         }
-    }
+    },
+    "nazov": "topGen - topAs",
+    "time": "2022-03-23 01:13:08"
 }

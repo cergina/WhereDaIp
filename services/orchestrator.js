@@ -11,6 +11,7 @@ const eventEmitter = new EventEmitter()
 
 
 const setUp = (req, res) => {
+    /* vyhadzovanie eventov */
     setInterval( () => {
         eventEmitter.emit(configuration.EVENT_GRAPH);
     }, configuration.TIMER_EVENT_GRAPH)
@@ -21,9 +22,10 @@ const setUp = (req, res) => {
     
     setInterval( () => {
         eventEmitter.emit(configuration.EVENT_TEST);
-    }, configuration.TIMER_EVENT_TEST)
+    }, configuration.TIMER_EVENT_TEST) 
     
     
+    /* spracuj graph event */
     eventEmitter.on(configuration.EVENT_GRAPH, async () => {
         console.log(`Event GRAPH raised on: ${helper.date_plus_time()}`);
         
@@ -35,6 +37,7 @@ const setUp = (req, res) => {
         }
     });
     
+    /* spracuj map event */
     eventEmitter.on(configuration.EVENT_MAPS, async () => {
         console.log(`Event MAPS raised on: ${helper.date_plus_time()}`);
 

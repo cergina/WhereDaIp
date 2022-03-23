@@ -381,10 +381,42 @@ function extractFromXML(extractedData, originalResponse, provider) {
     return extractedData
 }
 
+
+// For EVENTS
+const getJsonWithCountedOrigin = async (req, res) => {
+    var ro = []
+
+
+    var responses = await responseData.find({}, {
+        "success": 1,
+        "ipRequested": 1,
+        "addedAt": 1,
+        "country": 1
+    }).sort({ ipRequested: 'asc'})
+
+    // ziskat oddelene country unikatne do pola
+    // prejst polozky a zakazdym dat ++ takemu co ma kluc to country
+    // TODO
+    var lastIp = undefined
+    for (var x of responses) {
+        if (x.ipRequested !== lastIp) {
+            
+
+            lastIp = x.ipRequested
+        }
+    }
+
+    // GridJs
+    
+
+    return retObj
+}
+
 module.exports = {
     showAllIps, showFilteredIps, makeRequestController, showFusedResponse, showResponse,
     showTestMap, downloadResponses, analyseIps,
     acceptRequestController,
-    deleteExistingResponse
+    deleteExistingResponse,
+    getJsonWithCountedOrigin
 }
 
