@@ -1,11 +1,17 @@
 {
     "type": "bar",
     "data": {
-        "labels": [],
+        "labels": [
+            "Slovak Republic",
+            "United States"
+        ],
         "datasets": [
             {
-                "label": "Covered",
-                "data": [],
+                "label": "Origin",
+                "data": [
+                    2,
+                    1
+                ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -31,7 +37,7 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Cover in use"
+                "text": "Top 5 originating countries"
             },
             "legend": {
                 "display": false
@@ -39,5 +45,24 @@
         }
     },
     "nazov": "topGen - topOrigin",
-    "time": "2022-03-23 01:13:08"
+    "forGridJs": {
+        "tableNames": [
+            "Order",
+            "Country name",
+            "Occurence"
+        ],
+        "tableValues": [
+            [
+                1,
+                "Slovak Republic",
+                2
+            ],
+            [
+                2,
+                "United States",
+                1
+            ]
+        ]
+    },
+    "time": "2022-03-24 01:35:17"
 }

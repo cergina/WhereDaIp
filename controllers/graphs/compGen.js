@@ -20,7 +20,7 @@ const onEventGenerateFiles = async (req, res) => {
     } catch (e) {
         helper.logError(`Error in compGen occured during event ${e}`)
     }
-}
+} 
 
 // private
 const generateCompOnline = async (req, res) => {

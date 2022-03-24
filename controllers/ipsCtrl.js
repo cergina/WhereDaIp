@@ -9,11 +9,9 @@ const generalCtrl = require('./generalCtrl.js')
 const covertCtrl = require('./covertCtrl.js')
 const suspectCtrl = require('./suspectCtrl.js')
 const blklistCtrl = require('./blklistCtrl.js')
-const { logDebug, logInfo, logError, yyyymmdd } = require('../services/helper.js')
+const { logDebug, logError, yyyymmdd } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
-const stateProvider = require('../models/stateProvider.js')
-const { request } = require('express')
 
 const basePath = `requests/`
 
@@ -384,30 +382,56 @@ function extractFromXML(extractedData, originalResponse, provider) {
 
 // For EVENTS
 const getJsonWithCountedOrigin = async (req, res) => {
-    var ro = []
+    // we want same country names, so same provider is a necessity
+    var providers = await getAllUsableProviders()
 
-
-    var responses = await responseData.find({}, {
+    var responses = await responseData.find({ provider : providers[0]._id}, {
         "success": 1,
         "ipRequested": 1,
         "addedAt": 1,
         "country": 1
     }).sort({ ipRequested: 'asc'})
 
-    // ziskat oddelene country unikatne do pola
-    // prejst polozky a zakazdym dat ++ takemu co ma kluc to country
-    // TODO
-    var lastIp = undefined
+    // prejst pole a nechat len take kde je ip adresa raz
+    var uniqueResponses = []
     for (var x of responses) {
-        if (x.ipRequested !== lastIp) {
-            
+        var tmpRes = uniqueResponses.some(elem => elem.ipRequested === x.ipRequested)
 
-            lastIp = x.ipRequested
+        if (!tmpRes) {
+            uniqueResponses.push(x)
         }
     }
 
-    // GridJs
+    // ziskat unikatne countries
+    var uniqueCountries = []
+    for (var x of uniqueResponses) {
+        var tmpCes = uniqueCountries.some(elem => elem.country === x.country)
+
+        if (!tmpCes) {
+            uniqueCountries.push({"country": x.country, "count": 0})
+        }
+    }
+
+    // spocitat vyskyt country
+    for (var x of uniqueResponses) {
+        // vieme x.country
+        // najst prvok v uniqueCountries ktory je .country === x.country a spravit .count++
+        uniqueCountries[uniqueCountries.findIndex(el => el.country === x.country)].count++
+    }
+
+    // sort them
+    uniqueCountries.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
+    var retObj = {}
+    retObj.list = uniqueCountries
+
+    // GridJs
+    retObj.table = []
+    var order = 1
+    
+    for (var tmp of uniqueCountries) {
+        retObj.table.push([order++, tmp.country, tmp.count])
+    }
 
     return retObj
 }

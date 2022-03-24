@@ -26,7 +26,7 @@ const onEventGenerateFiles = async (req, res) => {
         // await generateTopTypes()
         // await generateTopPorts()
         // TODO dalsie
-    } catch (e) {
+    } catch (e) { 
         helper.logError(`Error in topGen occured during event ${e}`)
     }
 }
@@ -56,20 +56,20 @@ const generateTopOrigin = async (req, res) => {
     for (var tmp of list) {
         // neustale pocitame dlzku zoznamu do ktoreho pridavame a ak je este miesto pridame dalsi
         if (graphLabels.length < graphLimit) {
-            graphLabels.push(tmp.name)
+            graphLabels.push(tmp.country)
             graphValues.push(tmp.count)
         }
     }
 
-    fil.data.labels = graphLabels
-    fil.data.datasets[0].label = graphLabel
-    fil.data.datasets[0].data = graphValues
-    fil.options.plugins.title.text = graphOptionsLabel
+    fileTopOrigin.data.labels = graphLabels
+    fileTopOrigin.data.datasets[0].label = graphLabel
+    fileTopOrigin.data.datasets[0].data = graphValues
+    fileTopOrigin.options.plugins.title.text = graphOptionsLabel
 
     // Grid.js
-    fil.forGridJs = {}
-    fil.forGridJs.tableNames = ["Order", "Country name", "Occurence"]
-    fil.forGridJs.tableValues = retObj.table
+    fileTopOrigin.forGridJs = {}
+    fileTopOrigin.forGridJs.tableNames = ["Order", "Country name", "Occurence"]
+    fileTopOrigin.forGridJs.tableValues = retObj.table
     /* UNDER WORK END */ 
 
     saveChangesToFile(folderWrite, fileNameWriteOrigin, fileTopOrigin)
