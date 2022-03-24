@@ -1,11 +1,19 @@
 {
     "type": "bar",
     "data": {
-        "labels": [],
+        "labels": [
+            "AS15169 Google LLC",
+            "AS5578 SWAN, a.s.",
+            "AS28952 O2 Business Services, a.s"
+        ],
         "datasets": [
             {
-                "label": "Covered",
-                "data": [],
+                "label": "AS",
+                "data": [
+                    1,
+                    1,
+                    1
+                ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
                     "rgba(54, 162, 235, 0.2)",
@@ -31,7 +39,7 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Cover in use"
+                "text": "Top 5 originating Autonomous systems"
             },
             "legend": {
                 "display": false
@@ -39,5 +47,29 @@
         }
     },
     "nazov": "topGen - topAs",
-    "time": "2022-03-24 01:35:17"
+    "forGridJs": {
+        "tableNames": [
+            "Order",
+            "AS Name",
+            "Occurence"
+        ],
+        "tableValues": [
+            [
+                1,
+                "AS15169 Google LLC",
+                1
+            ],
+            [
+                2,
+                "AS5578 SWAN, a.s.",
+                1
+            ],
+            [
+                3,
+                "AS28952 O2 Business Services, a.s",
+                1
+            ]
+        ]
+    },
+    "time": "2022-03-24 02:14:17"
 }

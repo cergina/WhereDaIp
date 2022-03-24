@@ -15,7 +15,7 @@ var fileNameWriteTypes = 'topTypes.json'
 var fileNameWritePorts = 'topPorts.json'
 
 // Individual
-const { getJsonWithCountedOrigin } = require('../../controllers/ipsCtrl')
+const { getJsonWithCountedOrigin, getJsonWithCountedAs } = require('../../controllers/ipsCtrl')
 
 // public
 const onEventGenerateFiles = async (req, res) => {
@@ -43,7 +43,7 @@ const generateTopOrigin = async (req, res) => {
     fileTopOrigin.nazov = 'topGen - topOrigin'
     
     /* UNDER WORK START */ 
-    var retObj = await getJsonWithCountedOrigin() // not implemented
+    var retObj = await getJsonWithCountedOrigin()
 
     // Chart.js
     var list = retObj.list
@@ -75,10 +75,40 @@ const generateTopOrigin = async (req, res) => {
     saveChangesToFile(folderWrite, fileNameWriteOrigin, fileTopOrigin)
 }
 const generateTopAs = async (req, res) => {
-    var fileTopAs = JSON.parse(JSON.stringify(fileBar))
-    fileTopAs.nazov = 'topGen - topAs'
+    var fil = JSON.parse(JSON.stringify(fileBar))
+    fil.nazov = 'topGen - topAs'
     
-    saveChangesToFile(folderWrite, fileNameWriteAs, fileTopAs)
+    /* UNDER WORK START */ 
+    var retObj = await getJsonWithCountedAs()
+
+    // Chart.js
+    var list = retObj.list
+    var graphLabels = []
+    var graphLabel = "AS"
+    var graphValues = []
+    var graphOptionsLabel = "Top 5 originating Autonomous systems"
+
+    var graphLimit = 5
+    for (var tmp of list) {
+        // neustale pocitame dlzku zoznamu do ktoreho pridavame a ak je este miesto pridame dalsi
+        if (graphLabels.length < graphLimit) {
+            graphLabels.push(tmp.name)
+            graphValues.push(tmp.count)
+        }
+    }
+
+    fil.data.labels = graphLabels
+    fil.data.datasets[0].label = graphLabel
+    fil.data.datasets[0].data = graphValues
+    fil.options.plugins.title.text = graphOptionsLabel
+
+    // Grid.js
+    fil.forGridJs = {}
+    fil.forGridJs.tableNames = ["Order", "AS Name", "Occurence"]
+    fil.forGridJs.tableValues = retObj.table
+    /* UNDER WORK END */ 
+
+    saveChangesToFile(folderWrite, fileNameWriteAs, fil)
 }
 const generateTopTypes = async (req, res) => {
     var fileTopTypes = JSON.parse(JSON.stringify(fileBar))

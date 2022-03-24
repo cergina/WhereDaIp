@@ -436,11 +436,64 @@ const getJsonWithCountedOrigin = async (req, res) => {
     return retObj
 }
 
+const getJsonWithCountedAs = async (req, res) => {
+    // we want same AS names, so same provider is a necessity
+    var providers = await getAllUsableProviders()
+
+    // zisti ktory index obsahuje validnu hodnotu 
+    var searchedIndex = providers.findIndex(provider => provider.response.asPath !== '')
+
+    var responses = await responseData.find({ provider : providers[searchedIndex]._id}, {
+        "success": 1,
+        "ipRequested": 1,
+        "addedAt": 1,
+        "as": 1
+    }).sort({ ipRequested: 'asc'})
+
+    // prejst pole a nechat len take kde je ip adresa raz
+    var uniqueResponses = []
+    for (var x of responses) {
+        var tmpRes = uniqueResponses.some(elem => elem.ipRequested === x.ipRequested)
+
+        if (!tmpRes) {
+            uniqueResponses.push(x)
+        }
+    }
+
+    // ziskat unikatne AS
+    var uniqueValues = []
+    for (var x of uniqueResponses) {
+        var tmpCes = uniqueValues.some(elem => elem.as === x.as)
+
+        if (!tmpCes) {
+            uniqueValues.push({"name": x.as, "count": 0})
+        }
+    }
+
+    for (var x of uniqueResponses) {
+        uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count++
+    }
+
+    uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
+    
+    var retObj = {}
+    retObj.list = uniqueValues
+
+    // GridJs
+    retObj.table = []
+    var order = 1
+    
+    for (var tmp of uniqueValues) {
+        retObj.table.push([order++, tmp.name, tmp.count])
+    }
+
+    return retObj
+}
 module.exports = {
     showAllIps, showFilteredIps, makeRequestController, showFusedResponse, showResponse,
     showTestMap, downloadResponses, analyseIps,
     acceptRequestController,
     deleteExistingResponse,
-    getJsonWithCountedOrigin
+    getJsonWithCountedOrigin, getJsonWithCountedAs
 }
 
