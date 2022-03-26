@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
                     <li class="breadcrumb-item"><a href="/graphs">Graphs</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Types</li>
+                    <li class="breadcrumb-item active" aria-current="page">Signatures</li>
                 </ol>
               </nav>
         </div>
@@ -35,7 +35,7 @@
     </script>
 
     <script>
-    fetch("/accessible/topTypes.json")
+    fetch("/accessible/topSignatures.json")
         .then(response => response.json())
         .then(data => {
             // Perform Deep copy

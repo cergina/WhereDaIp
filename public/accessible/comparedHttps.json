@@ -2,15 +2,15 @@
     "type": "bar",
     "data": {
         "labels": [
-            "Slovak Republic",
-            "United States"
+            "http",
+            "https"
         ],
         "datasets": [
             {
-                "label": "Origin",
+                "label": "https vs http",
                 "data": [
-                    2,
-                    1
+                    51722,
+                    2086
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -37,30 +37,30 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Top 5 originating countries"
+                "text": "Ratio between URLs that use https and unsecured http"
             },
             "legend": {
                 "display": false
             }
         }
     },
-    "nazov": "topGen - topOrigin",
+    "nazov": "compGen - comparedHttps.json",
     "forGridJs": {
         "tableNames": [
             "Order",
-            "Country name",
-            "Occurence"
+            "Name",
+            "Value"
         ],
         "tableValues": [
             [
                 1,
-                "Slovak Republic",
-                2
+                "http",
+                51722
             ],
             [
                 2,
-                "United States",
-                1
+                "https",
+                2086
             ]
         ]
     },

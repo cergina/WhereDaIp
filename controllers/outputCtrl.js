@@ -19,9 +19,9 @@ const topOrigin = (req, res) => {
     res.render(`${basePath}topCountries.ejs`, { siteTitle: `Leading threat origins`})
 }
 
-const topTypes = (req, res) => {
+const topSignatures = (req, res) => {
     
-    res.render(`${basePath}topTypes.ejs`, { siteTitle: `Leading threat types`})
+    res.render(`${basePath}topSignatures.ejs`, { siteTitle: `Leading threat signatures`})
 }
 
 const topPorts = (req, res) => {
@@ -61,7 +61,7 @@ const activity = (req, res) => {
 
 module.exports = {
     test, 
-    crossroad, topOrigin, topTypes, topPorts, topAs, topTags,
+    crossroad, topOrigin, topSignatures, topPorts, topAs, topTags,
     comparedOnline, comparedCovered,  comparedDomain,
     activity
 }

@@ -70,9 +70,9 @@ configuration.WWW_API = "/api"
 
 // Events
 configuration.EVENT_TEST = "event_test"
-configuration.TIMER_EVENT_TEST = 8000
+configuration.TIMER_EVENT_TEST = 16000
 configuration.EVENT_GRAPH = "event_graph_update"
-configuration.TIMER_EVENT_GRAPH = 10000
+configuration.TIMER_EVENT_GRAPH = 60000
 configuration.EVENT_MAPS = "event_maps_update"
 configuration.TIMER_EVENT_MAPS = 15000
 

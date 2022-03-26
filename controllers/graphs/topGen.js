@@ -11,11 +11,12 @@ var folderWrite = './public/accessible/'
 var fileNameWriteHaha = 'topHaha.json'
 var fileNameWriteOrigin = 'topOrigin.json'
 var fileNameWriteAs = 'topAs.json'
-var fileNameWriteTypes = 'topTypes.json'
+var fileNameWriteSignatures = 'topSignatures.json'
 var fileNameWritePorts = 'topPorts.json'
 
 // Individual
 const { getJsonWithCountedOrigin, getJsonWithCountedAs } = require('../../controllers/ipsCtrl')
+const { getJsonWithCountedPorts, getJsonWithCountedSignatures } = require('../../controllers/blklistCtrl')
 
 // public
 const onEventGenerateFiles = async (req, res) => {
@@ -23,8 +24,8 @@ const onEventGenerateFiles = async (req, res) => {
         await generateTopHaha()
         await generateTopOrigin()
         await generateTopAs()
-        // await generateTopTypes()
-        // await generateTopPorts()
+        await generateTopSignatures()
+        await generateTopPorts()
         // TODO dalsie
     } catch (e) { 
         helper.logError(`Error in topGen occured during event ${e}`)
@@ -110,17 +111,89 @@ const generateTopAs = async (req, res) => {
 
     saveChangesToFile(folderWrite, fileNameWriteAs, fil)
 }
-const generateTopTypes = async (req, res) => {
-    var fileTopTypes = JSON.parse(JSON.stringify(fileBar))
-    fileTopTypes.nazov = 'topGen - topTypes'
+const generateTopSignatures = async (req, res) => {
+    var fil = JSON.parse(JSON.stringify(fileBar))
+    fil.nazov = 'topGen - topSignatures'
     
-    saveChangesToFile(folderWrite, fileNameWriteTypes, fileTopTypes)
+    /* UNDER WORK START */ 
+    var retObj = await getJsonWithCountedSignatures()
+
+    // Chart.js
+    var list = retObj.list
+    var graphLabels = []
+    var graphLabel = "Signatures"
+    var graphValues = []
+    var graphOptionsLabel = "Top 5 attack signatures"
+    
+    var graphLimit = 5
+    for (var tmp of list) {
+        // neustale pocitame dlzku zoznamu do ktoreho pridavame a ak je este miesto pridame dalsi
+        if (graphLabels.length < graphLimit) {
+            graphLabels.push(tmp.name)
+            graphValues.push(tmp.count)
+        }
+    }
+    
+    fil.data.labels = graphLabels
+    fil.data.datasets[0].label = graphLabel
+    fil.data.datasets[0].data = graphValues
+    fil.options.plugins.title.text = graphOptionsLabel
+    
+    // Grid.js
+    fil.forGridJs = {}
+    fil.forGridJs.tableNames = ["Order", "Signature name", "Occurence"]
+    var tableLimit = 500
+    fil.forGridJs.tableValues = []
+    for (var tmp of retObj.table) {
+        if (fil.forGridJs.tableValues.length < tableLimit) {
+            fil.forGridJs.tableValues.push(tmp)
+        }
+    }
+    /* UNDER WORK END */ 
+
+    saveChangesToFile(folderWrite, fileNameWriteSignatures, fil)
 }
 const generateTopPorts = async (req, res) => {
-    var fileTopPorts = JSON.parse(JSON.stringify(fileBar))
-    fileTopPorts.nazov = 'topGen - topPorts'
+    var fil = JSON.parse(JSON.stringify(fileBar))
+    fil.nazov = 'topGen - topPorts'
     
-    saveChangesToFile(folderWrite, fileNameWritePorts, fileTopPorts)
+    /* UNDER WORK START */ 
+    var retObj = await getJsonWithCountedPorts()
+
+    // Chart.js
+    var list = retObj.list
+    var graphLabels = []
+    var graphLabel = "Ports"
+    var graphValues = []
+    var graphOptionsLabel = "Top 5 misused ports"
+    
+    var graphLimit = 5
+    for (var tmp of list) {
+        // neustale pocitame dlzku zoznamu do ktoreho pridavame a ak je este miesto pridame dalsi
+        if (graphLabels.length < graphLimit) {
+            graphLabels.push(tmp.name)
+            graphValues.push(tmp.count)
+        }
+    }
+    
+    fil.data.labels = graphLabels
+    fil.data.datasets[0].label = graphLabel
+    fil.data.datasets[0].data = graphValues
+    fil.options.plugins.title.text = graphOptionsLabel
+    
+    // Grid.js
+    fil.forGridJs = {}
+    fil.forGridJs.tableNames = ["Order", "Port number", "Occurence"]
+    var tableLimit = 500
+    fil.forGridJs.tableValues = []
+    for (var tmp of retObj.table) {
+        if (fil.forGridJs.tableValues.length < tableLimit) {
+            fil.forGridJs.tableValues.push(tmp)
+        }
+    }
+    /* UNDER WORK END */ 
+
+    saveChangesToFile(folderWrite, fileNameWritePorts, fil)
 }
 
 function saveChangesToFile(whereFolder, whereName, tempFile) {

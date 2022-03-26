@@ -2,19 +2,24 @@
     "type": "bar",
     "data": {
         "labels": [
-            "Pure IP",
-            "IP w domain"
+            "IPv4",
+            "Domain",
+            "IPv6"
         ],
         "datasets": [
             {
-                "label": "Domain",
+                "label": "Domains vs No domains",
                 "data": [
-                    421,
-                    117
+                    49880,
+                    3928,
+                    0
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)"
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 206, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)"
                 ],
                 "borderWidth": 1,
                 "borderColor": "#777",
@@ -34,11 +39,37 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Ratio between IPs with domain name and pure IPs"
+                "text": "Ratio between IPs domain name and pure IPs"
             },
             "legend": {
                 "display": false
             }
         }
-    }
+    },
+    "nazov": "compGen - comparedDomain.json",
+    "forGridJs": {
+        "tableNames": [
+            "Order",
+            "Name",
+            "Value"
+        ],
+        "tableValues": [
+            [
+                1,
+                "IPv4",
+                49880
+            ],
+            [
+                2,
+                "Domain",
+                3928
+            ],
+            [
+                3,
+                "IPv6",
+                0
+            ]
+        ]
+    },
+    "time": "2022-03-26 01:26:11"
 }

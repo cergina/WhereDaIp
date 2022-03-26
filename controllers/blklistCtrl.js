@@ -8,6 +8,7 @@ const blklistProvider = require("../models/BlklistProvider")
 const blklistResponse = require("../models/ResponseBlklist")
 const { sendPromise } = require('../services/simpleCommunicator.js')
 const { logError } = require('../services/helper.js')
+const net = require('net')
 
 /* settings */
 const basePath = `${configuration.WWW_BLKLIST_HOME}`
@@ -296,11 +297,198 @@ const reportFindingsHere = async (arg) => {
     return retArr
 }
 
+
+const getJsonWithCountedPorts = async (req, res) => {
+    // get all responses
+    var responses = await blklistResponse.find({}, {
+        "provider": 1,
+        "list": 1
+    })
+
+    var retArr = []
+    const regexForPort = /:[0-9]+/g;
+
+
+    // prejst vsetky blocklisty
+    var uniqueValues = []
+    for (var xResp of responses) {
+        // prejst list z blocklist response
+        for (var xIp of xResp.list) {
+            // ziskaj port z xIp.url        
+            const found = xIp.url?.match(regexForPort);
+            if (found) {
+                const port = found[0].substring(1)
+
+
+                // zistit ci uz taky port
+                var tmpCes = uniqueValues.find(elem => elem.name === port)
+    
+                if (tmpCes === undefined) {
+                    uniqueValues.push({"name": port, "count": 1})
+                } else {
+                    tmpCes.count++
+                }
+            }
+        }
+    }
+
+    // sort based on port occurence
+    uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
+    
+    var retObj = {}
+    retObj.list = uniqueValues
+
+    // GridJs
+    retObj.table = []
+    var order = 1
+    
+    for (var tmp of uniqueValues) {
+        retObj.table.push([order++, tmp.name, tmp.count])
+    }
+
+    return retObj
+}
+
+const getJsonWithCountedSignatures = async (req, res) => {
+    // get all responses
+    var responses = await blklistResponse.find({}, {
+        "provider": 1,
+        "list": 1
+    })
+
+    var retArr = []
+    const regexForSignatures = /[^,]+/g;
+
+
+    // prejst vsetky blocklisty
+    var uniqueValues = []
+    for (var xResp of responses) {
+        // prejst list z blocklist response
+        for (var xIp of xResp.list) {
+            // ziskaj signatury z xIp.
+            const found = xIp.tags?.match(regexForSignatures);
+            if (found) {
+                // prejst vsetky signatury
+                for (var xSig of found) {
+                    // zistit ci uz taka signatura je
+                    var tmpCes = uniqueValues.find(elem => elem.name === xSig)
+                    
+                    if (tmpCes === undefined) {
+                        uniqueValues.push({"name": xSig, "count": 1})
+                    } else {
+                        tmpCes.count++
+                    }
+                }
+            }
+        }
+    }
+
+    // sort based on port occurence
+    uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
+    
+    var retObj = {}
+    retObj.list = uniqueValues
+
+    // GridJs
+    retObj.table = []
+    var order = 1
+    
+    for (var tmp of uniqueValues) {
+        retObj.table.push([order++, tmp.name, tmp.count])
+    }
+
+    return retObj
+}
+
+const getJsonWithCountedDomainsAndHttp = async (req, res) => {
+    // get all responses
+    var responses = await blklistResponse.find({}, {
+        "provider": 1,
+        "list": 1
+    })
+
+    var retArr = []
+    const regexForDomain = /^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i;
+    const regexForIps = /^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i;
+
+    
+    // prejst vsetky blocklisty
+    var doms = [
+        {"name": "IPv4", count: 0}, 
+        {"name": "IPv6", count: 0},
+        {"name": "Domain", count: 0}
+    ]
+    var httpsArr = [
+        {"name": "http", count: 0}, 
+        {"name": "https", count: 0}
+    ]
+    for (var xResp of responses) {
+        // prejst list z blocklist response
+        for (var xUrl of xResp.list) {
+            // ziskaj domeny z xIp.
+            const found = xUrl.url?.match(regexForDomain);
+            if (found) {
+                // prejst vsetky ipcky
+                var domain = found && found[1]
+                var res = net.isIP(found[1].split(':')[0])
+                
+                // res is 4 its IPv4, res is 6 its IPv6, res is 0 its domain
+                if (res === 4) {
+                    doms[0].count++
+                } else if (res === 6) {
+                    doms[1].count++
+                } else if (res === 0) {
+                    doms[2].count++
+                }
+            }
+
+            // zisti ci je to HTTP alebo HTTPS
+            if (xUrl.url?.startsWith('https://')) {
+                httpsArr[1].count++
+            } else if (xUrl.url?.startsWith('http://')) {
+                httpsArr[0].count++
+            }
+        }
+    }
+
+    // sort based on domain occurence
+    doms.sort((a, b) => (a.count < b.count) ? 1 : -1)
+    
+    // sort based on http occurence
+    httpsArr.sort((a, b) => (a.count < b.count) ? 1 : -1)
+    
+    var retObj = {}
+    retObj.domObj = {}
+    retObj.httpObj = {}
+    retObj.domObj.list = doms
+    retObj.httpObj.list = httpsArr    
+
+    // GridJs doms
+    retObj.domObj.table = []
+    var order = 1
+    
+    for (var tmp of doms) {
+        retObj.domObj.table.push([order++, tmp.name, tmp.count])
+    }
+
+    // GridJS http
+    retObj.httpObj.table = []
+    var order = 1
+    
+    for (var tmp of httpsArr) {
+        retObj.httpObj.table.push([order++, tmp.name, tmp.count])
+    }
+
+    return retObj
+}
+
 module.exports = {
     showModule, addNewSource, editSource, showList,
     createNewProvider, editExistingProvider, deleteExistingProvider, refreshProviderList,
     getJsonWithCountedOnline,
     saveAndRedirect,
-    reportFindingsHere
+    reportFindingsHere,
+    getJsonWithCountedPorts, getJsonWithCountedSignatures,
+    getJsonWithCountedDomainsAndHttp
 }
 
