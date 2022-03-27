@@ -1,6 +1,7 @@
 var fs = require('fs');
 const helper = require('../../services/helper');
 const { getJsonWithCountedOnline, getJsonWithCountedDomainsAndHttp } = require('../../controllers/blklistCtrl')
+const { getJsonWithCountedCovered } = require('../../controllers/ipsCtrl')
 
 // template
 var folderRead = '../../public/templates/'
@@ -21,6 +22,7 @@ const onEventGenerateFiles = async (req, res) => {
     try {
         await generateCompOnline()
         await generateCompDomainAndHttp()
+        await generateCompCovered()
         // TODO dalsie
     } catch (e) {
         helper.logError(`Error in compGen occured during event ${e}`)
@@ -139,6 +141,43 @@ const generateCompDomainAndHttp = async (req, res) => {
 
     // Generic
     saveChangesToFile(folderWrite, fileNameWriteHttps, fil)
+}
+const generateCompCovered = async (req, res) => {
+    const retObj = await getJsonWithCountedCovered()
+
+    // DOM comp
+    var fil = JSON.parse(JSON.stringify(fileBar))
+    fil.nazov = `compGen - ${fileNameWriteCovered}`
+
+
+    // Chart.js
+    var list = retObj.list
+    var graphLabels = []
+    var graphLabel = "Comparation of privacy techniques"
+    var graphValues = []
+    var graphOptionsLabel = "Ratio between techniques used to fake its location"
+
+    var graphLimit = 5
+    for (var tmp of list) {
+        // neustale pocitame dlzku zoznamu do ktoreho pridavame a ak je este miesto pridame dalsi
+        if (graphLabels.length < graphLimit) {
+            graphLabels.push(tmp.name)
+            graphValues.push(tmp.count)
+        }
+    }
+
+    fil.data.labels = graphLabels
+    fil.data.datasets[0].label = graphLabel
+    fil.data.datasets[0].data = graphValues
+    fil.options.plugins.title.text = graphOptionsLabel
+
+    // Grid.js
+    fil.forGridJs = {}
+    fil.forGridJs.tableNames = ["Order", "Name", "Value"]
+    fil.forGridJs.tableValues = retObj.table
+
+    // Generic
+    saveChangesToFile(folderWrite, fileNameWriteCovered, fil)
 }
 
 function saveChangesToFile(whereFolder, whereName, tempFile) {

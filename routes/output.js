@@ -14,6 +14,7 @@ router.get('/top/tags', controller.topTags)
 router.get('/compared/online', controller.comparedOnline)
 router.get('/compared/covered', controller.comparedCovered)
 router.get('/compared/domain', controller.comparedDomain)
+router.get('/compared/https', controller.comparedHttps)
 router.get('/activity', controller.activity)
 
 

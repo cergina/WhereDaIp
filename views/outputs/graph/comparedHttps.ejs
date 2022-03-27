@@ -14,12 +14,13 @@
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
                     <li class="breadcrumb-item"><a href="/graphs">Graphs</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Hidden</li>
+                    <li class="breadcrumb-item active" aria-current="page">Http(s)</li>
                 </ol>
               </nav>
         </div>
         
         <%- include('_graphsThree') %> 
+
 
         <!-- footer with name, year, FIIT, www -->
         <%- include('../../_footer') %> 
@@ -38,7 +39,7 @@
     </script>
 
     <script>
-    fetch("/accessible/comparedCovered.json")
+    fetch("/accessible/comparedHttps.json")
         .then(response => response.json())
         .then(data => {
             // Perform Deep copy

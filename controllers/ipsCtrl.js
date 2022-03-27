@@ -489,11 +489,87 @@ const getJsonWithCountedAs = async (req, res) => {
 
     return retObj
 }
+const getJsonWithCountedCovered = async (req, res) => {
+    // we want only that provider that has access to this information
+    var providers = await getAllUsableProviders()
+
+    // zisti ktory index obsahuje validnu hodnotu (mozno ale aj viac providerov bude mat pristup tak TODO)
+    var searchedIndex = providers.findIndex(provider => provider.response.mobilePath !== '')
+
+    var responses = await responseData.find({ provider : providers[searchedIndex]._id}, {
+        "success": 1,
+        "ipRequested": 1,
+        "addedAt": 1,
+        "mobile": 1,
+        "proxy": 1,
+        "hosting": 1,
+        "findings": 1
+    }).sort({ ipRequested: 'asc'})
+
+    // prejst pole a nechat len take kde je ip adresa raz
+    var uniqueResponses = []
+    for (var x of responses) {
+        var tmpRes = uniqueResponses.some(elem => elem.ipRequested === x.ipRequested)
+
+        if (!tmpRes) {
+            uniqueResponses.push(x)
+        }
+    }
+
+    // ziskat unikatne nothing/tor/proxy/hosting
+    var uniqueValues = [
+        {"name": "Cellular", "count": 0},
+        {"name": "Proxy/VPN/TOR", "count": 0},
+        {"name": "Hosting", "count": 0},
+        {"name": "Nothing", "count": 0},
+        {"name": "VPN", "count": 0},
+        {"name": "TOR", "count": 0}
+    ]
+
+    for (var x of uniqueResponses) {
+        // GEODB part
+        if (x.mobile === 'true')
+            uniqueValues[0].count++
+        if (x.proxy === 'true')
+            uniqueValues[1].count++
+        if (x.hosting === 'true')
+            uniqueValues[2].count++
+        if (x.mobile === 'false' && x.proxy === 'false' && x.hosting === 'false')
+            uniqueValues[3].count++
+        
+        // COVERT from findings
+        if (x.findings.some(el => {
+            return true === el?.text?.includes("COVERT", "VPN")
+        })) uniqueValues[4].count++
+        if (x.findings.some(el => {
+            return true === el?.text?.includes("COVERT", "TOR")
+        })) uniqueValues[5].count++
+    }
+
+    uniqueValues.filter(a => a.count === 0)
+    uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
+    
+    var retObj = {}
+    retObj.list = uniqueValues
+
+    // GridJs
+    retObj.table = []
+    var order = 1
+    
+    for (var tmp of uniqueValues) {
+        if (tmp.count > 0)
+            retObj.table.push([order++, tmp.name, tmp.count])
+    }
+
+    return retObj
+}
+
 module.exports = {
     showAllIps, showFilteredIps, makeRequestController, showFusedResponse, showResponse,
     showTestMap, downloadResponses, analyseIps,
     acceptRequestController,
     deleteExistingResponse,
-    getJsonWithCountedOrigin, getJsonWithCountedAs
+    getJsonWithCountedOrigin, getJsonWithCountedAs,
+    getJsonWithCountedCovered
 }
 

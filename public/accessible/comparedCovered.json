@@ -2,21 +2,21 @@
     "type": "bar",
     "data": {
         "labels": [
-            "VPN",
-            "TOR",
-            "Cellular",
+            "Nothing",
             "Hosting",
-            "None"
+            "Cellular",
+            "TOR",
+            "VPN"
         ],
         "datasets": [
             {
-                "label": "Covered",
+                "label": "Comparation of privacy techniques",
                 "data": [
-                    150,
-                    260,
-                    64, 
-                    47,
-                    21
+                    1,
+                    1,
+                    1,
+                    0,
+                    0
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -43,11 +43,37 @@
         "plugins": {
             "title": {
                 "display": true,
-                "text": "Cover in use"
+                "text": "Ratio between techniques used to fake its location"
             },
             "legend": {
                 "display": false
             }
         }
-    }
+    },
+    "nazov": "compGen - comparedCovered.json",
+    "forGridJs": {
+        "tableNames": [
+            "Order",
+            "Name",
+            "Value"
+        ],
+        "tableValues": [
+            [
+                1,
+                "Nothing",
+                1
+            ],
+            [
+                2,
+                "Hosting",
+                1
+            ],
+            [
+                3,
+                "Cellular",
+                1
+            ]
+        ]
+    },
+    "time": "2022-03-27 13:13:19"
 }

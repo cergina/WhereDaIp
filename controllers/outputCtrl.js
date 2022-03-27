@@ -54,6 +54,11 @@ const comparedDomain = (req, res) => {
     res.render(`${basePath}comparedDomain.ejs`, { siteTitle: `Comparation of IPs with(out) domain`})
 }
 
+const comparedHttps = (req, res) => {
+    
+    res.render(`${basePath}comparedHttps.ejs`, { siteTitle: `Comparation of URLs that use https vs http`})
+}
+
 const activity = (req, res) => {
     
     res.render(`${basePath}activity.ejs`, { siteTitle: `Historical activity`})
@@ -62,6 +67,6 @@ const activity = (req, res) => {
 module.exports = {
     test, 
     crossroad, topOrigin, topSignatures, topPorts, topAs, topTags,
-    comparedOnline, comparedCovered,  comparedDomain,
+    comparedOnline, comparedCovered,  comparedDomain, comparedHttps,
     activity
 }
