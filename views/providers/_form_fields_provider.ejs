@@ -144,114 +144,43 @@
     <small class="form-text text-muted mb-4">XML not implemmented yet</small>
 </div>
 
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_success_path">Path to "was succesfull request"</label></div>
-            <div class="col-md-6"><label for="api_resp_iptype_path">Path to "Type of IP address v4 or v6"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.successPath %>" placeholder="eg.: 'success'" type="text" name="api_resp_success_path" id="api_resp_success_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.typePath %>" placeholder="eg.: 'type'" type="text" name="api_resp_iptype_path" id="api_resp_iptype_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_continent_path">Path to "continent"</label></div>
-            <div class="col-md-6"><label for="api_resp_country_path">Path to "country" *</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.continentPath %>" placeholder="eg.: 'continent'" type="text" name="api_resp_continent_path" id="api_resp_continent_path" class="form-control"></div>
-            <div class="col-md-6"><input required value="<%= provider.response.countryPath %>" placeholder="eg.: 'country'" type="text" name="api_resp_country_path" id="api_resp_country_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_countrycode_path">Path to "country code"</label></div>
-            <div class="col-md-6"><label for="api_resp_countryflag_path">Path to "country flag"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.countryCodePath %>" placeholder="eg.: 'country_code'" type="text" name="api_resp_countrycode_path" id="api_resp_countrycode_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.countryFlagPath %>" placeholder="eg.: 'country_flag'" type="text" name="api_resp_countryflag_path" id="api_resp_countryflag_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_region_path">Path to "region"</label></div>
-            <div class="col-md-6"><label for="api_resp_city_path">Path to "city" *</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.regionPath %>" placeholder="eg.: 'region'" type="text" name="api_resp_region_path" id="api_resp_region_path" class="form-control"></div>
-            <div class="col-md-6"><input required value="<%= provider.response.cityPath %>" placeholder="eg.: 'city'" type="text" name="api_resp_city_path" id="api_resp_city_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_latitude_path">Path to "latitude" *</label></div>
-            <div class="col-md-6"><label for="api_resp_longitude_path">Path to "longitude" *</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input required value="<%= provider.response.latitudePath %>" placeholder="eg.: 'latitude'" type="text" name="api_resp_latitude_path" id="api_resp_latitude_path" class="form-control"></div>
-            <div class="col-md-6"><input required value="<%= provider.response.longitudePath %>" placeholder="eg.: 'longitude'" type="text" name="api_resp_longitude_path" id="api_resp_longitude_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_organization_path">Path to "organization"</label></div>
-            <div class="col-md-6"><label for="api_resp_isp_path">Path to "ISP (internet service provider) *"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.orgPath %>" placeholder="eg.: 'org'" type="text" name="api_resp_organization_path" id="api_resp_organization_path" class="form-control"></div>
-            <div class="col-md-6"><input required value="<%= provider.response.ispPath %>" placeholder="eg.: 'isp'" type="text" name="api_resp_isp_path" id="api_resp_isp_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_currency_path">Path to "current currency in use by country"</label></div>
-            <div class="col-md-6"><label for="api_resp_requestscount_path">Path to "number of already fulfilled requests"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.currencyPath %>" placeholder="eg.: 'currency'" type="text" name="api_resp_currency_path" id="api_resp_currency_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.fulfilledRequestsPath %>" placeholder="eg.: 'completed_requests'" type="text" name="api_resp_requestscount_path" id="api_resp_requestscount_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_as_path">Path to "AS number or/and name (if in BGP tables)"</label></div>
-            <div class="col-md-6"><label for="api_resp_mobile_path">Path to "originates from cellular?"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.asPath %>" placeholder="eg.: 'as_number'" type="text" name="api_resp_as_path" id="api_resp_as_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.mobilePath %>" placeholder="eg.: 'is_mobile'" type="text" name="api_resp_mobile_path" id="api_resp_mobile_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="api_resp_proxy_path">Path to "is proxy/vpn/TOR exit node?"</label></div>
-            <div class="col-md-6"><label for="api_resp_hosting_path">Path to "is hosted?"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.proxyPath %>" placeholder="eg.: 'proxy'" type="text" name="api_resp_proxy_path" id="api_resp_proxy_path" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.hostingPath %>" placeholder="eg.: 'hosting'" type="text" name="api_resp_hosting_path" id="api_resp_hosting_path" class="form-control"></div>
-        </div>
-    </div>
-</div>
+
+<% let value1= provider.response.successPath %>
+<% let value2= provider.response.typePath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_success_path", label1: "was succesfull request", value1: value1, exampleId1: "success", /* 2. */ identifier2: "api_resp_iptype_path", label2: "Type of IP address v4 or v6", value2: value2, exampleId2: "type"}) %> 
+
+<% value1= provider.response.continentPath %>
+<% value2= provider.response.countryPath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_continent_path", label1: "continent", value1: value1, exampleId1: "continent", /* 2. */ identifier2: "api_resp_country_path", label2: "country *", value2: value2, exampleId2: "country"}) %> 
+
+<% value1= provider.response.countryCodePath %>
+<% value2= provider.response.countryFlagPath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_countrycode_path", label1: "country code", value1: value1, exampleId1: "country_code", /* 2. */ identifier2: "api_resp_countryflag_path", label2: "country flag", value2: value2, exampleId2: "country_flag"}) %> 
+
+<% value1= provider.response.regionPath %>
+<% value2= provider.response.cityPath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_region_path", label1: "region", value1: value1, exampleId1: "region", /* 2. */ identifier2: "api_resp_city_path", label2: "city *", value2: value2, exampleId2: "city"}) %> 
+
+<% value1= provider.response.latitudePath %>
+<% value2= provider.response.longitudePath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_latitude_path", label1: "latitude *", value1: value1, exampleId1: "latitude", /* 2. */ identifier2: "api_resp_longitude_path", label2: "longitude *", value2: value2, exampleId2: "longitude"}) %> 
+
+<% value1= provider.response.orgPath %>
+<% value2= provider.response.ispPath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_organization_path", label1: "organization", value1: value1, exampleId1: "org", /* 2. */ identifier2: "api_resp_isp_path", label2: "ISP \(internet service provider\) *", value2: value2, exampleId2: "isp"}) %> 
+
+<% value1= provider.response.currencyPath %>
+<% value2= provider.response.fulfilledRequestsPath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_currency_path", label1: "current currency in use by country", value1: value1, exampleId1: "currency", /* 2. */ identifier2: "api_resp_requestscount_path", label2: "number of already fulfilled requests", value2: value2, exampleId2: "completed_requests"}) %> 
+
+<% value1= provider.response.asPath %>
+<% value2= provider.response.mobilePath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_as_path", label1: "AS number or/and name \(if in BGP tables\)", value1: value1, exampleId1: "as_number", /* 2. */ identifier2: "api_resp_mobile_path", label2: "originates from cellular?", value2: value2, exampleId2: "is_mobile"}) %> 
+
+<% value1= provider.response.proxyPath %>
+<% value2= provider.response.hostingPath %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "api_resp_proxy_path", label1: "is proxy/vpn/TOR exit node?", value1: value1, exampleId1: "proxy", /* 2. */ identifier2: "api_resp_hosting_path", label2: "is hosted?", value2: value2, exampleId2: "hosting"}) %> 
+
 <small class="form-text text-muted mb-4">Inputs marked with * are required.</small>
 
 <!-- akcne tlacidla -->
