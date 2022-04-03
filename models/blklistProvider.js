@@ -20,7 +20,7 @@ const blklistProviderSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 0,
-        _options: ["JSON", "XML"]
+        _options: ["CSV", "JSON"]
     },
     baseUrl: {
         type: String,
@@ -55,7 +55,12 @@ const blklistProviderSchema = new mongoose.Schema({
         urlStatus:String,
         lastOnline:String,
         tags:String,
-        externalUrl:String
+        externalUrl:String,
+        ip:String,
+        port:String,
+        hostname:String,
+        asnumber:String,
+        country:String
     }
 })
 

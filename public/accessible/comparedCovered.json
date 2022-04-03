@@ -4,19 +4,19 @@
         "labels": [
             "Nothing",
             "Hosting",
-            "Cellular",
             "TOR",
-            "VPN"
+            "VPN",
+            "Cellular"
         ],
         "datasets": [
             {
                 "label": "Comparation of privacy techniques",
                 "data": [
+                    4,
+                    2,
                     1,
                     1,
-                    1,
-                    0,
-                    0
+                    1
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -61,19 +61,29 @@
             [
                 1,
                 "Nothing",
-                1
+                4
             ],
             [
                 2,
                 "Hosting",
-                1
+                2
             ],
             [
                 3,
+                "TOR",
+                1
+            ],
+            [
+                4,
+                "VPN",
+                1
+            ],
+            [
+                5,
                 "Cellular",
                 1
             ]
         ]
     },
-    "time": "2022-03-27 13:13:19"
+    "time": "2022-04-03 01:59:30"
 }

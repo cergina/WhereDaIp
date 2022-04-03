@@ -4,12 +4,16 @@
         "labels": [
             "AS15169 Google LLC",
             "AS5578 SWAN, a.s.",
-            "AS28952 O2 Business Services, a.s"
+            "AS28952 O2 Business Services, a.s",
+            "AS409 Air Force Systems Networking",
+            "AS2607 Zdruzenie pouzivatelov Slovenskej akademickej datovej siete"
         ],
         "datasets": [
             {
                 "label": "AS",
                 "data": [
+                    1,
+                    1,
                     1,
                     1,
                     1
@@ -68,8 +72,28 @@
                 3,
                 "AS28952 O2 Business Services, a.s",
                 1
+            ],
+            [
+                4,
+                "AS409 Air Force Systems Networking",
+                1
+            ],
+            [
+                5,
+                "AS2607 Zdruzenie pouzivatelov Slovenskej akademickej datovej siete",
+                1
+            ],
+            [
+                6,
+                "AS4134 CHINANET-BACKBONE",
+                1
+            ],
+            [
+                7,
+                "AS134451 NewMedia Express Pte Ltd",
+                1
             ]
         ]
     },
-    "time": "2022-03-27 13:13:19"
+    "time": "2022-04-03 01:59:30"
 }

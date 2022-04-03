@@ -51,34 +51,62 @@ const refreshProviderList = async (req, res) => {
     try {
         
         let acquiredList = await sendPromise(provider.baseUrl)
-        
-        // check every IP for type and save
-        acquiredList = acquiredList.split(/\r?\n/)
+       
+        // we save responses here
         let newList = []
 
-        acquiredList.forEach(address => {
-            var res = address.startsWith('#')
+        // check every IP for type and save
+        if (provider.format === 1) {
+            // its already in json, do nothing
+            
+            acquiredList.forEach(address => {
+                let temp = {}
+                temp.checked = "false"
 
-            if (res === true)
-                return
+                temp.country = address[provider.response.country]
+                temp.externalId = address[provider.response.externalId]
+                temp.externalDate = address[provider.response.externalDate]
+                temp.url = address[provider.response.url]
+                temp.urlStatus = address[provider.response.urlStatus]
+                temp.lastOnline = address[provider.response.lastOnline]
+                temp.tags = address[provider.response.tags]
+                temp.externalUrl =  address[provider.response.externalUrl]
+                temp.ip = address[provider.response.ip]
+                temp.port = address[provider.response.port]
+                temp.hostname = address[provider.response.hostname]
+                temp.asnumber = address[provider.response.asnumber]
+    
+                newList.push(temp)
+            })
+        }
+        else if (provider.format === 0) {
+            // CSV is split with commas and new line
+            acquiredList = acquiredList.split(/\r?\n/)
+            
+            acquiredList.forEach(address => {
+                var res = address.startsWith('#')
+    
+                if (res === true)
+                    return
+    
+                // now we know its not a comment
+                let addParsed = address.split("\",\"")
+    
+                let temp = {}
+                temp.checked = "false"
+                temp.externalId = addParsed[0]
+                temp.externalDate = addParsed[1]
+                temp.url = addParsed[2]
+                temp.urlStatus = addParsed[3]
+                temp.lastOnline = addParsed[4]
+                temp.tags = addParsed[6]
+                temp.externalUrl = addParsed[7]
+    
+                newList.push(temp)
+            })
+        }
 
-            // now we know its not a comment
-            let addParsed = address.split("\",\"")
-
-            let temp = {}
-            temp.checked = "false"
-            temp.externalId = addParsed[0]
-            temp.externalDate = addParsed[1]
-            temp.url = addParsed[2]
-            temp.urlStatus = addParsed[3]
-            temp.lastOnline = addParsed[4]
-            temp.tags = addParsed[6]
-            temp.externalUrl = addParsed[7]
-
-            newList.push(temp)
-        })
-
-        // will only work on urlhaus
+        // CSV will only work on urlhaus abuse list
         let objParsed = new blklistResponse()
         objParsed.checked = false
 
@@ -153,14 +181,15 @@ const getJsonWithCountedOnline = async (req, res) => {
                 "list.urlStatus": 1
             })
 
-
-        for (var stat of tmpResp.list) {
-            if (stat.urlStatus === 'online')
-                countOn++
-            else if (stat.urlStatus === 'offline')
-                countOff++
-            else
-                countNA++
+        if (tmpResp?.list) {
+            for (var stat of tmpResp.list) {
+                if (stat.urlStatus === 'online')
+                    countOn++
+                else if (stat.urlStatus === 'offline')
+                    countOff++
+                else
+                    countNA++
+            }
         }
     }
 
@@ -211,6 +240,12 @@ function saveAndRedirect(viewName) {
         provider.response.lastOnline = req.body.blk_resp_lastOnline
         provider.response.tags = req.body.blk_resp_tags
         provider.response.externalUrl = req.body.blk_resp_externalUrl
+
+        provider.response.ip = req.body.blk_resp_ip
+        provider.response.port = req.body.blk_resp_port
+        provider.response.hostname = req.body.blk_resp_hostname
+        provider.response.asnumber = req.body.blk_resp_asnumber
+        provider.response.country = req.body.blk_resp_country
 
         console.log(provider)
 

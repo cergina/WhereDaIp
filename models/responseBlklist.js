@@ -34,7 +34,12 @@ const responseBlklistSchema = new mongoose.Schema({
             urlStatus: String,
             lastOnline: String,
             tags: String,
-            externalUrl: String
+            externalUrl: String,
+            ip:String,
+            port:String,
+            hostname:String,
+            asnumber:String,
+            country:String
         }
     ]
 })

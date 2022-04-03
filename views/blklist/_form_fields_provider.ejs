@@ -108,62 +108,40 @@
     <label for="response_format">Response format type</label>
 
     <select name="response_format" id="response_format" class="form-control">
-        <% var options = ["JSON", "XML"] %>
+        <% var options = ["CSV", "JSON"] %>
         <% var selected_response_format = provider.format %>
         <% for(var i = 0; i < options.length; i++) { %>
             <% var selected = (selected_response_format == i) ? 'selected' : '' %> 
             <option  <%= selected %>  value='<%= i %>'><%= options[i] %></option>
         <% } %>
     </select>
-    <small class="form-text text-muted mb-4">XML not implemmented yet</small>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-12"><label for="blk_resp_tags">Path to "tags"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-12"><input value="<%= provider.response.tags %>" placeholder="eg.: 'tags'" type="text" name="blk_resp_tags" id="blk_resp_tags" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="blk_resp_externalId">Path to "external ID"</label></div>
-            <div class="col-md-6"><label for="blk_resp_externalDate">Path to "external date discovered"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.externalId %>" placeholder="eg.: 'id'" type="text" name="blk_resp_externalId" id="blk_resp_externalId" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.externalDate %>" placeholder="eg.: 'dateadded'" type="text" name="blk_resp_externalDate" id="blk_resp_externalDate" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="blk_resp_url">Path to "dangerous url/ip"</label></div>
-            <div class="col-md-6"><label for="blk_resp_urlStatus">Path to "its availability status"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.url %>" placeholder="eg.: 'url'" type="text" name="blk_resp_url" id="blk_resp_url" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.urlStatus %>" placeholder="eg.: 'url_status'" type="text" name="blk_resp_urlStatus" id="blk_resp_urlStatus" class="form-control"></div>
-        </div>
-    </div>
-</div>
-<div class="d-grid gap-3">
-    <div class="form-group p-2 bg-light border">
-        <div class="row">
-            <div class="col-md-6"><label for="blk_resp_lastOnline">Path to "last time online"</label></div>
-            <div class="col-md-6"><label for="blk_resp_externalUrl">Path to "URL on external service"</label></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6"><input value="<%= provider.response.lastOnline %>" placeholder="eg.: 'last_online'" type="text" name="blk_resp_lastOnline" id="blk_resp_lastOnline" class="form-control"></div>
-            <div class="col-md-6"><input value="<%= provider.response.externalUrl %>" placeholder="eg.: 'urlhaus_link'" type="text" name="blk_resp_externalUrl" id="blk_resp_externalUrl" class="form-control"></div>
-        </div>
-    </div>
 </div>
 
+<% let value1= provider.response.tags %>
+<% let value2= provider.response.country %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "blk_resp_tags", label1: "tags", value1: value1, exampleId1: "tags", /* 2. */ identifier2: "blk_resp_country", label2: "Country", value2: value2, exampleId2: "country"}) %> 
+
+
+<% value1= provider.response.externalId %>
+<% value2= provider.response.externalDate %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "blk_resp_externalId", label1: "external ID", value1: value1, exampleId1: "id", /* 2. */ identifier2: "blk_resp_externalDate", label2: "external date discovered", value2: value2, exampleId2: "dateadded"}) %> 
+
+<% value1= provider.response.url %>
+<% value2= provider.response.urlStatus %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "blk_resp_url", label1: "dangerous url/ip", value1: value1, exampleId1: "url", /* 2. */ identifier2: "blk_resp_urlStatus", label2: "its availability status", value2: value2, exampleId2: "url_status"}) %> 
+
+<% value1= provider.response.lastOnline %>
+<% value2= provider.response.externalUrl %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "blk_resp_lastOnline", label1: "last time online", value1: value1, exampleId1: "last_online", /* 2. */ identifier2: "blk_resp_externalUrl", label2: "URL to an external service", value2: value2, exampleId2: "urlhaus_link"}) %> 
+<!-- these are new -->
+
+<% value1= provider.response.ip %>
+<% value2= provider.response.port %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "blk_resp_ip", label1: "IP address", value1: value1, exampleId1: "ip_address", /* 2. */ identifier2: "blk_resp_port", label2: "PORT", value2: value2, exampleId2: "port"}) %> 
+
+<% value1= provider.response.hostname %>
+<% value2= provider.response.asnumber %>
+<%- include('./_twoColumnDiv.ejs', { /* 1. */ identifier1: "blk_resp_hostname", label1: "Isolated hostname", value1: value1, exampleId1: "hostname", /* 2. */ identifier2: "blk_resp_asnumber", label2: "AS Number", value2: value2, exampleId2: "as_number"}) %> 
 
 
 
