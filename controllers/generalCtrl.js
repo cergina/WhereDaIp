@@ -14,6 +14,9 @@ const state = async (req, res) => {
     
     state.analyse = await getState(3)
     state.geoloc = await getState(2)
+    state.graphs = await getState(4)
+    state.maps = await getState(5)
+    state.sources = await getState(6)
 
     res.render(`${basePath}state.ejs`, { name: configuration.USER, siteTitle: 'APP state', startedAt: configuration.STARTEDAT, 
         state: state
@@ -35,6 +38,8 @@ const setBusyFor = async (arg, howManyMinutes) => {
     // test is 1
     // geolocation is 2
     // analyse is 3
+    // graph analysis is 4
+    // maps analysis is 5
     var retState = await stateProvider.findOne({ type : arg })
 
     if (retState === null) {
@@ -58,6 +63,8 @@ const setFree = async (arg) => {
     // test is 1
     // geolocation is 2
     // analyse is 3
+    // graph analysis is 4
+    // maps analysis is 5
     var retState = await stateProvider.findOne({ type : arg })
 
     if (retState === null) {
@@ -97,13 +104,15 @@ const setFreeAfterTime = async (arg, milis) =>  {
 }
 
 const simulateWorkAndThenSetIdle = async (arg, howManyMinutes) => {
-    console.log("Simulating work - started")
+    //console.log("Simulating work - started")
 
     setTimeout(async function() {
         // general is 0
         // test is 1
         // geolocation is 2
         // analyse is 3
+        // graph analysis is 4
+        // maps analysis is 5
         var retState = await stateProvider.findOne({ type : arg })
 
         if (retState === null) {
@@ -111,7 +120,7 @@ const simulateWorkAndThenSetIdle = async (arg, howManyMinutes) => {
             retState.type = arg
         }
 
-        console.log(`simulate finishing ${retState}`)
+        //console.log(`simulate finishing ${retState}`)
         if (retState.isBusy === 1) 
             retState.expectedEndAt = new Date()
         retState.isBusy = 0
@@ -122,10 +131,10 @@ const simulateWorkAndThenSetIdle = async (arg, howManyMinutes) => {
             console.log(e)
         }
 
-        console.log("Simulating work - FINISHED")
+        //console.log("Simulating work - FINISHED")
     }, howManyMinutes * 60000)
 
-    console.log("Simulating work - planned")
+    //console.log("Simulating work - planned")
 }
 
 // general
@@ -134,6 +143,8 @@ const getState = async (arg) => {
     // test is 1
     // geolocation is 2
     // analyse is 3
+    // graph analysis is 4
+    // maps analysis is 5
     var retState = await stateProvider.findOne({ type : arg })
 
     if (retState === null) {

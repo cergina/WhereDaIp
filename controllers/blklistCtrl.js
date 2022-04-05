@@ -8,6 +8,7 @@ const blklistProvider = require("../models/BlklistProvider")
 const blklistResponse = require("../models/ResponseBlklist")
 const { sendPromise } = require('../services/simpleCommunicator.js')
 const { logError } = require('../services/helper.js')
+const { getCachedBloklistProviders, getCachedBloklistResponses } = require('../services/cacheFile.js')
 const net = require('net')
 
 /* settings */
@@ -154,16 +155,11 @@ function renderList(req, res, provider) {
 
 /* */
 // For EVENTS
-const getJsonWithCountedOnline = async (req, res) => {
+const getJsonWithCountedOnline = async (cacheBlkProv, cacheBlkResp) => {
     var ro = []
 
-    // ziskat cely zoznam {urlStatus}
-    // zisk vsetkych poskytovatelov
-    const providers = await blklistProvider.find({}, {
-        "isActive": 1,
-        "slug": 1
-    })
-
+    const providers = cacheBlkProv
+    
     
     ro.push({"name": "online", "count": 0})
     ro.push({"name": "offline", "count": 0})
@@ -174,12 +170,7 @@ const getJsonWithCountedOnline = async (req, res) => {
     var countNA = 0
 
     for (var provider of providers) {
-         var tmpResp = await blklistResponse.findOne({provider: provider._id},
-            {
-                "addedAt": 1,
-                "analyzed": 1,
-                "list.urlStatus": 1
-            })
+        var tmpResp = cacheBlkResp.find(temp => provider._id.equals(temp.provider))
 
         if (tmpResp?.list) {
             for (var stat of tmpResp.list) {
@@ -268,20 +259,10 @@ function saveAndRedirect(viewName) {
 // TODO TODOREPORT
 const reportFindingsHere = async (arg) => {
     // get this only once
-    var lists = await blklistProvider.find({}, {
-        "slug": 1,
-        "name": 1,
-        "tags": 1,
-    })
-    var responses = await blklistResponse.find({}, {
-        "provider": 1,
-        "list": 1
-    })
+    var lists = getCachedBloklistProviders()
+    var responses = getCachedBloklistResponses()
 
     var retArr = []
-
-    // prejst responses
-        // konkretna response
 
     // zoznam odpovedi
     for (var xResp of responses) {
@@ -294,12 +275,13 @@ const reportFindingsHere = async (arg) => {
             if (previousIp !== xIp.ipRequested) {
                 // ci obsiahnuta v zozname a vratit ktora to je
                 // TODO cannot read propertz includes of undefined
+                
                 var found = xResp.list.filter(e => {
-                    if (e.url === 'http://41.78.172.77:42550/Mozi.m' && xIp.ipRequested === '41.78.172.77')
-                        console.log('som tu')
+                    // if (e.url === 'http://41.78.172.77:42550/Mozi.m' && xIp.ipRequested === '41.78.172.77')
+                    //     console.log('som tu')
                     
-                    if (e.url === 'http://110.85.99.215:43230/Mozi.a' && xIp.ipRequested === '110.85.99.215')
-                        console.log('som tu 2')
+                    // if (e.url === 'http://110.85.99.215:43230/Mozi.a' && xIp.ipRequested === '110.85.99.215')
+                    //     console.log('som tu 2')
 
                     if (e.url)
                         return e.url.includes(xIp.ipRequested)
@@ -308,9 +290,10 @@ const reportFindingsHere = async (arg) => {
                 })
 
                 if (found.length > 0) {
+
                     var tempName  = lists.find(l => {
-                        console.log(l)
-                        console.log(xResp)
+                        //console.log(l)
+                        //console.log(xResp)
 
                         if (l._id.id.equals(xResp.provider.id))
                             return l
@@ -320,7 +303,8 @@ const reportFindingsHere = async (arg) => {
                     processed = {
                         foundAt: Date.now(),
                         ipRequested: xIp.ipRequested,
-                        text: `BLKLIST | ${xResp.tags} | ${tempName.slug} | ${tempName.name}`
+                        //text: `BLKLIST | ${xResp.tags} | ${tempName.slug} | ${tempName.name}`
+                        text: `BLKLIST | ${found[0].tags} | ${tempName.slug} | ${tempName.name}`
                     }
 
                     retArr.push(processed)
@@ -333,12 +317,9 @@ const reportFindingsHere = async (arg) => {
 }
 
 
-const getJsonWithCountedPorts = async (req, res) => {
+const getJsonWithCountedPorts = async (cacheBlkProv, cacheBlkResp) => {
     // get all responses
-    var responses = await blklistResponse.find({}, {
-        "provider": 1,
-        "list": 1
-    })
+    var responses = cacheBlkResp
 
     var retArr = []
     const regexForPort = /:[0-9]+/g;
@@ -348,18 +329,24 @@ const getJsonWithCountedPorts = async (req, res) => {
     var uniqueValues = []
     for (var xResp of responses) {
         // prejst list z blocklist response
+        console.log(xResp)
         for (var xIp of xResp.list) {
-            // ziskaj port z xIp.url        
-            const found = xIp.url?.match(regexForPort);
+            // ziskaj port z xIp.url
+            var found = xIp.port
+            
+            if (!found) {
+                found = xIp.url?.match(regexForPort);
+                
+                if (found)
+                    found = found[0].substring(1)
+            }
+            
             if (found) {
-                const port = found[0].substring(1)
-
-
                 // zistit ci uz taky port
-                var tmpCes = uniqueValues.find(elem => elem.name === port)
+                var tmpCes = uniqueValues.find(elem => elem.name === found)
     
                 if (tmpCes === undefined) {
-                    uniqueValues.push({"name": port, "count": 1})
+                    uniqueValues.push({"name": found, "count": 1})
                 } else {
                     tmpCes.count++
                 }
@@ -384,12 +371,9 @@ const getJsonWithCountedPorts = async (req, res) => {
     return retObj
 }
 
-const getJsonWithCountedSignatures = async (req, res) => {
+const getJsonWithCountedSignatures = async (cacheBlkProv, cacheBlkResp) => {
     // get all responses
-    var responses = await blklistResponse.find({}, {
-        "provider": 1,
-        "list": 1
-    })
+    var responses = cacheBlkResp
 
     var retArr = []
     const regexForSignatures = /[^,]+/g;
@@ -406,7 +390,7 @@ const getJsonWithCountedSignatures = async (req, res) => {
                 // prejst vsetky signatury
                 for (var xSig of found) {
                     // zistit ci uz taka signatura je
-                    var tmpCes = uniqueValues.find(elem => elem.name === xSig)
+                    var tmpCes = uniqueValues.find(elem => elem?.name.toLocaleLowerCase() === xSig.toLocaleLowerCase())
                     
                     if (tmpCes === undefined) {
                         uniqueValues.push({"name": xSig, "count": 1})
@@ -435,12 +419,9 @@ const getJsonWithCountedSignatures = async (req, res) => {
     return retObj
 }
 
-const getJsonWithCountedDomainsAndHttp = async (req, res) => {
+const getJsonWithCountedDomainsAndHttp = async (cacheBlkProv, cacheBlkResp) => {
     // get all responses
-    var responses = await blklistResponse.find({}, {
-        "provider": 1,
-        "list": 1
-    })
+    var responses = cacheBlkResp
 
     var retArr = []
     const regexForDomain = /^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i;

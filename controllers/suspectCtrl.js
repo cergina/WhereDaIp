@@ -14,7 +14,7 @@ const res = require("express/lib/response")
 const baseViewFolder = `${WWW_SUSPECT_HOME}`
 
 // for Internal
-const getJsonWithCountedListTags = async (req, res) => {
+const getJsonWithCountedListTags = async () => {
     var ro = []
 
     const tags = await getAllTags()

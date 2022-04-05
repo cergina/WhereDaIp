@@ -12,17 +12,17 @@ var fileNameWriteOnline = 'mapHaha.json'
 
 
 // public
-const onEventGenerateFiles = async (req, res) => {
+const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
     try {
         await generateMapTest()
         // dalsie
-    } catch (e) {
+    } catch (e) { 
         helper.logError(`Error in mapGen occured during event ${e}`)
     }
 }
 
 // private
-const generateMapTest = async (req, res) => {
+const generateMapTest = async () => {
     var fileMapTest = JSON.parse(JSON.stringify(fileBar))
 
     fileMapTest.nazov = 'mapGen - generateMapTest'

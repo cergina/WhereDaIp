@@ -86,7 +86,77 @@
             </div>
         </div>
         
+        <!-- grafy -->
+        <div class="float-right"><span class="badge badge-primary badge-pill"><%= state.geoloc.isBusy == 1 ? 'BUSY' : 'IDLE' %> </span></div>
+        <h5 class="display-5 mt-4 mb-2">Graphs file generation</h5>
+        <!-- datumy -->
+        <div class="form-group">
+            <!-- ci je aktivny -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Date started (shows last one)</label>
+                </div>
+                <div class="col-md-6">
+                    <label>Date ended (or expected)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input disabled value="<%= state.graphs.startedAt %>" type="text" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <input disabled value="<%= state.graphs.expectedEndAt %>" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
 
+        <!-- maps -->
+        <div class="float-right"><span class="badge badge-primary badge-pill"><%= state.geoloc.isBusy == 1 ? 'BUSY' : 'IDLE' %> </span></div>
+        <h5 class="display-5 mt-4 mb-2">Maps file generation</h5>
+        <!-- datumy -->
+        <div class="form-group">
+            <!-- ci je aktivny -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Date started (shows last one)</label>
+                </div>
+                <div class="col-md-6">
+                    <label>Date ended (or expected)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input disabled value="<%= state.maps.startedAt %>" type="text" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <input disabled value="<%= state.maps.expectedEndAt %>" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <!-- Sources for file generation -->
+        <div class="float-right"><span class="badge badge-primary badge-pill"><%= state.sources.isBusy == 1 ? 'BUSY' : 'IDLE' %> </span></div>
+        <h5 class="display-5 mt-4 mb-2">Sources caching</h5>
+        <!-- datumy -->
+        <div class="form-group">
+            <!-- ci je aktivny -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Date started (shows last one)</label>
+                </div>
+                <div class="col-md-6">
+                    <label>Date ended (or expected)</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input disabled value="<%= state.sources.startedAt %>" type="text" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <input disabled value="<%= state.sources.expectedEndAt %>" type="text" class="form-control">
+                </div>
+            </div>
+        </div>
 
         <!-- www, ... -->
         <%- include('../_footer') %> 

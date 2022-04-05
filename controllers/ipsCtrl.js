@@ -12,6 +12,7 @@ const blklistCtrl = require('./blklistCtrl.js')
 const { logDebug, logError, yyyymmdd } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
+const {isCacheUsable} = require('../services/cacheFile.js')
 
 const basePath = `requests/`
 
@@ -121,7 +122,7 @@ const downloadResponses = async (req, res) => {
 const analyseIps = async (req, res) => {
     // block for one minute
     if ((await generalCtrl.getState(3)).isBusy === 0) {
-        await generalCtrl.setBusyFor(3, 1)
+        await generalCtrl.setBusyFor(3, configuration.BLOCK_TIME_ANALYSIS)
         await generalCtrl.simulateWorkAndThenSetIdle(3, 1)
     } else {
         console.log("Analyse is already occupied")
@@ -131,8 +132,6 @@ const analyseIps = async (req, res) => {
 
     // just test
     res.redirect('/state')
-
-    console.log('test')
 
     // let's analyze
     var responses = await responseData.find({}, {
@@ -160,7 +159,6 @@ const analyseIps = async (req, res) => {
                 }
             }
 
-            console.log('test middle')
 
             //TODO
             // cov
@@ -183,13 +181,8 @@ const analyseIps = async (req, res) => {
     } catch(e) {
         console.log(e)
     } finally {
-        //await generalCtrl.setFree(3, 1)
+        await generalCtrl.setFree(3)
     }
-
-    console.log('test end')
-    await generalCtrl.setFree(3)
-    console.log('test freed')
-    
 }
 
 
@@ -381,7 +374,7 @@ function extractFromXML(extractedData, originalResponse, provider) {
 
 
 // For EVENTS
-const getJsonWithCountedOrigin = async (req, res) => {
+const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
     // we want same country names, so same provider is a necessity
     var providers = await getAllUsableProviders()
 
@@ -436,7 +429,7 @@ const getJsonWithCountedOrigin = async (req, res) => {
     return retObj
 }
 
-const getJsonWithCountedAs = async (req, res) => {
+const getJsonWithCountedAs = async (cacheBlkProv, cacheBlkResp) => {
     // we want same AS names, so same provider is a necessity
     var providers = await getAllUsableProviders()
 
@@ -489,7 +482,7 @@ const getJsonWithCountedAs = async (req, res) => {
 
     return retObj
 }
-const getJsonWithCountedCovered = async (req, res) => {
+const getJsonWithCountedCovered = async () => {
     // we want only that provider that has access to this information
     var providers = await getAllUsableProviders()
 

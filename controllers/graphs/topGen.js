@@ -13,19 +13,19 @@ var fileNameWriteOrigin = 'topOrigin.json'
 var fileNameWriteAs = 'topAs.json'
 var fileNameWriteSignatures = 'topSignatures.json'
 var fileNameWritePorts = 'topPorts.json'
-
+ 
 // Individual
 const { getJsonWithCountedOrigin, getJsonWithCountedAs } = require('../../controllers/ipsCtrl')
 const { getJsonWithCountedPorts, getJsonWithCountedSignatures } = require('../../controllers/blklistCtrl')
 
 // public
-const onEventGenerateFiles = async (req, res) => {
+const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
     try {
         await generateTopHaha()
-        await generateTopOrigin()
-        await generateTopAs()
-        await generateTopSignatures()
-        await generateTopPorts()
+        await generateTopOrigin(cacheBlkProv, cacheBlkResp)
+        await generateTopAs(cacheBlkProv, cacheBlkResp)
+        await generateTopSignatures(cacheBlkProv, cacheBlkResp)
+        await generateTopPorts(cacheBlkProv, cacheBlkResp)
         // TODO dalsie
     } catch (e) { 
         helper.logError(`Error in topGen occured during event ${e}`)
@@ -33,18 +33,18 @@ const onEventGenerateFiles = async (req, res) => {
 }
 
 // private
-const generateTopHaha = async (req, res) => {
+const generateTopHaha = async () => {
     var fileTopHaha = JSON.parse(JSON.stringify(fileBar))
     fileTopHaha.nazov = 'topGen - topHaha'
     
     saveChangesToFile(folderWrite, fileNameWriteHaha, fileTopHaha)
 }
-const generateTopOrigin = async (req, res) => {
+const generateTopOrigin = async (cacheBlkProv, cacheBlkResp) => {
     var fileTopOrigin = JSON.parse(JSON.stringify(fileBar))
     fileTopOrigin.nazov = 'topGen - topOrigin'
     
     /* UNDER WORK START */ 
-    var retObj = await getJsonWithCountedOrigin()
+    var retObj = await getJsonWithCountedOrigin(cacheBlkProv, cacheBlkResp)
 
     // Chart.js
     var list = retObj.list
@@ -75,12 +75,12 @@ const generateTopOrigin = async (req, res) => {
 
     saveChangesToFile(folderWrite, fileNameWriteOrigin, fileTopOrigin)
 }
-const generateTopAs = async (req, res) => {
+const generateTopAs = async (cacheBlkProv, cacheBlkResp) => {
     var fil = JSON.parse(JSON.stringify(fileBar))
     fil.nazov = 'topGen - topAs'
     
     /* UNDER WORK START */ 
-    var retObj = await getJsonWithCountedAs()
+    var retObj = await getJsonWithCountedAs(cacheBlkProv, cacheBlkResp)
 
     // Chart.js
     var list = retObj.list
@@ -111,12 +111,12 @@ const generateTopAs = async (req, res) => {
 
     saveChangesToFile(folderWrite, fileNameWriteAs, fil)
 }
-const generateTopSignatures = async (req, res) => {
+const generateTopSignatures = async (cacheBlkProv, cacheBlkResp) => {
     var fil = JSON.parse(JSON.stringify(fileBar))
     fil.nazov = 'topGen - topSignatures'
     
     /* UNDER WORK START */ 
-    var retObj = await getJsonWithCountedSignatures()
+    var retObj = await getJsonWithCountedSignatures(cacheBlkProv, cacheBlkResp)
 
     // Chart.js
     var list = retObj.list
@@ -153,12 +153,12 @@ const generateTopSignatures = async (req, res) => {
 
     saveChangesToFile(folderWrite, fileNameWriteSignatures, fil)
 }
-const generateTopPorts = async (req, res) => {
+const generateTopPorts = async (cacheBlkProv, cacheBlkResp) => {
     var fil = JSON.parse(JSON.stringify(fileBar))
     fil.nazov = 'topGen - topPorts'
     
     /* UNDER WORK START */ 
-    var retObj = await getJsonWithCountedPorts()
+    var retObj = await getJsonWithCountedPorts(cacheBlkProv, cacheBlkResp)
 
     // Chart.js
     var list = retObj.list

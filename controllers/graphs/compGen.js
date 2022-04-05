@@ -18,11 +18,11 @@ var fileNameWriteCoveredAll = 'comparedCoveredAll.json'
 
 
 // public
-const onEventGenerateFiles = async (req, res) => {
+const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
     try {
-        await generateCompOnline()
-        await generateCompDomainAndHttp()
-        await generateCompCovered()
+        await generateCompOnline(cacheBlkProv, cacheBlkResp)
+        await generateCompDomainAndHttp(cacheBlkProv, cacheBlkResp)
+        await generateCompCovered(cacheBlkProv, cacheBlkResp)
         // TODO dalsie
     } catch (e) {
         helper.logError(`Error in compGen occured during event ${e}`)
@@ -30,12 +30,12 @@ const onEventGenerateFiles = async (req, res) => {
 } 
 
 // private
-const generateCompOnline = async (req, res) => {
+const generateCompOnline = async (cacheBlkProv, cacheBlkResp) => {
     // Init
     var fil = JSON.parse(JSON.stringify(fileBar))
     fil.nazov = 'compGen - comparedOnline'
 
-    const retObj = await getJsonWithCountedOnline()
+    const retObj = await getJsonWithCountedOnline(cacheBlkProv, cacheBlkResp)
 
     // Chart.js
     var list = retObj.list
@@ -67,8 +67,8 @@ const generateCompOnline = async (req, res) => {
     // Generic
     saveChangesToFile(folderWrite, fileNameWriteOnline, fil)
 }
-const generateCompDomainAndHttp = async (req, res) => {
-    const retObj = await getJsonWithCountedDomainsAndHttp()
+const generateCompDomainAndHttp = async (cacheBlkProv, cacheBlkResp) => {
+    const retObj = await getJsonWithCountedDomainsAndHttp(cacheBlkProv, cacheBlkResp)
 
     // DOM comp
     var fil = JSON.parse(JSON.stringify(fileBar))
@@ -142,8 +142,8 @@ const generateCompDomainAndHttp = async (req, res) => {
     // Generic
     saveChangesToFile(folderWrite, fileNameWriteHttps, fil)
 }
-const generateCompCovered = async (req, res) => {
-    const retObj = await getJsonWithCountedCovered()
+const generateCompCovered = async (cacheBlkProv, cacheBlkResp) => {
+    const retObj = await getJsonWithCountedCovered(cacheBlkProv, cacheBlkResp)
 
     // DOM comp
     var fil = JSON.parse(JSON.stringify(fileBar))

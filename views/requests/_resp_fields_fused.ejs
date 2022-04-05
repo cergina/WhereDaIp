@@ -6,7 +6,7 @@
 
 <div class="row <%= mbToUse %>">
 
-    <!-- main information panel -->
+    <!-- main information panel --> 
     <div class="col-md-3">
         <h3>
             <small class="text-muted"><%= fieldTitle %></small>
@@ -17,13 +17,13 @@
             <!-- if clickable link -->
             <% if (typeof clickableLocalLink !== 'undefined') { %> 
                 <a href="<%= clickableLocalLink %>" class="link-primary"><%= fieldValue %> </a>
-            <% } else if (typeof valueName !== 'undefined') { %> 
+            <% } else if (typeof valueName !== 'undefined' && typeof valueName !== 'null') { %>
                 
                 <!-- find which provider has this value -->
                 <% var tmpText = '' %>
                 <% var by = '' %> 
                 <% for (var key in providers) { %> 
-                    <% if (providers[key].data[valueName]) { %> 
+                    <% if (providers[key].data && providers[key].data[valueName]) { %> 
                         <% tmpText = providers[key].data[valueName] %> 
                         <% by = providers[key].name %> 
                         <% break %> 
