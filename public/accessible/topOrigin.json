@@ -4,8 +4,8 @@
         "labels": [
             "Slovakia",
             "United States",
+            "United Kingdom",
             "Nigeria",
-            "China",
             "Indonesia"
         ],
         "datasets": [
@@ -13,7 +13,7 @@
                 "label": "Origin",
                 "data": [
                     3,
-                    1,
+                    2,
                     1,
                     1,
                     1
@@ -66,24 +66,34 @@
             [
                 2,
                 "United States",
-                1
+                2
             ],
             [
                 3,
-                "Nigeria",
+                "United Kingdom",
                 1
             ],
             [
                 4,
-                "China",
+                "Nigeria",
                 1
             ],
             [
                 5,
                 "Indonesia",
                 1
+            ],
+            [
+                6,
+                "France",
+                1
+            ],
+            [
+                7,
+                "China",
+                1
             ]
         ]
     },
-    "time": "2022-04-05 22:51:21"
+    "time": "2022-04-08 21:07:48"
 }

@@ -52,6 +52,7 @@ const getJsonWithCountedListTags = async () => {
         }
     }
 
+    
     ro.sort((a, b) => (a.numOfIps < b.numOfIps) ? 1 : -1)
 
 

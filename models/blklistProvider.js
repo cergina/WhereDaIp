@@ -32,7 +32,7 @@ const blklistProviderSchema = new mongoose.Schema({
         default: 0,
         _options: ["GET= url"]
     },
-    isActive: {
+    isActive: { 
         type: Number,
         required: true,
         default: 1,

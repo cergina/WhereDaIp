@@ -16,7 +16,7 @@ const responseBlklistSchema = new mongoose.Schema({
     total: {
         type: Number,
         required: true,
-        default: 0
+        default: 0 
     },
     analyzed: {
         type: Number,

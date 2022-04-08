@@ -42,7 +42,7 @@ const generateTopHaha = async () => {
 const generateTopOrigin = async (cacheBlkProv, cacheBlkResp) => {
     var fileTopOrigin = JSON.parse(JSON.stringify(fileBar))
     fileTopOrigin.nazov = 'topGen - topOrigin'
-    
+     
     /* UNDER WORK START */ 
     var retObj = await getJsonWithCountedOrigin(cacheBlkProv, cacheBlkResp)
 
@@ -57,7 +57,7 @@ const generateTopOrigin = async (cacheBlkProv, cacheBlkResp) => {
     for (var tmp of list) {
         // neustale pocitame dlzku zoznamu do ktoreho pridavame a ak je este miesto pridame dalsi
         if (graphLabels.length < graphLimit) {
-            graphLabels.push(tmp.country)
+            graphLabels.push(tmp.name)
             graphValues.push(tmp.count)
         }
     }

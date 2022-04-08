@@ -189,6 +189,7 @@ const getJsonWithCountedOnline = async (cacheBlkProv, cacheBlkResp) => {
     ro[2].count = countNA
 
     // sort them
+    ro = ro.filter(a => a.count > 0)
     ro.sort((a, b) => (a.count < b.count) ? 1 : -1)
 
     var retObj = {}
@@ -329,7 +330,7 @@ const getJsonWithCountedPorts = async (cacheBlkProv, cacheBlkResp) => {
     var uniqueValues = []
     for (var xResp of responses) {
         // prejst list z blocklist response
-        console.log(xResp)
+        //console.log(xResp)
         for (var xIp of xResp.list) {
             // ziskaj port z xIp.url
             var found = xIp.port
@@ -355,6 +356,7 @@ const getJsonWithCountedPorts = async (cacheBlkProv, cacheBlkResp) => {
     }
 
     // sort based on port occurence
+    uniqueValues = uniqueValues.filter(a => a.count > 0)
     uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
     var retObj = {}
@@ -403,6 +405,7 @@ const getJsonWithCountedSignatures = async (cacheBlkProv, cacheBlkResp) => {
     }
 
     // sort based on port occurence
+    uniqueValues = uniqueValues.filter(a => a.count > 0)
     uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
     var retObj = {}
@@ -468,9 +471,11 @@ const getJsonWithCountedDomainsAndHttp = async (cacheBlkProv, cacheBlkResp) => {
     }
 
     // sort based on domain occurence
+    doms = doms.filter(a => a.count > 0)
     doms.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
     // sort based on http occurence
+    httpsArr = httpsArr.filter(a => a.count > 0)
     httpsArr.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
     var retObj = {}

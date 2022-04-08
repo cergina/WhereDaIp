@@ -13,6 +13,7 @@ const { logDebug, logError, yyyymmdd } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
 const {isCacheUsable} = require('../services/cacheFile.js')
+const { getCountryNameByCode, getCountryArrayCountsZero } = require('../services/countries.js')
 
 const basePath = `requests/`
 
@@ -382,8 +383,9 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
         "success": 1,
         "ipRequested": 1,
         "addedAt": 1,
-        "country": 1
+        "countryCode": 1
     }).sort({ ipRequested: 'asc'})
+
 
     // prejst pole a nechat len take kde je ip adresa raz
     var uniqueResponses = []
@@ -396,26 +398,33 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
     }
 
     // ziskat unikatne countries
-    var uniqueCountries = []
-    for (var x of uniqueResponses) {
-        var tmpCes = uniqueCountries.some(elem => elem.country === x.country)
-
-        if (!tmpCes) {
-            uniqueCountries.push({"country": x.country, "count": 0})
-        }
-    }
+    var uniqueCountries = getCountryArrayCountsZero()
 
     // spocitat vyskyt country
     for (var x of uniqueResponses) {
         // vieme x.country
+        var foundName = getCountryNameByCode(x.countryCode)
+
         // najst prvok v uniqueCountries ktory je .country === x.country a spravit .count++
-        uniqueCountries[uniqueCountries.findIndex(el => el.country === x.country)].count++
+        uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count++
+    }
+    for (var x of cacheBlkResp) {
+        if (x.list[0].country) {
+            for (var y of x.list) {
+                // vieme x.country
+                var foundName = getCountryNameByCode(y.country)
+
+                // najst prvok v uniqueCountries ktory je .country === x.country a spravit .count++
+                uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count++
+            }
+        }
     }
 
     // sort them
+    uniqueCountries = uniqueCountries.filter(a => a.count > 0)
     uniqueCountries.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
-    var retObj = {}
+    var retObj = {} 
     retObj.list = uniqueCountries
 
     // GridJs
@@ -423,7 +432,7 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
     var order = 1
     
     for (var tmp of uniqueCountries) {
-        retObj.table.push([order++, tmp.country, tmp.count])
+        retObj.table.push([order++, tmp.name, tmp.count])
     }
 
     return retObj
@@ -453,20 +462,46 @@ const getJsonWithCountedAs = async (cacheBlkProv, cacheBlkResp) => {
         }
     }
 
-    // ziskat unikatne AS
+    // ziskat unikatne AS pre uniqueResp
     var uniqueValues = []
     for (var x of uniqueResponses) {
-        var tmpCes = uniqueValues.some(elem => elem.as === x.as)
+        var tmpCes = uniqueValues.some(elem => elem.name === x.as)
 
         if (!tmpCes) {
             uniqueValues.push({"name": x.as, "count": 0})
         }
     }
+    for (var x of cacheBlkResp) {
+        if (x.list[0].asnumber) {
+            for (var y of x.list) {
+                var toFind = `AS${y.asnumber} `
+                var tmpCes = uniqueValues.some(elem => {
+                    return elem.name.includes(toFind)
+                })
+                
+                if (!tmpCes)
+                    uniqueValues.push({"name": toFind, "count": 0})
+            }
+        }
+    }
 
+    
+
+    // pozvysovat pocty ake su v uniqueResp
     for (var x of uniqueResponses) {
         uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count++
     }
+    // pozvysovat pocty v cacheBlkResp a pripadne pridat rovno do pola ak neni
+    for (var x of cacheBlkResp) {
+        if (x.list[0].asnumber) {
+            for (var y of x.list) {
+                var toFind = `AS${y.asnumber} `
+                uniqueValues[uniqueValues.findIndex(el => el.name.includes(toFind))].count++
+            }
+        }
+    }
 
+    uniqueValues = uniqueValues.filter(a => a.count > 0)
     uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
     var retObj = {}
@@ -539,7 +574,7 @@ const getJsonWithCountedCovered = async () => {
         })) uniqueValues[5].count++
     }
 
-    uniqueValues.filter(a => a.count === 0)
+    uniqueValues = uniqueValues.filter(a => a.count > 0)
     uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
     var retObj = {}
