@@ -1,0 +1,18 @@
+{
+    "options": {
+        "zoom": 2,
+        "tilting": true,
+        "dragging": true,
+        "zooming": true
+    },
+    "points": [
+        
+    ],
+    "forGridJs": {
+        "tableNames": [
+        ],
+        "tableValues": [
+            
+        ]
+    }
+}

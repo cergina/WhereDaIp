@@ -47,7 +47,7 @@ const generateTopOrigin = async (cacheBlkProv, cacheBlkResp) => {
     var retObj = await getJsonWithCountedOrigin(cacheBlkProv, cacheBlkResp)
 
     // Chart.js
-    var list = retObj.list
+    var list = retObj.list 
     var graphLabels = []
     var graphLabel = "Origin"
     var graphValues = []

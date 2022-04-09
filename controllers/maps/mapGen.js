@@ -3,18 +3,21 @@ const helper = require('../../services/helper');
 
 // template
 var folderRead = '../../public/templates/'
-var fileNameRead = 'barType.json'
-var fileBar = require(folderRead + fileNameRead);
+var fileNameRead = 'mapBase.json'
+var fileBase = require(folderRead + fileNameRead);
 
 // saves
 var folderWrite = './public/accessible/map/'
-var fileNameWriteOnline = 'mapHaha.json'
+var fileNameWriteTest = 'mapHaha.json'
+var fileNameWriteRquests = 'mapRequests.json'
 
+const { getJsonForMapRequests } = require('../../controllers/ipsCtrl')
 
 // public
 const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
     try {
         await generateMapTest()
+        await generateMapRequests()
         // dalsie
     } catch (e) { 
         helper.logError(`Error in mapGen occured during event ${e}`)
@@ -23,11 +26,28 @@ const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
 
 // private
 const generateMapTest = async () => {
-    var fileMapTest = JSON.parse(JSON.stringify(fileBar))
-
-    fileMapTest.nazov = 'mapGen - generateMapTest'
+    var fil = JSON.parse(JSON.stringify(fileBase))
+    fil.nazov = 'mapGen - generateMapTest'
     
-    saveChangesToFile(folderWrite, fileNameWriteOnline, fileMapTest)
+
+    // Generic
+    saveChangesToFile(folderWrite, fileNameWriteTest, fil)
+}
+const generateMapRequests = async () => {
+    var fil = JSON.parse(JSON.stringify(fileBase))
+    fil.nazov = 'mapGen - generateMapRequests'
+    
+    /* UNDER WORK START */ 
+    var retObj = await getJsonForMapRequests()
+
+    fil.points = retObj.points
+    fil.forGridJs.tableNames = retObj.fgTableNames
+    fil.forGridJs.tableValues = retObj.fgTableValues
+    /* UNDER WORK END */ 
+
+
+    // Generic
+    saveChangesToFile(folderWrite, fileNameWriteRquests, fil)
 }
 
 function saveChangesToFile(whereFolder, whereName, tempFile) {

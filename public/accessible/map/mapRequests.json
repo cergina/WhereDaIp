@@ -1,0 +1,107 @@
+{
+    "options": {
+        "zoom": 2,
+        "tilting": true,
+        "dragging": true,
+        "zooming": true
+    },
+    "points": [
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>103.60.9.27</span>",
+            "lat": "-6.1741",
+            "lon": "106.8296"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>110.85.99.215</span>",
+            "lat": "25.4541",
+            "lon": "119.008"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>147.175.250.133</span>",
+            "lat": "48.1514",
+            "lon": "17.1128"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>41.78.172.77</span>",
+            "lat": "6.5009",
+            "lon": "3.3557"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>46.34.240.96</span>",
+            "lat": "48.0835",
+            "lon": "17.2607"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>62.197.243.225</span>",
+            "lat": "48.3132",
+            "lon": "18.0512"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>8.8.8.8</span>",
+            "lat": "39.03",
+            "lon": "-77.5"
+        }
+    ],
+    "forGridJs": {
+        "tableNames": [
+            "IP",
+            "Reason",
+            "AS",
+            "City",
+            "Country"
+        ],
+        "tableValues": [
+            [
+                "103.60.9.27",
+                "len tak",
+                "AS134451 NewMedia Express Pte Ltd",
+                "Jakarta",
+                "Indonesia"
+            ],
+            [
+                "110.85.99.215",
+                "len tak",
+                "AS4134 CHINANET-BACKBONE",
+                "Putian",
+                "China"
+            ],
+            [
+                "147.175.250.133",
+                "len tak",
+                "AS2607 Zdruzenie pouzivatelov Slovenskej akademickej datovej siete",
+                "Bratislava",
+                "Slovakia"
+            ],
+            [
+                "41.78.172.77",
+                "len tak",
+                "AS409 Air Force Systems Networking",
+                "Surulere",
+                "Nigeria"
+            ],
+            [
+                "46.34.240.96",
+                "len tak",
+                "AS28952 O2 Business Services, a.s",
+                "Dunajska Luzna",
+                "Slovakia"
+            ],
+            [
+                "62.197.243.225",
+                "len tak",
+                "AS5578 SWAN, a.s.",
+                "Nitra",
+                "Slovakia"
+            ],
+            [
+                "8.8.8.8",
+                "len tak",
+                "AS15169 Google LLC",
+                "Ashburn",
+                "United States"
+            ]
+        ]
+    },
+    "nazov": "mapGen - generateMapRequests",
+    "time": "2022-04-09 02:43:44"
+}

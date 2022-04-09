@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../../_headerOutMap') %> 
+<body>
+    
+    <div class="container"> 
+        <!-- alert at top -->
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Maps</h1> 
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
+                    <li class="breadcrumb-item"><a href="/maps">Maps</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Geolocated IPs</li>
+                </ol>
+              </nav>
+        </div>
+
+        <!-- main test -->
+        <div class="center mw-80" style="border:1px solid gray; padding:2px;" id="earth_div"></div>
+        
+        <!-- GridJS -->
+        <div id="wrapper"></div>
+
+        <div class="center">
+            <small class="form-text text-muted" id="datetime">Data gotten at [time here].</small>
+        </div>
+
+        <!-- footer with name, year, FIIT, www -->
+        <%- include('../../_footer') %> 
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <script>
+        fetch("/accessible/map/mapRequests.json")
+            .then(response => response.json())
+            .then(data => {
+              // WebGL
+              var earth = new WE.map('earth_div', {'zooming': data.options.zooming, 'tilting': data.options.tilting, 'dragging': data.options.dragging});
+              WE.tileLayer('/{z}/{x}/{y}.jpg', {
+                tileSize: 256,
+                bounds: [[-85, -180], [85, 180]],
+                minZoom: 0,
+                maxZoom: 5,
+                attribution: 'FIIT STU',
+                tms: true
+              }).addTo(earth);
+
+              for (var point of data.points) {
+                var marker = WE.marker([point.lat, point.lon]).addTo(earth);
+                marker.bindPopup(point.htmlSnippet, {maxWidth: 300, closeButton: true}).closePopup();
+              }
+              
+              earth.setView([data.points[0].lat, data.points[0].lon], data.options.zoom);
+
+              // GridJS
+              new gridjs.Grid({ 
+                columns: data.forGridJs.tableNames,
+                data: data.forGridJs.tableValues
+              }).render(document.getElementById('wrapper'))
+            
+              document.getElementById('datetime').textContent = `Data calculated at ${data.time}`
+            })
+    </script>
+</body>
+</html>
+
+

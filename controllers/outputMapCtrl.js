@@ -16,9 +16,13 @@ const testMultiple = (req, res) => {
 const crossroad = (req, res) => {
     res.render(`${basePath}mapCrossroad.ejs`, { siteTitle: 'Maps crossroad'})
 } 
+const viewRequests = (req, res) => {
+    res.render(`${basePath}viewRequests.ejs`, { siteTitle: 'Map showing geolocated IPs'})
+}
  
 
 module.exports = {
     test, testMultiple,
-    crossroad
+    crossroad,
+    viewRequests
 }

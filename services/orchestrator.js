@@ -26,13 +26,13 @@ const setUp = () => {
         eventEmitter.emit(configuration.EVENT_GRAPH);
     }, configuration.TIMER_EVENT_GRAPH)
     
-    // setInterval( () => {
-    //     eventEmitter.emit(configuration.EVENT_MAPS);
-    // }, configuration.TIMER_EVENT_MAPS)
-    
     setInterval( () => {
-        eventEmitter.emit(configuration.EVENT_TEST);
-    }, configuration.TIMER_EVENT_TEST) 
+        eventEmitter.emit(configuration.EVENT_MAPS);
+    }, configuration.TIMER_EVENT_MAPS)
+    
+    // setInterval( () => {
+    //     eventEmitter.emit(configuration.EVENT_TEST);
+    // }, configuration.TIMER_EVENT_TEST) 
     
     
 
@@ -114,7 +114,10 @@ const setUp = () => {
 
         try {
             if (isCacheUsable()) {
-                await mapGen.onEventGenerateFiles(getCachedBloklistProviders(), getCachedBloklistResponses());
+                var tmp1 = getCachedBloklistProviders()
+                var tmp2 = getCachedBloklistResponses()
+                await mapGen.onEventGenerateFiles(tmp1, tmp2);
+                console.log('here we are')
             } else {
                 console.log("Data for mapGen not ready yet")
             }

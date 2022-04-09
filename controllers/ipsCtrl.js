@@ -375,6 +375,71 @@ function extractFromXML(extractedData, originalResponse, provider) {
 
 
 // For EVENTS
+/* for maps */
+const getJsonForMapRequests = async () => {
+    // we want same same provider data
+    var providers = await getAllUsableProviders()
+
+    // musi mat veci  ako AS, Country
+    var responses = await responseData.find({ provider : providers[0]._id}, {
+        "success": 1,
+        "ipRequested": 1,
+        "addedAt": 1,
+        "city": 1,
+        "country": 1,
+        "as": 1,
+        "findings": 1,
+        "latitude": 1,
+        "longitude": 1
+    }).sort({ ipRequested: 'asc'})
+
+    // TODO maybe sa stane, ze [0] nebude mat to as a preto by sa malo kontrolovat 
+    // ci ma a zvolit takeho providera radsej
+
+    // prejst pole a nechat len take kde je ip adresa raz
+    var uniqueResponses = []
+    for (var x of responses) {
+        var tmpRes = uniqueResponses.some(elem => elem.ipRequested === x.ipRequested)
+
+        if (!tmpRes) {
+            uniqueResponses.push(x)
+        }
+    }
+
+
+    // Generate JSON base
+    var retObj = {points: [], fgTableNames: [], fgTableValues: []} 
+    
+    // generate table header
+    retObj.fgTableNames.push("IP")
+    retObj.fgTableNames.push("Reason")
+    retObj.fgTableNames.push("AS")
+    retObj.fgTableNames.push("City")
+    retObj.fgTableNames.push("Country")
+    
+    for (var x of uniqueResponses) {
+        // put to points
+        retObj.points.push({
+            "htmlSnippet": `<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>${x.ipRequested}</span>`,
+            "lat": x.latitude,
+            "lon": x.longitude
+        })
+    
+        // put to fgTableValues
+        retObj.fgTableValues.push([
+            `${x.ipRequested}`,
+            "len tak",
+            `${x.as}`,
+            `${x.city}`,
+            `${x.country}`
+        ])
+    }
+
+
+    return retObj
+}
+
+/* for graphs */
 const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
     // we want same country names, so same provider is a necessity
     var providers = await getAllUsableProviders()
@@ -598,6 +663,7 @@ module.exports = {
     acceptRequestController,
     deleteExistingResponse,
     getJsonWithCountedOrigin, getJsonWithCountedAs,
-    getJsonWithCountedCovered
+    getJsonWithCountedCovered, 
+    getJsonForMapRequests
 }
 
