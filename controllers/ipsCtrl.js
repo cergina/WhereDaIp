@@ -380,6 +380,15 @@ const getJsonForMapRequests = async () => {
     // we want same same provider data
     var providers = await getAllUsableProviders()
 
+    var useIndex = 0
+    var x = 0
+    for (var prov of providers) {
+        if (prov.response.asPath)
+            useIndex = x
+            
+        x = x + 1
+    }
+
     // musi mat veci  ako AS, Country
     var responses = await responseData.find({ provider : providers[0]._id}, {
         "success": 1,
