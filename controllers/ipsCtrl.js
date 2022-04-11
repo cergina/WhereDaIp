@@ -385,12 +385,12 @@ const getJsonForMapRequests = async () => {
     for (var prov of providers) {
         if (prov.response.asPath)
             useIndex = x
-            
+
         x = x + 1
     }
 
     // musi mat veci  ako AS, Country
-    var responses = await responseData.find({ provider : providers[0]._id}, {
+    var responses = await responseData.find({ provider : providers[useIndex]._id}, {
         "success": 1,
         "ipRequested": 1,
         "addedAt": 1,
