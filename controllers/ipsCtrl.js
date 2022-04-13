@@ -160,8 +160,6 @@ const analyseIps = async (req, res) => {
                 }
             }
 
-
-            //TODO
             // cov
             for (var c of covFindings) {
                 if (x.ipRequested === c.ipRequested) {
@@ -169,7 +167,6 @@ const analyseIps = async (req, res) => {
                 }
             } 
 
-            //TODO
             // blk
             for (var b of blkFindings) {
                 if (x.ipRequested === b.ipRequested) {
@@ -261,7 +258,7 @@ const acceptRequestController = async (req, res) => {
 
     //logInfo('I will look onto it')
 
-    // TODO it's necessarry to clear \r\n, maybe on linux it will be only \n, will have to test
+    // it's necessarry to clear \r\n, maybe on linux it will be only \n, will have to test
     var addresses = req.body.ip_addresses_to_lookup.split("\r\n").filter(item => item)
 
     //logDebug(addresses)
@@ -428,6 +425,8 @@ const getJsonForMapRequests = async () => {
     
     for (var x of uniqueResponses) {
         // put to points
+        // TODO
+        // doplnit info o nebezpecnosti IP adresy, nejake findingy a tak
         retObj.points.push({
             "htmlSnippet": `<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>${x.ipRequested}</span>`,
             "lat": x.latitude,
@@ -435,6 +434,8 @@ const getJsonForMapRequests = async () => {
         })
     
         // put to fgTableValues
+        // TODO 
+        // 'len tak' treba nahradit realnym findingom
         retObj.fgTableValues.push([
             `${x.ipRequested}`,
             "len tak",

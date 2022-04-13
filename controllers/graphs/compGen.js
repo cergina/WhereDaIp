@@ -19,14 +19,19 @@ var fileNameWriteCoveredAll = 'comparedCoveredAll.json'
 
 // public
 const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
+    var funcLog
     try {
+        funcLog = fileNameWriteOnline
         await generateCompOnline(cacheBlkProv, cacheBlkResp)
+    } catch (e) {helper.logError(`Error in compGen - ${funcLog} - occured during event ${e}`)}
+    try {
+        funcLog = fileNameWriteDomain
         await generateCompDomainAndHttp(cacheBlkProv, cacheBlkResp)
+    } catch (e) {helper.logError(`Error in compGen - ${funcLog} - occured during event ${e}`)}
+    try {
+        funcLog = fileNameWriteCovered
         await generateCompCovered(cacheBlkProv, cacheBlkResp)
-        // TODO dalsie
-    } catch (e) {
-        helper.logError(`Error in compGen occured during event ${e}`)
-    }
+    } catch (e) {helper.logError(`Error in compGen - ${funcLog} - occured during event ${e}`)}
 } 
 
 // private

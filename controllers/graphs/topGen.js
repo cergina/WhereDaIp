@@ -20,36 +20,27 @@ const { getJsonWithCountedPorts, getJsonWithCountedSignatures } = require('../..
 
 // public
 const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
-    var funcLog = 'Haha'
+    var funcLog
     try {
+        funcLog = fileNameWriteHaha
         await generateTopHaha()
-    } catch (e) {
-        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
-    }
+    } catch (e) {helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)}
     try {
-        funcLog = 'Origin'
+        funcLog = fileNameWriteOrigin
         await generateTopOrigin(cacheBlkProv, cacheBlkResp)
-    } catch (e) {
-        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
-    }
+    } catch (e) {helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)}
     try {
-        funcLog = 'AS'
+        funcLog = fileNameWriteAs
         await generateTopAs(cacheBlkProv, cacheBlkResp)
-    } catch (e) {
-        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
-    }
+    } catch (e) {helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)}
     try {
-        funcLog = 'Signatures'
+        funcLog = fileNameWriteSignatures
         await generateTopSignatures(cacheBlkProv, cacheBlkResp)
-    } catch (e) {
-        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
-    }
+    } catch (e) {helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)}
     try {
-        funcLog = 'Ports'
+        funcLog = fileNameWritePorts
         await generateTopPorts(cacheBlkProv, cacheBlkResp)
-    } catch (e) {
-        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
-    }
+    } catch (e) {helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)}
 }
 
 // private

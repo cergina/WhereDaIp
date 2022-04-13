@@ -26,11 +26,14 @@ const viewEmotet = (req, res) => {
     res.render(`${basePath}viewEmotet.ejs`, { siteTitle: 'Emotet'})
 }
 const viewQakbot = (req, res) => { 
-    res.render(`${basePath}viewQakbot.ejs`, { siteTitle: 'Qakbot'})
+    res.render(`${basePath}viewQakbot.ejs`, { siteTitle: 'QakBot'})
+}
+const viewTrickbot = (req, res) => { 
+    res.render(`${basePath}viewTrickbot.ejs`, { siteTitle: 'TrickBot'})
 }
  
 module.exports = {
     test, testMultiple,
     crossroad,
-    viewRequests, viewDridex, viewQakbot, viewEmotet
+    viewRequests, viewDridex, viewQakbot, viewEmotet, viewTrickbot
 }

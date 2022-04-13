@@ -257,7 +257,6 @@ function saveAndRedirect(viewName) {
 }
 
 
-// TODO TODOREPORT
 const reportFindingsHere = async (arg) => {
     // get this only once
     var lists = getCachedBloklistProviders()
@@ -275,7 +274,6 @@ const reportFindingsHere = async (arg) => {
             // porovnat iba ak uz neni v retArr ta ista IP
             if (previousIp !== xIp.ipRequested) {
                 // ci obsiahnuta v zozname a vratit ktora to je
-                // TODO cannot read propertz includes of undefined
                 
                 var found = xResp.list.filter(e => {
                     // if (e.url === 'http://41.78.172.77:42550/Mozi.m' && xIp.ipRequested === '41.78.172.77')

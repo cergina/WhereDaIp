@@ -11,5 +11,6 @@ router.get('/requests', controller.viewRequests)
 router.get('/dridex', controller.viewDridex)
 router.get('/qakbot', controller.viewQakbot)
 router.get('/emotet', controller.viewEmotet)
+router.get('/trickbot', controller.viewTrickbot)
 
 module.exports = router

@@ -165,7 +165,6 @@ function appendAndRedirect(viewName) {
     } 
 }
 
-// TODO
 const reportFindingsHere = async (arg) => {
     // get this only once
     var lists = await coverSource.find({}, {
