@@ -20,15 +20,35 @@ const { getJsonWithCountedPorts, getJsonWithCountedSignatures } = require('../..
 
 // public
 const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
+    var funcLog = 'Haha'
     try {
         await generateTopHaha()
+    } catch (e) {
+        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
+    }
+    try {
+        funcLog = 'Origin'
         await generateTopOrigin(cacheBlkProv, cacheBlkResp)
+    } catch (e) {
+        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
+    }
+    try {
+        funcLog = 'AS'
         await generateTopAs(cacheBlkProv, cacheBlkResp)
+    } catch (e) {
+        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
+    }
+    try {
+        funcLog = 'Signatures'
         await generateTopSignatures(cacheBlkProv, cacheBlkResp)
+    } catch (e) {
+        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
+    }
+    try {
+        funcLog = 'Ports'
         await generateTopPorts(cacheBlkProv, cacheBlkResp)
-        // TODO dalsie
-    } catch (e) { 
-        helper.logError(`Error in topGen occured during event ${e}`)
+    } catch (e) {
+        helper.logError(`Error in topGen - ${funcLog} - occured during event ${e}`)
     }
 }
 

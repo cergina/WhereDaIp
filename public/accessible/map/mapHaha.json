@@ -1,9 +1,29 @@
 {
     "options": {
         "zoom": 2,
+        "maxZoom": 6,
         "tilting": true,
         "dragging": true,
-        "zooming": true
+        "zooming": true,
+        "sky": true,
+        "atmosphere": true
+    },
+    "tiles": {
+        "attribution": "FIIT STU",
+        "minZoom": 0,
+        "maxZoom": 5,
+        "tileSize": 256,
+        "bounds": [
+            [
+                -85,
+                -180
+            ],
+            [
+                85,
+                180
+            ]
+        ],
+        "tms": true
     },
     "points": [],
     "forGridJs": {
@@ -11,5 +31,5 @@
         "tableValues": []
     },
     "nazov": "mapGen - generateMapTest",
-    "time": "2022-04-11 16:03:32"
+    "time": "2022-04-13 11:32:59"
 }

@@ -119,7 +119,8 @@ const countryList = [
     {name: 'Heard Island and Mcdonald Islands', code: 'HM'}, 
     {name: 'Holy See (Vatican City State)', code: 'VA'}, 
     {name: 'Honduras', code: 'HN'}, 
-    {name: 'Hong Kong', code: 'HK'}, 
+    {name: 'Hong Kong', code: 'HK'},
+    {name: 'Kosovo', code: 'XK'},
     {name: 'Hungary', code: 'HU'}, 
     {name: 'Iceland', code: 'IS'}, 
     {name: 'India', code: 'IN'}, 
@@ -214,7 +215,9 @@ const countryList = [
     {name: 'Sao Tome and Principe', code: 'ST'}, 
     {name: 'Saudi Arabia', code: 'SA'}, 
     {name: 'Senegal', code: 'SN'}, 
+    {name: 'Serbia', code: 'RS'}, 
     {name: 'Serbia and Montenegro', code: 'CS'}, 
+    {name: 'Montenegro', code: 'ME'}, 
     {name: 'Seychelles', code: 'SC'}, 
     {name: 'Sierra Leone', code: 'SL'}, 
     {name: 'Singapore', code: 'SG'}, 
@@ -264,5 +267,6 @@ const countryList = [
     {name: 'Western Sahara', code: 'EH'}, 
     {name: 'Yemen', code: 'YE'}, 
     {name: 'Zambia', code: 'ZM'}, 
-    {name: 'Zimbabwe', code: 'ZW'} 
+    {name: 'Zimbabwe', code: 'ZW'},
+    {name: 'Unknown', code: 'N/A'}
   ]

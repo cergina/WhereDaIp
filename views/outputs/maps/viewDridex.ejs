@@ -13,7 +13,7 @@
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
                     <li class="breadcrumb-item"><a href="/maps">Maps</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Geolocated IPs</li>
+                    <li class="breadcrumb-item active" aria-current="page">Dridex locations</li>
                 </ol>
               </nav>
         </div> 
@@ -35,14 +35,8 @@
 
 
 
-
-
-
-
-
-
     <script>
-        fetch("/accessible/map/mapRequests.json")
+        fetch("/accessible/map/mapDridex.json")
             .then(response => response.json())
             .then(data => {
               // WebGL

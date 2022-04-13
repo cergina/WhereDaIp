@@ -453,7 +453,15 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
     // we want same country names, so same provider is a necessity
     var providers = await getAllUsableProviders()
 
-    var responses = await responseData.find({ provider : providers[0]._id}, {
+    var place = 0
+    var i = 0
+    for (var x of providers) {
+        if (x.response.countryCodePath)
+            place = i
+
+        i = i + 1
+    }
+    var responses = await responseData.find({ provider : providers[place]._id}, {
         "success": 1,
         "ipRequested": 1,
         "addedAt": 1,
@@ -480,6 +488,14 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
         var foundName = getCountryNameByCode(x.countryCode)
 
         // najst prvok v uniqueCountries ktory je .country === x.country a spravit .count++
+        // if (uniqueCountries.findIndex(el => el.name === foundName) == undefined)
+        //     console.log('jop')
+        // if (uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)] == undefined)
+        //     console.log('kop')
+        // if (uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count == undefined)
+        //     console.log('lop')
+
+        // increase
         uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count++
     }
     for (var x of cacheBlkResp) {
@@ -489,6 +505,14 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
                 var foundName = getCountryNameByCode(y.country)
 
                 // najst prvok v uniqueCountries ktory je .country === x.country a spravit .count++
+                // if (uniqueCountries.findIndex(el => el.name === foundName) == undefined)
+                //     console.log('dop')
+                // if (uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)] == undefined)
+                //     console.log('fop')
+                // if (uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count == undefined)
+                //     console.log('gop')
+            
+                // increase
                 uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count++
             }
         }
