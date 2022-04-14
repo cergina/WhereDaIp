@@ -29,7 +29,7 @@ function getGeolocCodeArrayCountsZero() {
   var arr = []
 
   for (var x of countryGeolocList) {
-    arr.push({"code": x.code, "latitude": x.latitude, "longitude": x.longitude, "count": 0})
+    arr.push({"code": x.code, "latitude": x.latitude, "longitude": x.longitude, "name": x.name, "count": 0})
   }
 
   return arr

@@ -4,12 +4,16 @@
         "labels": [
             "Nothing",
             "Hosting",
+            "TOR",
+            "VPN",
             "Cellular"
         ],
         "datasets": [
             {
                 "label": "Comparation of privacy techniques",
                 "data": [
+                    4,
+                    2,
                     1,
                     1,
                     1
@@ -57,19 +61,29 @@
             [
                 1,
                 "Nothing",
-                1
+                4
             ],
             [
                 2,
                 "Hosting",
-                1
+                2
             ],
             [
                 3,
+                "TOR",
+                1
+            ],
+            [
+                4,
+                "VPN",
+                1
+            ],
+            [
+                5,
                 "Cellular",
                 1
             ]
         ]
     },
-    "time": "2022-04-14 01:33:16"
+    "time": "2022-04-14 21:40:58"
 }

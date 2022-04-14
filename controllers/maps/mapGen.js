@@ -78,7 +78,6 @@ const generateMapForBotnets = async (cacheBlkProv, cacheBlkResp) => {
     for (var x of cacheBlkResp) {
         if (places.find(el => el.equals(x.provider))) {
             // pozriet odpoved x ideme
-            console.log('haha')
             // x.list[0].country
             // x.list[0].tags
 
@@ -109,116 +108,44 @@ const generateMapForBotnets = async (cacheBlkProv, cacheBlkResp) => {
     arrays.trickbot = arrays.trickbot.filter(a => a.count > 0)
     arrays.trickbot.sort((a, b) => (a.count < b.count) ? 1 : -1)
     
-    ////////////
     // EMOTET
-    var fil = JSON.parse(JSON.stringify(fileBase))
-    fil.nazov = `mapGen - ${fileNameWriteEmotet}`
+    botnetFileProcessAndSave(fileBase, fileNameWriteEmotet, 'Emotet', arrays.emotet)
+    
+    // DRIDEX
+    botnetFileProcessAndSave(fileBase, fileNameWriteDridex, 'Dridex', arrays.dridex)
+    
+    // QakBot
+    botnetFileProcessAndSave(fileBase, fileNameWriteQakbot, 'QakBot', arrays.qakbot)
+    
+    // TRICKBOT
+    botnetFileProcessAndSave(fileBase, fileNameWriteTrickbot, 'TrickBot', arrays.trickbot)
+}
 
-    var funcName = `Emotet`
+function botnetFileProcessAndSave(baseFile, argFileWriteName, argName, argArr) {
+    var fil = JSON.parse(JSON.stringify(baseFile))
+    fil.nazov = `mapGen - ${argFileWriteName}`
     var retObj = {points: [], fgTableNames: [], fgTableValues: []} 
     
     retObj.fgTableNames.push("Reason")
     retObj.fgTableNames.push("Country")
     retObj.fgTableNames.push("Count")
     
-    for (var x of arrays.emotet) {
+    for (var x of argArr) {
         retObj.points.push({
-            "htmlSnippet": `<b>${funcName} origin!</b><br>Possible threat actors<br/><span style='font-size:15px;color:#999'>${x.count} in ${x.code}</span>`,
+            "htmlSnippet": `<b>${argName} origin!</b><br>Possibly originating country of threat actors<br/><span style='font-size:15px;color:#999'>${x.count} IP address(es) in ${x.code} - ${x.name}</span>`,
             "lat": x.latitude,
             "lon": x.longitude
         })
         retObj.fgTableValues.push([
-            funcName,
-            `${x.code}`,
+            argName,
+            `${x.code} - ${x.name}`,
             `${x.count}`
         ])
     }
     fil.points = retObj.points
     fil.forGridJs.tableNames = retObj.fgTableNames
     fil.forGridJs.tableValues = retObj.fgTableValues
-    saveChangesToFile(folderWrite, fileNameWriteEmotet, fil)
-
-    ///////////
-    // DRIDEX
-    fil = JSON.parse(JSON.stringify(fileBase))
-    fil.nazov = `mapGen - ${fileNameWriteDridex}`
-    funcName = `Dridex`
-    retObj = {points: [], fgTableNames: [], fgTableValues: []} 
-    
-    retObj.fgTableNames.push("Reason")
-    retObj.fgTableNames.push("Country")
-    retObj.fgTableNames.push("Count")
-    
-    for (var x of arrays.dridex) {
-        retObj.points.push({
-            "htmlSnippet": `<b>${funcName} origin!</b><br>Possible threat actors<br/><span style='font-size:15px;color:#999'>${x.count} in ${x.code}</span>`,
-            "lat": x.latitude,
-            "lon": x.longitude
-        })
-        retObj.fgTableValues.push([
-            funcName,
-            `${x.code}`,
-            `${x.count}`
-        ])
-    }
-    fil.points = retObj.points
-    fil.forGridJs.tableNames = retObj.fgTableNames
-    fil.forGridJs.tableValues = retObj.fgTableValues
-    saveChangesToFile(folderWrite, fileNameWriteDridex, fil)
-
-    // QakBot
-    fil = JSON.parse(JSON.stringify(fileBase))
-    fil.nazov = `mapGen - ${fileNameWriteQakbot}`
-    funcName = `QakBot`
-    retObj = {points: [], fgTableNames: [], fgTableValues: []} 
-    
-    retObj.fgTableNames.push("Reason")
-    retObj.fgTableNames.push("Country")
-    retObj.fgTableNames.push("Count")
-    
-    for (var x of arrays.qakbot) {
-        retObj.points.push({
-            "htmlSnippet": `<b>${funcName} origin!</b><br>Possible threat actors<br/><span style='font-size:15px;color:#999'>${x.count} in ${x.code}</span>`,
-            "lat": x.latitude,
-            "lon": x.longitude
-        })
-        retObj.fgTableValues.push([
-            funcName,
-            `${x.code}`,
-            `${x.count}`
-        ])
-    }
-    fil.points = retObj.points
-    fil.forGridJs.tableNames = retObj.fgTableNames
-    fil.forGridJs.tableValues = retObj.fgTableValues
-    saveChangesToFile(folderWrite, fileNameWriteQakbot, fil)
-
-    // TRICKBOT
-    fil = JSON.parse(JSON.stringify(fileBase))
-    fil.nazov = `mapGen - ${fileNameWriteTrickbot}`
-    funcName = `TrickBot`
-    retObj = {points: [], fgTableNames: [], fgTableValues: []} 
-    
-    retObj.fgTableNames.push("Reason")
-    retObj.fgTableNames.push("Country")
-    retObj.fgTableNames.push("Count")
-    
-    for (var x of arrays.trickbot) {
-        retObj.points.push({
-            "htmlSnippet": `<b>${funcName} origin!</b><br>Possible threat actors<br/><span style='font-size:15px;color:#999'>${x.count} in ${x.code}</span>`,
-            "lat": x.latitude,
-            "lon": x.longitude
-        })
-        retObj.fgTableValues.push([
-            funcName,
-            `${x.code}`,
-            `${x.count}`
-        ])
-    }
-    fil.points = retObj.points
-    fil.forGridJs.tableNames = retObj.fgTableNames
-    fil.forGridJs.tableValues = retObj.fgTableValues
-    saveChangesToFile(folderWrite, fileNameWriteTrickbot, fil)
+    saveChangesToFile(folderWrite, argFileWriteName, fil)
 }
 
 
