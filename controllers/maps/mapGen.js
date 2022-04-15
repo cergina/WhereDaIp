@@ -74,7 +74,7 @@ const generateMapForBotnets = async (cacheBlkProv, cacheBlkResp) => {
         dridex: getGeolocCodeArrayCountsZero(),
         qakbot: getGeolocCodeArrayCountsZero(),
         trickbot: getGeolocCodeArrayCountsZero()
-    }
+    } 
     for (var x of cacheBlkResp) {
         if (places.find(el => el.equals(x.provider))) {
             // pozriet odpoved x ideme

@@ -8,6 +8,7 @@ const router = express.Router()
 // GETs
 router.get('/', controller.showModule)
 router.get('/new', controller.addNewSource)
+router.get('/removeObsolete', controller.deleteResponsesWithoutProvider)
 router.get('/list/:slug', controller.showList)
 router.get('/:slug', controller.editSource)
 router.get('/refresh/:slug', controller.refreshProviderList)

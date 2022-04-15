@@ -409,7 +409,7 @@ const getJsonForMapRequests = async () => {
 
         if (!tmpRes) {
             uniqueResponses.push(x)
-        }
+        } 
     }
 
 

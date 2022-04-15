@@ -52,11 +52,11 @@ const setUp = () => {
         
         try {
             // na zaciatok fakt staci cache na bloklisty, tych je vela
-            var tmp = await blklistResponse.find({})
-            setCacheBloklistResponses(tmp)
-
-            tmp = cachedBloklistProviders = await blklistProvider.find({})
-            setCacheBloklistProviders(tmp)
+            var resps = await blklistResponse.find({})
+            var provs = await blklistProvider.find({})
+            
+            setCacheBloklistResponses(resps)
+            setCacheBloklistProviders(provs)
         } catch (e) {
             helper.logError(`Error: ${e}`)
         } finally {

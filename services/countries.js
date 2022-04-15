@@ -6,7 +6,7 @@ function getCountryNameByCode(code) {
 
   return 'Unknown'
 }
-
+ 
 function getLocationByCode(code) {
   for (var country of countryGeolocList) {
     if (country.code === code)

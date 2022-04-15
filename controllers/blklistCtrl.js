@@ -135,7 +135,37 @@ const editExistingProvider = async (req, res, next) => {
     next()
 }
 const deleteExistingProvider = async (req, res) => {
+    var respsToDelete = await blklistResponse.find({provider: req.params.id})
+    for (var x of respsToDelete) {
+        await blklistResponse.findByIdAndDelete(x._id)
+    }
+    
     await blklistProvider.findByIdAndDelete(req.params.id)
+    res.redirect(`${configuration.WWW_BLKLIST_HOME}`)
+}
+const deleteResponsesWithoutProvider = async (req, res) => {
+    // vsetkych poskytovatelov
+    // vsetky odpovede
+    // pre kazdu odpoved
+    // zisti ci sa nachadza poskytovatel v provs
+    // ak hej ok
+    // ak nie, zmaz odpoved
+    
+    var provs = await blklistProvider.find()
+    var resps = await blklistResponse.find()
+    var arrToDel = []
+    for (var r of resps) {
+        if (provs.find(p => p._id.equals(r.provider))) {
+            // ok
+        } else {
+            arrToDel.push(r._id)
+        }
+    }
+    
+    for (var r of arrToDel) {
+        await blklistResponse.findByIdAndDelete(r)
+    }
+
     res.redirect(`${configuration.WWW_BLKLIST_HOME}`)
 }
 
@@ -508,6 +538,7 @@ module.exports = {
     saveAndRedirect,
     reportFindingsHere,
     getJsonWithCountedPorts, getJsonWithCountedSignatures,
-    getJsonWithCountedDomainsAndHttp
+    getJsonWithCountedDomainsAndHttp,
+    deleteResponsesWithoutProvider
 }
 
