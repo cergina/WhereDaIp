@@ -27,37 +27,37 @@
     },
     "points": [
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>103.60.9.27</span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>103.60.9.27<br>\n<br>1. COVERT  \"GitHub NordVPN list\"  VPN_SERVERS </span>",
             "lat": "-6.1741",
             "lon": "106.8296"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>110.85.99.215</span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>110.85.99.215<br></span>",
             "lat": "25.4541",
             "lon": "119.008"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>147.175.250.133</span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>147.175.250.133<br>\n<br>1. SUSPECT  \"asd\"  tags:   dfhfcvh, test </span>",
             "lat": "48.1514",
             "lon": "17.1128"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>41.78.172.77</span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>41.78.172.77<br></span>",
             "lat": "6.5009",
             "lon": "3.3557"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>46.34.240.96</span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>46.34.240.96<br></span>",
             "lat": "48.0835",
             "lon": "17.2607"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>62.197.243.225</span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>62.197.243.225<br></span>",
             "lat": "48.3132",
             "lon": "18.0512"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>8.8.8.8</span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>8.8.8.8<br>\n<br>1. SUSPECT  \"asd\"  tags:   dfhfcvh, test \n<br>2. SUSPECT  \"test list\"  tags:   test </span>",
             "lat": "39.03",
             "lon": "-77.5"
         }
@@ -73,49 +73,49 @@
         "tableValues": [
             [
                 "103.60.9.27",
-                "len tak",
+                "\n\r1. COVERT  \"GitHub NordVPN list\"  VPN_SERVERS ",
                 "AS134451 NewMedia Express Pte Ltd",
                 "Jakarta",
                 "Indonesia"
             ],
             [
                 "110.85.99.215",
-                "len tak",
+                "",
                 "AS4134 CHINANET-BACKBONE",
                 "Putian",
                 "China"
             ],
             [
                 "147.175.250.133",
-                "len tak",
+                "\n\r1. SUSPECT  \"asd\"  tags:   dfhfcvh, test ",
                 "AS2607 Zdruzenie pouzivatelov Slovenskej akademickej datovej siete",
                 "Bratislava",
                 "Slovakia"
             ],
             [
                 "41.78.172.77",
-                "len tak",
+                "",
                 "AS409 Air Force Systems Networking",
                 "Surulere",
                 "Nigeria"
             ],
             [
                 "46.34.240.96",
-                "len tak",
+                "",
                 "AS28952 O2 Business Services, a.s",
                 "Dunajska Luzna",
                 "Slovakia"
             ],
             [
                 "62.197.243.225",
-                "len tak",
+                "",
                 "AS5578 SWAN, a.s.",
                 "Nitra",
                 "Slovakia"
             ],
             [
                 "8.8.8.8",
-                "len tak",
+                "\n\r1. SUSPECT  \"asd\"  tags:   dfhfcvh, test \n\r2. SUSPECT  \"test list\"  tags:   test ",
                 "AS15169 Google LLC",
                 "Ashburn",
                 "United States"
@@ -123,5 +123,5 @@
         ]
     },
     "nazov": "mapGen - generateMapRequests",
-    "time": "2022-04-15 17:32:32"
+    "time": "2022-04-15 23:24:36"
 }

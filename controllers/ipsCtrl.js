@@ -425,20 +425,30 @@ const getJsonForMapRequests = async () => {
     
     for (var x of uniqueResponses) {
         // put to points
-        // TODO
+        var detailStringHtml = ''
+        var detailString = ''
+        var inc = 0
+        for (var f of x.findings) {
+            ++inc
+            var af = f.text.split('|')
+            detailStringHtml    = `${detailStringHtml}\n<br>${inc}. ${af[0]} "${af[3].slice(1)}" ${af[1]}`
+            detailString        = `${detailString}\n\r${inc}. ${af[0]} "${af[3].slice(1)}" ${af[1]}`
+        }
+
         // doplnit info o nebezpecnosti IP adresy, nejake findingy a tak
         retObj.points.push({
-            "htmlSnippet": `<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>${x.ipRequested}</span>`,
+            "htmlSnippet": `<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>${x.ipRequested}<br>${detailStringHtml}</span>`,
             "lat": x.latitude,
             "lon": x.longitude
         })
+        
     
         // put to fgTableValues
         // TODO 
         // 'len tak' treba nahradit realnym findingom
         retObj.fgTableValues.push([
             `${x.ipRequested}`,
-            "len tak",
+            `${detailString}`,
             `${x.as}`,
             `${x.city}`,
             `${x.country}`

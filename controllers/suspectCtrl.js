@@ -7,6 +7,7 @@ const { findTagById, findIdByTag, addTag, decreaseTag, getAllTags, removeAllTags
 const { sendPromise } = require('../services/simpleCommunicator.js')
 
 const suspectProvider = require("../models/suspectProvider")
+const tagDb = require("../models/tagDb")
 const net = require('net')
 const { WWW_SUSPECT_HOME } = require("../config/config-nonRestricted")
 const res = require("express/lib/response")
@@ -415,6 +416,11 @@ const reportFindingsHere = async (arg) => {
     for (var xList of lists) {
         var processed = null
         var previousIp = null
+        var listTags = `tags:   `
+        for (var xTag of xList.tagList) {
+            listTags = listTags + (await tagDb.findById(xTag)).name + ', '
+        }
+        listTags = listTags.slice(0, -2)
 
         // ip adresa zo zoznamu
         for (var xIp of arg) {
@@ -424,7 +430,7 @@ const reportFindingsHere = async (arg) => {
                     previousIp = xIp.ipRequested
                     processed = {
                         ipRequested: xIp.ipRequested,
-                        text: `SUSPECT | ${'tags here temp'} | ${xList.slug} | ${xList.name}`,
+                        text: `SUSPECT | ${listTags} | ${xList.slug} | ${xList.name}`,
                         foundAt: Date.now()
                     }
 
