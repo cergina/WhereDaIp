@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 const slugify = require('slugify')
 const { stringIsAValidUrl } = require('../services/helper')
 
-// TODO pozor, mozno zaujimave
-// niektore maju https://geo.ipify.org/?mc=adwords&utm_term=ip%20geolocation%20api&utm_campaign=October+-+Pilot&utm_source=adwords&utm_medium=ppc&hsa_acc=2564220217&hsa_cam=6767142137&hsa_grp=78387694054&hsa_ad=424587132136&hsa_src=g&hsa_tgt=kwd-332054273884&hsa_kw=ip%20geolocation%20api&hsa_mt=e&hsa_net=adwords&hsa_ver=3&gclid=CjwKCAjwh5qLBhALEiwAioods2sSt7iBRM1lm0_dyJKags7vRXI_1_ctmd8CRJVLB_TdNJjBxvIDuxoCtsMQAvD_BwE
-// aj take ze tor, proxy, vpn vedia identifikovat
-
 const locationProviderSchema = new mongoose.Schema({
     slug: {
         type: String,
@@ -29,6 +25,11 @@ const locationProviderSchema = new mongoose.Schema({
     baseUrl: {
         type: String,
         required: true
+    },
+    limit: {
+        type: Number,
+        required: true,
+        default: 1
     },
     restMethod: {
         type: Number,
@@ -101,6 +102,15 @@ locationProviderSchema.pre('validate', function(next) {
         const validationError = this.invalidate(
             'baseUrl',
             'Url is not valid'
+        )
+
+        throw validationError
+    }
+
+    if (this.limit < 1 || this.limit % 1 !== 0) {
+        const validationError = this.invalidate(
+            'limit',
+            'Max IPs has to be positive number'
         )
 
         throw validationError

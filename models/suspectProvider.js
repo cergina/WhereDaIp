@@ -11,7 +11,7 @@ const suspectProviderSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
-    },
+    }, 
     description: { 
         type: String,
         required: false
@@ -48,9 +48,25 @@ const suspectProviderSchema = new mongoose.Schema({
         required: true,
         ref: 'TagSchema'
     }],
+    total: {
+        type: Number,
+        required: true,
+        default: 0 
+    },
+    analyzed: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     ipList: [
         {
             ip: String,
+            checked: {
+                type: Number,
+                required: true,
+                default: 0,
+                _options: ["NO", "YES"]
+            },
             type: {
                 type: Number,
                 required: true,
@@ -65,6 +81,10 @@ const suspectProviderSchema = new mongoose.Schema({
 suspectProviderSchema.pre('validate', function(next) {
     if (this.name) {
         this.slug = slugify(this.name, {lower: true, strict: true })
+    }
+
+    if (this.ipList) {
+        this.total = this.ipList.length
     }
 
     next()

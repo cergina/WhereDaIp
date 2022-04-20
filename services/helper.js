@@ -1,5 +1,6 @@
 const configuration = require("../config/config-nonRestricted")
 const URL = require("url").URL;
+const net = require('net')
 
 function logRaw(textToLog) {
     if (configuration.PRODUCTION === false) {
@@ -91,9 +92,69 @@ function getLocalIp() {
     return '0.0.0.0'
 }
 
+function getSubnetForIp(ipAddress, subnetMask) {
+    if (!net.isIPv4(ipAddress)) {
+        LogError(`${ipAddress} is not a valid IPv4 address, therefore its mask wont be calculated.`)
+        return undefined
+    }
+
+    if (subnetMask < 0 || subnetMask > 32) {
+        LogError(`${subnetMask} is not a valid IPv4 mask in CIDR notation. Use 0 - 32.`)
+        return undefined
+    }
+    
+    
+    var mod = subnetMask % 8
+    var div = Math.floor(subnetMask / 8)
+
+    var res0 = 0
+    var res1 = res0
+    var res2 = res0
+    var res3 = res0
+    
+    var octets = ipAddress.split('.')
+    var oct0 = octets[0]
+    var oct1 = octets[1]
+    var oct2 = octets[2]
+    var oct3 = octets[3]
+
+    if (div > 0)
+        res0 = 255
+    if (div > 1)
+        res1 = 255
+    if (div > 2)
+        res2 = 255
+    if (div > 3)
+        res3 = 255
+    
+    var builded = 0
+    if (mod > 0) {
+        for (let i=0; i<mod; i++) {
+            builded += Math.pow(2, 7-i)
+        }
+    }
+    
+    if (div === 0)
+        res0 = builded
+    if (div === 1)
+        res1 = builded
+    if (div === 2)
+        res2 = builded
+    if (div === 3)
+        res3 = builded
+
+    oct0 &= res0
+    oct1 &= res1
+    oct2 &= res2
+    oct3 &= res3
+
+    return `${oct0}.${oct1}.${oct2}.${oct3}`
+}
+
+
 module.exports = {
     logInfo, logDebug, logRaw, logError,
     stringIsAValidUrl, uniq,
     yyyymmdd, date_plus_time,
-    getLocalIp
+    getLocalIp, getSubnetForIp
 }

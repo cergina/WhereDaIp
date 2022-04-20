@@ -38,6 +38,11 @@ const coverSourceSchema = new mongoose.Schema({
         default: 1,
         _options: ["No", "Yes"]
     },
+    total: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     addedAt: {
         type: Date,
         required: true,
@@ -72,6 +77,10 @@ const coverSourceSchema = new mongoose.Schema({
 coverSourceSchema.pre('validate', function(next) {
     if (this.name) {
         this.slug = slugify(this.name, {lower: true, strict: true })
+    }
+
+    if (this.list) {
+        this.total = this.list.length
     }
 
     if (!stringIsAValidUrl(this.baseUrl)) {

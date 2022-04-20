@@ -2,6 +2,7 @@ const configuration = require('../config/config-nonRestricted.js')
 const helper = require('./helper.js')
 const EventEmitter = require('events')
 const generalCtrl = require('../controllers/generalCtrl.js')
+const ipsCtrl = require('../controllers/ipsCtrl.js')
 const blklistProvider = require("../models/BlklistProvider")
 const blklistResponse = require("../models/ResponseBlklist")
 const { onPremiseChangeTestFile } = require('../controllers/testingCtrl.js')
@@ -10,9 +11,10 @@ const topGen = require('../controllers/graphs/topGen.js')
 const mapGen = require('../controllers/maps/mapGen.js')
 const { onEventRun } = require('./workers/top.js')
 const { getState, setFree, setFreeAfterTime } = require('../controllers/generalCtrl.js')
-const { isCacheUsable, setCacheBloklistResponses, setCacheBloklistProviders, getCachedBloklistProviders, getCachedBloklistResponses } = require('../services/cacheFile.js')
+const { isCacheUsable, setCacheBloklistResponses, setCacheBloklistProviders, getCachedBloklistProviders, getCachedBloklistResponses, 
+    setCacheGeolocatedIps } = require('../services/cacheFile.js')
+const reqFile = require('./requestsFile.js')
 const eventEmitter = new EventEmitter()
-
 
 
 
@@ -29,12 +31,48 @@ const setUp = () => {
     setInterval( () => {
         eventEmitter.emit(configuration.EVENT_MAPS);
     }, configuration.TIMER_EVENT_MAPS)
+
+    setInterval( () => {
+        eventEmitter.emit(configuration.EVENT_GEOLOCATION);
+    }, configuration.TIMER_EVENT_GEOLOCATION)
     
     // setInterval( () => {
     //     eventEmitter.emit(configuration.EVENT_TEST);
     // }, configuration.TIMER_EVENT_TEST) 
     
-    
+    /* spracuj geolocation event */
+    eventEmitter.on(configuration.EVENT_GEOLOCATION, async () => {
+        // set max time block
+        if ((await generalCtrl.getState(2)).isBusy === 0) {
+            await generalCtrl.setBusyFor(2, configuration.BLOCK_TIME_GEOLOCATION)
+            await generalCtrl.simulateWorkAndThenSetIdle(2, configuration.BLOCK_TIME_GEOLOCATION)
+        } else {
+            console.log("Event GEOLOCATION NOT raised. Consider increasing period for source caching.")
+            return
+        }
+
+        // Work
+        console.log(`Event GEOLOCATION raised on: ${helper.date_plus_time()}`);
+        
+        try {
+            // pop one array from requestsFile
+            // geolocate both
+            // save as subnet - with inner IPs
+            var whatToDo = await reqFile.popOneBatch()
+
+            if (whatToDo !== null) {
+                // geolocate
+                console.log('Now we do: ')
+                console.log(whatToDo)
+            } else {
+                console.log('Nothing to do now')
+            }
+        } catch (e) {
+            helper.logError(`Error: ${e}`)
+        } finally {
+            console.log("Event GEOLOCATION done, but new jobs will not be available straightaway")
+        }
+    });
 
     /* spracuj source event */
     eventEmitter.on(configuration.EVENT_SOURCES, async () => {
@@ -54,9 +92,11 @@ const setUp = () => {
             // na zaciatok fakt staci cache na bloklisty, tych je vela
             var resps = await blklistResponse.find({})
             var provs = await blklistProvider.find({})
-            
+            var ips = await ipsCtrl.getAllGeolocatedIps()
+
             setCacheBloklistResponses(resps)
             setCacheBloklistProviders(provs)
+            setCacheGeolocatedIps(ips)
         } catch (e) {
             helper.logError(`Error: ${e}`)
         } finally {
@@ -117,7 +157,6 @@ const setUp = () => {
                 var tmp1 = getCachedBloklistProviders()
                 var tmp2 = getCachedBloklistResponses()
                 await mapGen.onEventGenerateFiles(tmp1, tmp2);
-                console.log('here we are')
             } else {
                 console.log("Data for mapGen not ready yet")
             }

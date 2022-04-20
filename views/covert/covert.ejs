@@ -34,11 +34,13 @@
                 <div class="card-body">
                     <!-- ci je aktivny -->
                     <div class="float-right"><span class="badge badge-primary badge-pill"><%= source.isActive == 1 ? 'ACTIVE' : 'DISABLED' %> </span></div>
+                    <div class="float-right mr-2"><span class="badge badge-secondary badge-pill">Number of IPs: <%= source.total %> </span></div>
+
                     <!-- nadpis -->
                     <h4 class="card-title"><%= source.name %></h4>
                     <!-- tenke sede pismo -->
                     <div class="card-subtitle text-muted mb-2">
-                        <%= source.addedAt.toLocaleString() %>
+                        Created: <%= source.addedAt.toLocaleString() %> && Updated: <%= source.lastEditAt.toLocaleString() %>
                     </div>
                     <!-- skrateny popis -->
                     <div class="card-text mb-2"><%= source.description %></div>

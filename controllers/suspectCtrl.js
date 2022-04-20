@@ -2,7 +2,7 @@
 // to handle requests. 
 
 const configuration = require("../config/config-nonRestricted")
-const { logError, logInfo, stringIsAValidUrl, uniq } = require('../services/helper.js')
+const { logError, logInfo, stringIsAValidUrl, uniq, getSubnetForIp } = require('../services/helper.js')
 const { findTagById, findIdByTag, addTag, decreaseTag, getAllTags, removeAllTags } = require('../services/tagSupport.js')
 const { sendPromise } = require('../services/simpleCommunicator.js')
 
@@ -11,6 +11,8 @@ const tagDb = require("../models/tagDb")
 const net = require('net')
 const { WWW_SUSPECT_HOME } = require("../config/config-nonRestricted")
 const res = require("express/lib/response")
+const cached = require('../services/cacheFile.js')
+const reqFile = require('../services/requestsFile.js')
 
 const baseViewFolder = `${WWW_SUSPECT_HOME}`
 
@@ -101,6 +103,8 @@ const showAllProviders = async (req, res) => {
     //dont return whole object
     const providers = await suspectProvider.find({}, {
         "isActive": 1,
+        "total": 1,
+        "analyzed": 1,
         "name" : 1,
         "addedAt": 1,
         "description": 1,
@@ -146,6 +150,120 @@ const editProvider = async (req, res) => {
         // TODO error not found
     }
 }
+
+const geolocateProvider = async (req, res) => {
+    var provider = await suspectProvider.findOne({slug: req.params.slug})
+
+    // count if was not count yet
+    if (provider.total === 0) {
+        provider.total = provider.ipList.length
+        console.log(`Number of IP addresses in suspect list "${provider.name}" was counted to ${provider.total}.`)
+    }
+
+    // if checked already do nothing
+    if (provider.total > 0 && provider.analyzed === provider.total) {
+        console.log(`The whole list "${provider.name}" was already analyzed.`)
+        res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
+        return
+    }
+
+    if (provider.total === 0) {
+        console.log(`Nothing to analyze in this list "${provider.name}".`)
+        res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
+        return
+    }
+
+    var ips = cached.getUniqueGeolocatedIps()
+    if (ips.length === 0) {
+        res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
+        return
+    }
+    
+    // create a SET
+    var willBeSet = []
+    for (var x of provider.ipList) {
+        if (ips.includes(x.ip)) {
+            x.checked = 1
+            provider.analyzed++
+        } else {
+            willBeSet.push(x.ip)
+        }
+    }
+
+    console.log(provider)
+
+    try {
+        provider.save()
+    } catch (e) { console.log(e) }
+
+    // if checked already do nothing
+    if (provider.total > 0 && provider.analyzed === provider.total) {
+        console.log(`The whole list "${provider.name}" was already analyzed. (found out during SET generation)`)
+        res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
+        return
+    }
+
+    console.log(`We have list "${provider.name}" to analyze with: ${provider.total} IPs and already analyzed ${provider.analyzed}`)
+    res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
+
+    // GET GEOLOCATION MINIMUM per minute
+    var limit = await reqFile.setGeolocationLimit()
+    console.log(`We will divide list of IPs in this provider by ${limit}`)
+
+    // just in case, sort by asc ip address list
+    // netreba, je
+
+    // vytvor list, ktory bude mat polia podla subnetov
+    var list = []
+    var subnetObject = undefined
+    var activeSubnet = undefined
+    for (var x of willBeSet) {
+        var subnet = getSubnetForIp(x, 24)
+        
+        // add IP to subnet that exists
+        if (subnet === activeSubnet) {
+            subnetObject.ips.push(x)
+        // add current subnetObj and create new subnet and first IP
+        } else if (activeSubnet) {
+            list.push(subnetObject)
+
+            activeSubnet = subnet
+            subnetObject = {'subnet': activeSubnet, 'provider': provider._id, 'ips': []}
+            subnetObject.ips.push(x)
+        // nothing exists yet
+        } else {
+            activeSubnet = subnet
+            subnetObject = {'subnet': activeSubnet, 'provider': provider._id, 'ips': []}
+            subnetObject.ips.push(x)
+        }
+    }
+    // last iteration needs manual  addition
+    list.push(subnetObject)
+
+    // confirm all ok
+    //console.log(list)
+
+    // Divide subnets by Geolocation LIMIT
+    var limitedList = []
+    var activeList = []
+    for (var x of list) {
+        activeList.push(x)
+
+        if (activeList.length === 2) {
+            limitedList.push(activeList)
+            activeList = []
+        }
+    }
+    if (activeList.length > 0)
+        limitedList.push(activeList)
+
+    // check if well divided by max IP limit
+    console.log(limitedList)
+    
+
+    reqFile.addNewSet(limitedList)
+}
+
 
 const deleteExistingSource = async (req, res) => {
     //console.log(req.params)
@@ -448,7 +566,7 @@ const reportFindingsHere = async (arg) => {
 module.exports = {
     getAllUsableProviders,
     showTags, showAllProviders, newSource, addNewList,
-    editProvider,
+    editProvider, geolocateProvider,
     acceptNewList, acceptEditExisting, acceptNewProvider, 
     deleteExistingSource, removeAllTagsTestOnly,
     saveAndRedirectTest,

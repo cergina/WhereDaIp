@@ -11,6 +11,7 @@ router.get('/providers', controller.showAllProviders)
 router.get('/providers/new', controller.newSource)
 router.get('/list/add', controller.addNewList)
 router.get('/list/delete/all', controller.removeAllTagsTestOnly)
+router.get('/geolocate/:slug', controller.geolocateProvider)
 router.get('/providers/:slug', controller.editProvider)
 
 // POSTs

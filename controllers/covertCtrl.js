@@ -23,8 +23,10 @@ const showAllSources = async (req, res) => {
     // dont return whole object
     const sources = await coverSource.find({}, {
         "isActive": 1,
+        "total": 1,
         "name" : 1,
         "addedAt": 1,
+        "lastEditAt": 1,
         "description": 1,
         "slug": 1
     }).sort({ addedAt: 'desc'})

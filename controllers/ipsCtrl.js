@@ -270,6 +270,10 @@ const acceptRequestController = async (req, res) => {
     }
     
     try {
+        // TODO
+        // haha
+
+        
         var providers = await getAllUsableProviders()
 
         // for every address send
@@ -701,6 +705,11 @@ const getJsonWithCountedCovered = async () => {
     return retObj
 }
 
+const getAllGeolocatedIps = async () => {
+    var responses = await responseData.find({})
+    return responses
+}
+
 module.exports = {
     showAllIps, showFilteredIps, makeRequestController, showFusedResponse, showResponse,
     showTestMap, downloadResponses, analyseIps,
@@ -708,6 +717,7 @@ module.exports = {
     deleteExistingResponse,
     getJsonWithCountedOrigin, getJsonWithCountedAs,
     getJsonWithCountedCovered, 
-    getJsonForMapRequests
+    getJsonForMapRequests, 
+    getAllGeolocatedIps
 }
 

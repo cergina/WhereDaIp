@@ -89,6 +89,21 @@ const responseDataSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    isSubnet: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    subProvider: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: false,
+        ref: 'SuspectProviderSchema'
+    },
+    subList: [
+        {
+            address: String 
+        }
+    ],
     findings: [
         {
             text: String,

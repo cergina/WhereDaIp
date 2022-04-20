@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-
+ 
 
 
 <div class="form-group">
@@ -65,14 +65,18 @@
 <h5 class="display-5 mt-4">Service's request fields (see service's documentation)</h5>
 <!-- informacie potrebne k uspesnemu odoslaniu poziadavky -->
 
-<div class="form-group"> 
+<div class="form-group bg-light col-md-12 justify-content-center"> 
     <label for="api_url">Service's API url *</label>
     <input required value="<%= provider.baseUrl %>" placeholder="http://serviceurl.com/json/" type="text" name="api_url" id="api_url" class="form-control">
     <small class="form-text text-muted mb-4">See in documentation. The url has to comply with rules set in Request method dropdown</small>
 </div>
 
 
-
+<div class="form-group bg-warning col-md-12 justify-content-center"> 
+    <label for="api_limit">Service's API LIMIT (Number of IP addresses per minute)</label>
+    <input required value="<%= provider.limit %>" placeholder="eg.: 10" type="number" name="api_limit" id="api_limit" class="form-control">
+    <small class="form-text text-muted mb-4">See in documentation. Set in minutes.</small>
+</div>
 <!-- dropdowny -->
 <div class="form-group">
     <div class="row">
@@ -94,8 +98,7 @@
 </div>
 
 
-<form-group>
-    <!-- nadpisy -->
+<!-- <form-group>
     <div class="row">
         <div class="col-md-6">
             <label for="api_req_param_ip">Name for parameter "IP address" (if any)</label>
@@ -104,7 +107,6 @@
             <label for="api_req_param_auth">Name for parameter "authentication" (if service not free)</label>
         </div>
     </div>
-    <!-- inputy -->
     <div class="row">
         <div class="col-md-6">
             <input value="<%= provider.request.ipAddress %>" type="text" name="api_req_param_ip" id="api_req_param_ip" class="form-control">
@@ -115,7 +117,7 @@
             <small class="form-text text-muted mb-4">Not supported right now</small>
         </div>
     </div>
-</form-group>
+</form-group> -->
 
 
 

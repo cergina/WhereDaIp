@@ -95,6 +95,7 @@ function saveAndRedirect(viewName) {
         provider.isActive = req.body.service_enabled === 'on' ? 1 : 0
 
         provider.baseUrl = req.body.api_url
+        provider.limit = req.body.api_limit
 
         provider.restMethod = req.body.api_method
         provider.request.ipAddress = req.body.api_req_param_ip
