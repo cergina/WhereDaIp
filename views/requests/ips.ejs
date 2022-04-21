@@ -38,8 +38,14 @@
                 <div class="card-body">
                     <!-- ci je aktivny -->
                     <div class="float-right"><span class="badge badge-primary badge-pill"><%= request.success == 1 ? 'Successful' : 'Failed' %> </span></div>
+                    
                     <!-- nadpis -->
-                    <h4 class="card-title"><%= request.ipRequested %> by '<%= providers[request.provider].name %>' </h4>
+                    <% if (request.isSubnet) { %>
+                        <h4 class="card-title"><%= request.ipRequested %>/24 by '<%= providers[request.provider].name %>' </h4>  
+                    <% } else { %>
+                        <h4 class="card-title"><%= request.ipRequested %> by '<%= providers[request.provider].name %>' </h4>
+                    <% }%>
+                    
                     <!-- tenke sede pismo -->
                     <div class="card-subtitle text-muted mb-2">
                         <%= request.addedAt.toLocaleString() %>

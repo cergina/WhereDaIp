@@ -22,6 +22,7 @@ const showAllIps = async (req, res) => {
     const requests = await responseData.find({}, {
         "success": 1,
         "ipRequested": 1,
+        "isSubnet": 1,
         "addedAt": 1,
         "city": 1,
         "country": 1,
@@ -51,6 +52,7 @@ const showFilteredIps = async (req, res) => {
     const requests = await responseData.find({}, {
         "success": 1,
         "ipRequested": 1,
+        "isSubnet": 1,
         "addedAt": 1,
         "city": 1,
         "country": 1,
@@ -82,6 +84,7 @@ const showFilteredIps = async (req, res) => {
         {
             success: requests[i].success,
             ipRequested: requests[i].ipRequested,
+            isSubnet: requests[i].isSubnet,
             firstAddedAt: requests[i].addedAt,
             lastAddedAt: requests[i].addedAt,
             city: requests[i].city,
@@ -249,6 +252,39 @@ const deleteExistingResponse = async (req, res) => {
     res.redirect(`${configuration.WWW_REQ_HOME}`)
 }
 
+// regular geolocation event - suspicious list
+// TODO geoEvent
+const searchForIpsController = async (batch) => {
+    try {
+        // only use active ones
+        var providers = await getAllUsableProviders()
+        
+        // for every address send
+        batch.forEach(address => {
+            // var addr = address.ips[0]
+            // var arr = addr.split('.')
+            // if (arr[3] === '0')
+            //     addr = address.ips[1]
+            var addr = address.ips[0]
+
+            providers.forEach(provider => {
+                sendPromise(addr, provider)
+                    .then(async res => {
+                        logDebug(res)
+
+                        let extractedData = extractSubnetDataFromResponse(addr, address, res, provider)
+
+                        await extractedData.save()
+                    })
+                    .catch(err => logError(err))
+            })
+        })
+    } catch(e) {
+        logError(e)
+    }
+}
+
+// Form send request
 const acceptRequestController = async (req, res) => {
 
     if (configuration.PASS !== req.body.password_for_lookup) {
@@ -304,7 +340,7 @@ const acceptRequestController = async (req, res) => {
 
 
 // PRIVATE
-
+// - pre jednu IP adresu
 function extractDataFromResponse(address, originalResponse, provider) {
     let extractedData = new responseData()
 
@@ -314,6 +350,36 @@ function extractDataFromResponse(address, originalResponse, provider) {
 
     // success, type, country, city, latitude, longitude, isp is necessary
     extractedData.ipRequested = address
+    extractedData.addedAt = new Date()
+    extractedData.provider = provider._id
+    extractedData.type = net.isIPv4(address) ? 0 : 1
+    
+    if (provider.format === 0) {
+        // json
+        extractedData = extractFromJSON(extractedData, originalResponse, provider)
+    } else if (provider.format === 1) {
+        // xml not implemented yet
+        extractedData = extractFromXML(extractedData, originalResponse, provider)
+    }
+    
+
+    return extractedData
+}
+// - pre subnet IP adries
+function extractSubnetDataFromResponse(address, subnetWithList, originalResponse, provider) {
+    let extractedData = new responseData()
+
+    // subnet part
+    extractedData.isSubnet = 1
+    extractedData.subProvider = subnetWithList.provider
+    extractedData.subList = []
+    for (var x of subnetWithList.ips) {
+        extractedData.subList.push({'address': x})
+    }
+    
+
+    // regular part
+    extractedData.ipRequested = subnetWithList.subnet
     extractedData.addedAt = new Date()
     extractedData.provider = provider._id
     extractedData.type = net.isIPv4(address) ? 0 : 1
@@ -369,7 +435,7 @@ function extractFromJSON(extractedData, originalResponse, provider) {
 function extractFromXML(extractedData, originalResponse, provider) {
     // success, type, country, city, latitude, longitude, isp is necessary
     
-    // TODO - not implemented yet
+    // TODO - not implemented yet - and wont be
 
     return extractedData
 }
@@ -386,7 +452,7 @@ const getJsonForMapRequests = async () => {
     for (var prov of providers) {
         if (prov.response.asPath)
             useIndex = x
-
+ 
         x = x + 1
     }
 
@@ -713,7 +779,7 @@ const getAllGeolocatedIps = async () => {
 module.exports = {
     showAllIps, showFilteredIps, makeRequestController, showFusedResponse, showResponse,
     showTestMap, downloadResponses, analyseIps,
-    acceptRequestController,
+    searchForIpsController, acceptRequestController,
     deleteExistingResponse,
     getJsonWithCountedOrigin, getJsonWithCountedAs,
     getJsonWithCountedCovered, 

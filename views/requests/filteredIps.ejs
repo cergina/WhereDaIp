@@ -31,8 +31,14 @@
                 <div class="card-body">
                     <!-- ci je aktivny -->
                     <div class="float-right"><span class="badge badge-primary badge-pill"><%= summedRequest.success == 1 ? 'Successful' : 'Failed' %> </span></div>
+                    
                     <!-- nadpis -->
-                    <h4 class="card-title"><%= summedRequest.ipRequested %></h4>
+                    <% if (summedRequest.isSubnet) { %>
+                        <h4 class="card-title"><%= summedRequest.ipRequested %>/24</h4>    
+                    <% } else { %>
+                        <h4 class="card-title"><%= summedRequest.ipRequested %></h4>
+                    <% }%>
+                    
                     <!-- tenke sede pismo -->
                     <div class="card-subtitle text-muted mb-2">
                         First: <%= summedRequest.firstAddedAt.toLocaleString() %> Last: <%= summedRequest.lastAddedAt.toLocaleString() %>

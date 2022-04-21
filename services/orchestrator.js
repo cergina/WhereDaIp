@@ -60,10 +60,11 @@ const setUp = () => {
             // save as subnet - with inner IPs
             var whatToDo = await reqFile.popOneBatch()
 
-            if (whatToDo !== null) {
+            if (whatToDo !== null) { 
                 // geolocate
-                console.log('Now we do: ')
-                console.log(whatToDo)
+                console.log(`Now we do: \n${whatToDo}`)
+                
+                await ipsCtrl.searchForIpsController(whatToDo)
             } else {
                 console.log('Nothing to do now')
             }
