@@ -259,7 +259,10 @@ const searchForIpsController = async (batch) => {
         // only use active ones
         var providers = await getAllUsableProviders()
         
-        // for every address send
+        // TODO treba najst ci uz existuje taky zoznam s takym providerom a ulozit to donho
+
+        
+        // for every address find, if not send and get
         batch.forEach(address => {
             // var addr = address.ips[0]
             // var arr = addr.split('.')
@@ -267,16 +270,25 @@ const searchForIpsController = async (batch) => {
             //     addr = address.ips[1]
             var addr = address.ips[0]
 
-            providers.forEach(provider => {
-                sendPromise(addr, provider)
+            providers.forEach(async provider => {
+                // already found response ?
+                let foundData = await findResponseSubnetWithSameSuspectAndProvider(address.subnet, address.provider, provider)
+                if (foundData) {
+                    // append IP addresses inside
+                    foundData.subList.push({ address: addr})
+                    await foundData.save()
+                } else {
+                    // get geolocation data
+                    sendPromise(addr, provider)
                     .then(async res => {
                         logDebug(res)
-
-                        let extractedData = extractSubnetDataFromResponse(addr, address, res, provider)
-
-                        await extractedData.save()
-                    })
-                    .catch(err => logError(err))
+                        
+                            let extractedData = extractSubnetDataFromResponse(addr, address, res, provider)
+    
+                            await extractedData.save()
+                        })
+                        .catch(err => logError(err))
+                }
             })
         })
     } catch(e) {
@@ -340,6 +352,38 @@ const acceptRequestController = async (req, res) => {
 
 
 // PRIVATE
+const findResponseSubnetWithSameSuspectAndProvider = async (subnet, suspect, provider) => {
+    var responses = await responseData.find({}, {
+        "success": 1,
+        "ipRequested": 1,
+        "isSubnet": 1,
+        "subProvider": 1,
+        "subList": 1,
+        "provider": 1
+    })
+
+    if (!responses || responses.length === 0)
+        return null
+
+    let foundData = responses.find(resp => {
+        var t1 = resp.isSubnet
+        if (t1 === 0) 
+            return false
+
+        var t2 = resp.subProvider.equals(suspect)
+        var t3 = resp.provider.equals(provider._id)
+        var t4 = resp.ipRequested === subnet
+
+        if (t1 && t2 && t3 && t4)
+            return true
+    })
+
+    if (foundData)
+        return foundData
+    else
+        return null
+}
+
 // - pre jednu IP adresu
 function extractDataFromResponse(address, originalResponse, provider) {
     let extractedData = new responseData()

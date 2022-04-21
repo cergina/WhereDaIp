@@ -88,15 +88,18 @@
         <%- include('_resp_fields', {fieldTitle: 'Hosting: ', fieldValue: response.hosting}) %>
         <%- include('_resp_fields', {fieldTitle: 'ISP: ', fieldValue: response.isp, useMb: 'mb-4'}) %>
 
-
+        <% if (response.isSubnet) { %>
+            <textarea class="form-control mt-2 mb-2" name="ips" id="ips" rows="20" disabled><%= response.subList %></textarea>
+        <% } %>
         
         <!-- zoznam nalezov-->
         <%- include('_blklist_findings') %> 
 
         <!-- just temporary. maybe -->
-        <div class="form-group">
+        <!-- <div class="form-group">
             <textarea disabled class="form-control" rows="15"><%= response.findings %></textarea>
-        </div>
+        </div> -->
+        
         
         
         <!-- footer with name, year, FIIT, www -->

@@ -76,9 +76,10 @@ configuration.TIMER_EVENT_GRAPH = 60000
 configuration.EVENT_MAPS = "event_maps_update"
 configuration.TIMER_EVENT_MAPS = 30000
 configuration.EVENT_GEOLOCATION = "event_geolocation_process"
-configuration.TIMER_EVENT_GEOLOCATION = 70000
+configuration.TIMER_EVENT_GEOLOCATION = 30000
+//configuration.TIMER_EVENT_GEOLOCATION = 70000
 configuration.EVENT_SOURCES = "event_graph_sources"
-configuration.TIMER_EVENT_SOURCES = 10000 // has to be smaller than maps and graphs
+configuration.TIMER_EVENT_SOURCES = 20000 // has to be smaller than maps and graphs
 
 
 // Blocktimes in minutes (its max)

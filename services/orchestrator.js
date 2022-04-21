@@ -48,7 +48,7 @@ const setUp = () => {
             await generalCtrl.simulateWorkAndThenSetIdle(2, configuration.BLOCK_TIME_GEOLOCATION)
         } else {
             console.log("Event GEOLOCATION NOT raised. Consider increasing period for source caching.")
-            return
+            return 
         }
 
         // Work
@@ -63,7 +63,7 @@ const setUp = () => {
             if (whatToDo !== null) { 
                 // geolocate
                 console.log(`Now we do: \n${whatToDo}`)
-                
+
                 await ipsCtrl.searchForIpsController(whatToDo)
             } else {
                 console.log('Nothing to do now')

@@ -161,6 +161,7 @@ const geolocateProvider = async (req, res) => {
     }
 
     // if checked already do nothing
+    // TODO uncomment
     if (provider.total > 0 && provider.analyzed === provider.total) {
         console.log(`The whole list "${provider.name}" was already analyzed.`)
         res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
@@ -181,6 +182,7 @@ const geolocateProvider = async (req, res) => {
     
     // create a SET
     var willBeSet = []
+    provider.analyzed = 0
     for (var x of provider.ipList) {
         if (ips.includes(x.ip)) {
             x.checked = 1

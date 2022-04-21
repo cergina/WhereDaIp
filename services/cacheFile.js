@@ -46,8 +46,17 @@ function getUniqueGeolocatedIps() {
     }
 
     for  (var x of cachedGeolocatedIps) {
-        if (toRet.findIndex(i => i === x.ipRequested) === -1)
-            toRet.push(x.ipRequested)
+        // subnet IPs
+        if (x.isSubnet) {
+            for (var y of x.subList) {
+                if (toRet.findIndex(i => i === y.address) === -1)
+                    toRet.push(y.address)    
+            }
+        // general IP
+        } else {
+            if (toRet.findIndex(i => i === x.ipRequested) === -1)
+                toRet.push(x.ipRequested)
+        }
     }
     return toRet
 }
