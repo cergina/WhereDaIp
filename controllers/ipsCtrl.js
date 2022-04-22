@@ -589,6 +589,8 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
     var responses = await responseData.find({ provider : providers[place]._id}, {
         "success": 1,
         "ipRequested": 1,
+        "isSubnet": 1,
+        "subList": 1,
         "addedAt": 1,
         "countryCode": 1
     }).sort({ ipRequested: 'asc'})
@@ -621,7 +623,12 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
         //     console.log('lop')
 
         // increase
-        uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count++
+        if (x.isSubnet && x.subList.length > 0) {
+            uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count+= x.subList.length
+        } else {
+            uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count++
+        }
+        // TODO zvysok
     }
     for (var x of cacheBlkResp) {
         if (x.list[0].country) {

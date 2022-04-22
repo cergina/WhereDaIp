@@ -1,9 +1,12 @@
-<h2>
-    Findings
-</h2>
+<% if (response?.findings.length > 0) { %>
+    <h2>
+        Findings
+    </h2>
+<% } %>
+
 <% response.findings.forEach(finding => { %>
     <% var findArr = finding.text.split('|') %>
-    <div class="card mt-4">
+    <div class="card mb-2">
         <div class="card-body">
             <!-- nadpis -->
             <% if ('SUSPECT' == findArr[0].trim()) { %><h4><a href="/suspect/providers/<%= findArr[2].trim() %>">[SUSPICIOUS LIST] <%= findArr[3].trim() %></a></h4> <% } %> 

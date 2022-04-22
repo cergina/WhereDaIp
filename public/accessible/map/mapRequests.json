@@ -32,7 +32,7 @@
             "lon": "-122.39"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>108.62.56.0<br></span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>108.62.56.0<br>\n<br>1. SUSPECT  \"Mail attacks IPs\"  tags:   mail, postfix \n<br>2. SUSPECT  \"Testovaci zoznam\"  tags:   botnet, spam </span>",
             "lat": "47.6062",
             "lon": "-122.332"
         },
@@ -42,12 +42,12 @@
             "lon": "17.0379"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>62.197.243.225<br>\n<br>1. SUSPECT  \"Test list\"  tags here temp </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>62.197.243.225<br>\n<br>1. SUSPECT  \"Test list\"  tags:   test </span>",
             "lat": "48.3762",
             "lon": "17.5829"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>8.8.8.8<br>\n<br>1. SUSPECT  \"Test list\"  tags here temp </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>8.8.8.8<br>\n<br>1. SUSPECT  \"Test list\"  tags:   test </span>",
             "lat": "39.03",
             "lon": "-77.5"
         }
@@ -70,7 +70,7 @@
             ],
             [
                 "108.62.56.0",
-                "",
+                "\n\r1. SUSPECT  \"Mail attacks IPs\"  tags:   mail, postfix \n\r2. SUSPECT  \"Testovaci zoznam\"  tags:   botnet, spam ",
                 "AS396190 Leaseweb USA, Inc.",
                 "Seattle",
                 "United States"
@@ -84,14 +84,14 @@
             ],
             [
                 "62.197.243.225",
-                "\n\r1. SUSPECT  \"Test list\"  tags here temp ",
+                "\n\r1. SUSPECT  \"Test list\"  tags:   test ",
                 "AS5578 SWAN, a.s.",
                 "Trnava",
                 "Slovakia"
             ],
             [
                 "8.8.8.8",
-                "\n\r1. SUSPECT  \"Test list\"  tags here temp ",
+                "\n\r1. SUSPECT  \"Test list\"  tags:   test ",
                 "AS15169 Google LLC",
                 "Ashburn",
                 "United States"
@@ -99,5 +99,5 @@
         ]
     },
     "nazov": "mapGen - generateMapRequests",
-    "time": "2022-04-21 15:50:48"
+    "time": "2022-04-22 12:09:23"
 }

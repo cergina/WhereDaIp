@@ -38,7 +38,12 @@
         <h2>
             General information
         </h2>
-        <%- include('_resp_fields', {fieldTitle: 'Requested IP: ', fieldValue: response.ipRequested}) %>
+        <% if (response.isSubnet) { %>
+            <%- include('_resp_fields', {fieldTitle: 'Possible /24 subnet: ', fieldValue: `${response.ipRequested}`}) %>
+            <%- include('_resp_fields', {fieldTitle: 'Number of addresses: ', fieldValue: `${response.subList.length}`}) %>
+        <% } else { %>
+            <%- include('_resp_fields', {fieldTitle: 'Requested IP: ', fieldValue: response.ipRequested}) %>
+        <% } %>
         <%- include('_resp_fields', {fieldTitle: 'Type: ', fieldValue: response.type === 0 ? 'IPv4' : 'IPv6'}) %>
         <div class="row">
             <div class="col-md-3">
@@ -88,12 +93,33 @@
         <%- include('_resp_fields', {fieldTitle: 'Hosting: ', fieldValue: response.hosting}) %>
         <%- include('_resp_fields', {fieldTitle: 'ISP: ', fieldValue: response.isp, useMb: 'mb-4'}) %>
 
-        <% if (response.isSubnet) { %>
-            <textarea class="form-control mt-2 mb-2" name="ips" id="ips" rows="20" disabled><%= response.subList %></textarea>
-        <% } %>
-        
         <!-- zoznam nalezov-->
         <%- include('_blklist_findings') %> 
+
+        <% if (response.isSubnet) { %>
+            <!-- zoznam IP adries v subnete -->
+            <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th class="th-sm">Addresses in possible subnet, that are taken as of one origin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% response.subList.forEach( resAddr => { %>
+                    <tr>
+                      <td><%= resAddr.address %> </td>
+                    </tr>
+                  <% }) %> 
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th class="th-sm">Addresses in possible subnet, that are taken as of one origin</th>
+                  </tr>
+                </tfoot>
+            </table>
+        <% } %>
+        
+
 
         <!-- just temporary. maybe -->
         <!-- <div class="form-group">

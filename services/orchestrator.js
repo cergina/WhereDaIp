@@ -39,8 +39,8 @@ const setUp = () => {
     // setInterval( () => {
     //     eventEmitter.emit(configuration.EVENT_TEST);
     // }, configuration.TIMER_EVENT_TEST) 
-    
-    /* spracuj geolocation event */
+
+    /* spracuj GEOLOCATION event */
     eventEmitter.on(configuration.EVENT_GEOLOCATION, async () => {
         // set max time block
         if ((await generalCtrl.getState(2)).isBusy === 0) {
@@ -75,7 +75,7 @@ const setUp = () => {
         }
     });
 
-    /* spracuj source event */
+    /* spracuj SOURCE event */
     eventEmitter.on(configuration.EVENT_SOURCES, async () => {
         // set max time block
         if ((await generalCtrl.getState(6)).isBusy === 0) {
@@ -108,7 +108,7 @@ const setUp = () => {
 
 
 
-    /* spracuj graph event */
+    /* spracuj GRAPH event */
     eventEmitter.on(configuration.EVENT_GRAPH, async () => {
         // set max time block
         if ((await generalCtrl.getState(4)).isBusy === 0) {
@@ -139,7 +139,7 @@ const setUp = () => {
         }
     });
     
-    /* spracuj map event */
+    /* spracuj MAPS event */
     eventEmitter.on(configuration.EVENT_MAPS, async () => {
         // set max time block
         if ((await generalCtrl.getState(5)).isBusy === 0) {
@@ -169,6 +169,7 @@ const setUp = () => {
         }
     });
     
+    /* spracuj TEST event */
     eventEmitter.on(configuration.EVENT_TEST, async () => {
         // set max time block
         if ((await generalCtrl.getState(2)).isBusy === 0) {
