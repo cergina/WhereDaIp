@@ -3,20 +3,20 @@
     "data": {
         "labels": [
             "United States",
+            "United Arab Emirates",
             "France",
-            "Singapore",
-            "Indonesia",
-            "Germany"
+            "Brazil",
+            "India"
         ],
         "datasets": [
             {
                 "label": "Origin",
                 "data": [
-                    73,
-                    24,
-                    16,
-                    14,
-                    14
+                    133,
+                    47,
+                    42,
+                    40,
+                    34
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -61,244 +61,334 @@
             [
                 1,
                 "United States",
-                73
+                133
             ],
             [
                 2,
-                "France",
-                24
+                "United Arab Emirates",
+                47
             ],
             [
                 3,
-                "Singapore",
-                16
+                "France",
+                42
             ],
             [
                 4,
-                "Indonesia",
-                14
+                "Brazil",
+                40
             ],
             [
                 5,
-                "Germany",
-                14
+                "India",
+                34
             ],
             [
                 6,
-                "India",
-                12
+                "Mexico",
+                31
             ],
             [
                 7,
-                "Brazil",
-                12
+                "Germany",
+                31
             ],
             [
                 8,
-                "Canada",
-                11
+                "Singapore",
+                22
             ],
             [
                 9,
-                "United Arab Emirates",
-                7
+                "Indonesia",
+                22
             ],
             [
                 10,
-                "Mexico",
-                7
+                "Canada",
+                21
             ],
             [
                 11,
-                "Korea, Republic of",
-                7
+                "Italy",
+                19
             ],
             [
                 12,
-                "Turkey",
-                6
+                "China",
+                18
             ],
             [
                 13,
-                "United Kingdom",
-                5
+                "Pakistan",
+                17
             ],
             [
                 14,
-                "Italy",
-                5
+                "United Kingdom",
+                16
             ],
             [
                 15,
-                "Colombia",
-                5
+                "South Africa",
+                16
             ],
             [
                 16,
-                "Thailand",
-                4
+                "Taiwan, Province of China",
+                14
             ],
             [
                 17,
-                "Australia",
-                4
+                "Qatar",
+                13
             ],
             [
                 18,
-                "Netherlands",
-                3
+                "Egypt",
+                13
             ],
             [
                 19,
-                "Jamaica",
-                3
+                "Thailand",
+                12
             ],
             [
                 20,
-                "Bulgaria",
-                3
+                "Turkey",
+                11
             ],
             [
                 21,
-                "Venezuela",
-                2
+                "Colombia",
+                11
             ],
             [
                 22,
-                "Tunisia",
-                2
+                "Australia",
+                10
             ],
             [
                 23,
-                "Taiwan, Province of China",
-                2
+                "Spain",
+                9
             ],
             [
                 24,
-                "South Africa",
-                2
+                "Russian Federation",
+                9
             ],
             [
                 25,
-                "Slovakia",
-                2
+                "Korea, Republic of",
+                8
             ],
             [
                 26,
-                "Russian Federation",
-                2
+                "Argentina",
+                8
             ],
             [
                 27,
-                "Qatar",
-                2
+                "Netherlands",
+                6
             ],
             [
                 28,
-                "Puerto Rico",
-                2
+                "Greece",
+                6
             ],
             [
                 29,
-                "Hungary",
-                2
+                "Chile",
+                6
             ],
             [
                 30,
-                "China",
-                2
+                "Bulgaria",
+                6
             ],
             [
                 31,
-                "Switzerland",
-                1
+                "Tunisia",
+                5
             ],
             [
                 32,
-                "Serbia",
-                1
+                "Saudi Arabia",
+                5
             ],
             [
                 33,
-                "Portugal",
-                1
+                "Bangladesh",
+                5
             ],
             [
                 34,
-                "Palestinian Territory, Occupied",
-                1
+                "Venezuela",
+                4
             ],
             [
                 35,
-                "Pakistan",
-                1
+                "Slovakia",
+                4
             ],
             [
                 36,
-                "Kuwait",
-                1
+                "Jamaica",
+                4
             ],
             [
                 37,
-                "Kenya",
-                1
+                "Ukraine",
+                3
             ],
             [
                 38,
-                "Japan",
-                1
+                "Swaziland",
+                3
             ],
             [
                 39,
-                "Hong Kong",
-                1
+                "Poland",
+                3
             ],
             [
                 40,
-                "Greece",
-                1
+                "New Zealand",
+                3
             ],
             [
                 41,
-                "Egypt",
-                1
+                "Malaysia",
+                3
             ],
             [
                 42,
                 "Ecuador",
-                1
+                3
             ],
             [
                 43,
+                "Viet Nam",
+                2
+            ],
+            [
+                44,
+                "Switzerland",
+                2
+            ],
+            [
+                45,
+                "Puerto Rico",
+                2
+            ],
+            [
+                46,
+                "Japan",
+                2
+            ],
+            [
+                47,
+                "Hungary",
+                2
+            ],
+            [
+                48,
+                "Cambodia",
+                2
+            ],
+            [
+                49,
+                "Serbia",
+                1
+            ],
+            [
+                50,
+                "Romania",
+                1
+            ],
+            [
+                51,
+                "Portugal",
+                1
+            ],
+            [
+                52,
+                "Palestinian Territory, Occupied",
+                1
+            ],
+            [
+                53,
+                "Nepal",
+                1
+            ],
+            [
+                54,
+                "Luxembourg",
+                1
+            ],
+            [
+                55,
+                "Kuwait",
+                1
+            ],
+            [
+                56,
+                "Kenya",
+                1
+            ],
+            [
+                57,
+                "Ireland",
+                1
+            ],
+            [
+                58,
+                "Hong Kong",
+                1
+            ],
+            [
+                59,
+                "Georgia",
+                1
+            ],
+            [
+                60,
                 "Dominican Republic",
                 1
             ],
             [
-                44,
+                61,
                 "Cyprus",
                 1
             ],
             [
-                45,
+                62,
+                "Cameroon",
+                1
+            ],
+            [
+                63,
                 "Bosnia and Herzegovina",
                 1
             ],
             [
-                46,
+                64,
+                "Bolivia",
+                1
+            ],
+            [
+                65,
                 "Belgium",
                 1
             ],
             [
-                47,
-                "Bangladesh",
-                1
-            ],
-            [
-                48,
-                "Argentina",
+                66,
+                "Austria",
                 1
             ]
         ]
     },
-    "time": "2022-04-22 12:09:25"
+    "time": "2022-04-25 01:57:41"
 }

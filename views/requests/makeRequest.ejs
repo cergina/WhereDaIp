@@ -42,6 +42,8 @@
                 swal({icon: 'error', title: 'Ooops!', text: 'You\'ve entered a wrong password.', button: false, timer: 1500})
             } else if (urlParams.get('invalid') == '1') {
                 swal({icon: 'error', title: 'Ooops!', text: 'One or more IPs are invalid.', button: false, timer: 1500})
+            } else if (urlParams.get('geolocated') == '1') {
+                swal({icon: 'error', title: 'Ooops!', text: 'All IP addresses were already geolocated.', button: false, timer: 1500})
             }
         }
     </script>

@@ -9,10 +9,11 @@ const generalCtrl = require('./generalCtrl.js')
 const covertCtrl = require('./covertCtrl.js')
 const suspectCtrl = require('./suspectCtrl.js')
 const blklistCtrl = require('./blklistCtrl.js')
-const { logDebug, logError, yyyymmdd } = require('../services/helper.js')
+const { logDebug, logError, yyyymmdd, getSubnetForIp } = require('../services/helper.js')
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
 const {isCacheUsable} = require('../services/cacheFile.js')
+const reqFile = require('../services/requestsFile.js')
 const { getCountryNameByCode, getCountryArrayCountsZero } = require('../services/countries.js')
 
 const basePath = `requests/`
@@ -137,53 +138,74 @@ const analyseIps = async (req, res) => {
     // just test
     res.redirect('/state')
 
-    // let's analyze
-    var responses = await responseData.find({}, {
-        "success": 1,
-        "ipRequested": 1,
-        "addedAt": 1,
-        "findings": 1
-    }).sort({ ipRequested: 'asc'})
+    setTimeout(async function() {
+        // let's analyze
+        var responses = await responseData.find({}, {
+            "success": 1,
+            "ipRequested": 1,
+            "addedAt": 1,
+            "findings": 1,
+            "isSubnet": 1,
+            "subList": 1,
+            "subProvider": 1,
+        }).sort({ ipRequested: 'asc'})
 
 
-    var covFindings = await covertCtrl.reportFindingsHere(responses)
-    var blkFindings = await blklistCtrl.reportFindingsHere(responses)
-    var susFindings = await suspectCtrl.reportFindingsHere(responses)
+        /* TODO - podobne ako je sus */
+        var covFindings = await covertCtrl.reportFindingsHere(responses)
+        var blkFindings = await blklistCtrl.reportFindingsHere(responses)
+        var susFindings = await suspectCtrl.reportFindingsHere(responses)
 
-    /* mame findingy. teraz ich treba priradit ku kazdemu response.findings arrayu */
-    try {
-        for (var x of responses) {
+        /* mame findingy. teraz ich treba priradit ku kazdemu response.findings arrayu */
+        try {
+            for (var x of responses) {
+                x.findings = []
 
-            x.findings = []
+                // sus
+                var subnetEntered = undefined
+                for (var s of susFindings) {
 
-            // sus
-            for (var s of susFindings) {
-                if (x.ipRequested === s.ipRequested) {
-                    x.findings.push({text: s.text, foundAt: s.foundAt})
+                    if (x.isSubnet === 0 && x.ipRequested === s.ipRequested) {
+                        x.findings.push({text: s.text, foundAt: s.foundAt})
+                    } else if (x.isSubnet === 1) {
+                        for (var w of x.subList) {
+                            var wsub = getSubnetForIp(w.address, 24)
+
+                            if (subnetEntered !== wsub && w.address ===  s.ipRequested) {
+                                x.findings.push({text: s.text, foundAt: s.foundAt})
+                                subnetEntered = getSubnetForIp(s.ipRequested, 24)
+                                break
+                            }
+                        }
+                    }
                 }
+
+                /* TODO - podobne ako je sus */
+                // cov
+                for (var c of covFindings) {
+                    if (x.ipRequested === c.ipRequested) {
+                        x.findings.push({text: c.text, foundAt: c.foundAt})
+                    }
+                } 
+
+                /* TODO - podobne ako je sus */
+                // blk
+                for (var b of blkFindings) {
+                    if (x.ipRequested === b.ipRequested) {
+                        x.findings.push({text: b.text, foundAt: b.foundAt})
+                    }
+                }
+
+                x.save()
             }
-
-            // cov
-            for (var c of covFindings) {
-                if (x.ipRequested === c.ipRequested) {
-                    x.findings.push({text: c.text, foundAt: c.foundAt})
-                }
-            } 
-
-            // blk
-            for (var b of blkFindings) {
-                if (x.ipRequested === b.ipRequested) {
-                    x.findings.push({text: b.text, foundAt: b.foundAt})
-                }
-            }
-
-            x.save()
+        } catch(e) {
+            console.log(e)
+        } finally {
+            await generalCtrl.setFree(3)
         }
-    } catch(e) {
-        console.log(e)
-    } finally {
-        await generalCtrl.setFree(3)
-    }
+    }, 500)
+
+    
 }
 
 
@@ -268,27 +290,56 @@ const searchForIpsController = async (batch) => {
             // var arr = addr.split('.')
             // if (arr[3] === '0')
             //     addr = address.ips[1]
-            var addr = address.ips[0]
+            var addr = undefined
+            if (address.ipv6)
+                addr = address.ipv6
+            else
+                addr = address.ips[0]
 
             providers.forEach(async provider => {
-                // already found response ?
-                let foundData = await findResponseSubnetWithSameSuspectAndProvider(address.subnet, address.provider, provider)
-                if (foundData) {
-                    // append IP addresses inside
-                    foundData.subList.push({ address: addr})
-                    await foundData.save()
-                } else {
+                // TODO - nefunguje zatial tento zoznam z
+                /*
+                1.1.1.1
+8.8.8.8
+6.6.6.6
+7.7.7.7
+7.7.7.8
+7.7.7.9
+7.7.7.10
+2001:0db8:85a3:0000:0000:8a2e:0370:7334
+7.7.7.1
+                */
+                // IPv6
+                if (address.ipv6) {
                     // get geolocation data
                     sendPromise(addr, provider)
                     .then(async res => {
                         logDebug(res)
-                        
-                            let extractedData = extractSubnetDataFromResponse(addr, address, res, provider)
+                        let extractedData = extractDataFromResponse(addr, res, provider)
+                        await extractedData.save()
+                    })
+                    .catch(err => logError(err))
+                // IPv4
+                } else {
+                    // already found response ?
+                    let foundData = await findResponseSubnetWithSameSuspectAndProvider(address.subnet, address.provider, provider)
     
+                    if (foundData) {
+                        // append IP addresses inside
+                        foundData.subList.push({ address: addr})
+                        await foundData.save()
+                    } else {
+                        // get geolocation data
+                        sendPromise(addr, provider)
+                        .then(async res => {
+                            logDebug(res)
+                            let extractedData = extractSubnetDataFromResponse(addr, address, res, provider)
                             await extractedData.save()
                         })
                         .catch(err => logError(err))
+                    }
                 }
+                
             })
         })
     } catch(e) {
@@ -307,7 +358,7 @@ const acceptRequestController = async (req, res) => {
     //logInfo('I will look onto it')
 
     // it's necessarry to clear \r\n, maybe on linux it will be only \n, will have to test
-    var addresses = req.body.ip_addresses_to_lookup.split("\r\n").filter(item => item)
+    var addresses = req.body.ip_addresses_to_lookup.split("\r\n").sort().filter(item => item)
 
     //logDebug(addresses)
     
@@ -316,34 +367,109 @@ const acceptRequestController = async (req, res) => {
         res.redirect(`${configuration.WWW_REQ_NEW}/?invalid=1`)
         return
     }
-    
+
     try {
-        // TODO
-        // haha
+        // remove ip addresses that were already geolocated
+        var willBeSet = await returnOnlyAddressesThatWereNotGeolocated(addresses)
 
+        if (willBeSet && willBeSet.length === 0) {
+            res.redirect(`${configuration.WWW_REQ_NEW}/?geolocated=1`)
+            return
+        }
+
+        /* NEW VERSION */
         
-        var providers = await getAllUsableProviders()
+        // vytvor list, ktory bude mat polia podla subnetov (ak nie je IPv6)
+        var list = []
+        var subnetObject = undefined
+        var activeSubnet = undefined
+        for (var x of willBeSet) {
+            var subnet = undefined
 
-        // for every address send
-        addresses.forEach(address => {
-            logDebug(providers)
-            providers.forEach(provider => {
-                sendPromise(address, provider) // this one is real
-                //sendFakePromise(address, provider)
-                    .then(async res => {
-                        logDebug(res)
+            // Ak IPv6 tak nemozeme to zistovat ten subnet
+            if (net.isIP(x) === 6) {
+                if (activeSubnet) 
+                    list.push(subnetObject)
 
-                        let extractedData = extractDataFromResponse(address, res, provider)
+                subnetObject = {'ipv6': x, 'provider': undefined}
+                list.push(subnetObject)
+                
+                activeSubnet = undefined
+                subnetObject = undefined
+                continue
+            // IPv4
+            } else {
+                subnet = getSubnetForIp(x, 24)
+            }
 
-                        await extractedData.save()
-                    })
-                    .catch(err => logError(err))
-            })
-        })
+            // add IP to subnet that exists
+            if (subnet === activeSubnet) {
+                subnetObject.ips.push(x)
+            // add current subnetObj and create new subnet and first IP
+            } else if (activeSubnet) {
+                list.push(subnetObject)
+
+                activeSubnet = subnet
+                subnetObject = {'subnet': activeSubnet, 'provider': undefined, 'ips': []}
+                subnetObject.ips.push(x)
+            // nothing exists yet
+            } else {
+                activeSubnet = subnet
+                subnetObject = {'subnet': activeSubnet, 'provider': undefined, 'ips': []}
+                subnetObject.ips.push(x)
+            }
+
+        }
+        // last iteration needs manual  addition
+        if (subnetObject !== undefined)
+            list.push(subnetObject)
+
+        // confirm all ok
+        console.log(list)
+
+        // Divide subnets by Geolocation LIMIT
+        var limit = await reqFile.setGeolocationLimit()
+        var limitedList = []
+        var activeList = []
+        for (var x of list) {
+            activeList.push(x)
+
+            if (activeList.length === limit) {
+                limitedList.push(activeList)
+                activeList = []
+            }
+        }
+        if (activeList.length > 0)
+            limitedList.push(activeList)
+
+        // check if well divided by max IP limit
+        console.log(limitedList)
+
+        reqFile.addNewSet(limitedList)
+
+        /* OLD VERSION */
+        // var providers = await getAllUsableProviders()
+
+        // // for every address send
+        // addresses.forEach(address => {
+        //     logDebug(providers)
+        //     providers.forEach(provider => {
+        //         sendPromise(address, provider) // this one is real
+        //         //sendFakePromise(address, provider)
+        //             .then(async res => {
+        //                 logDebug(res)
+
+        //                 let extractedData = extractDataFromResponse(address, res, provider)
+
+        //                 await extractedData.save()
+        //             })
+        //             .catch(err => logError(err))
+        //     })
+        // })
 
         // this needs to be done differently because sometimes there can be more requests and the time will not be enough
         setTimeout(function() {
-            res.redirect(`${configuration.WWW_REQ_HOME}`);
+            res.redirect(`${configuration.WWW_STATE}`);
         }, 500)
     } catch (e) {
         logError(e)
@@ -352,6 +478,7 @@ const acceptRequestController = async (req, res) => {
 
 
 // PRIVATE
+
 const findResponseSubnetWithSameSuspectAndProvider = async (subnet, suspect, provider) => {
     var responses = await responseData.find({}, {
         "success": 1,
@@ -370,8 +497,8 @@ const findResponseSubnetWithSameSuspectAndProvider = async (subnet, suspect, pro
         if (t1 === 0) 
             return false
 
-        var t2 = resp.subProvider.equals(suspect)
-        var t3 = resp.provider.equals(provider._id)
+        var t2 = resp.subProvider?.equals(suspect)
+        var t3 = resp.provider?.equals(provider._id)
         var t4 = resp.ipRequested === subnet
 
         if (t1 && t2 && t3 && t4)
@@ -382,6 +509,74 @@ const findResponseSubnetWithSameSuspectAndProvider = async (subnet, suspect, pro
         return foundData
     else
         return null
+}
+
+const returnOnlyAddressesThatWereNotGeolocated = async (list) => {
+    var responses = await responseData.find({}, {
+        "success": 1,
+        "ipRequested": 1,
+        "isSubnet": 1,
+        "subProvider": 1,
+        "subList": 1,
+        "provider": 1
+    })
+
+    if (!responses || responses.length === 0)
+        return list
+
+    let toDelete = []
+    for (var l of list) {
+        var ipv4 = true
+        if (net.isIPv4(l))
+            ipv4 = true
+        else
+            ipv4 = false
+
+        var subnet = undefined
+        if (ipv4)
+            subnet = getSubnetForIp(l, 24)
+        
+        var investigate = true
+
+        for (var r of responses) {
+            if (investigate === false)
+                break
+            
+            if (r.isSubnet === 1) {
+                // TODO
+                // is same subnet?
+                // if yes, check everyone inside subList
+                if (subnet === r.ipRequested) {
+                    for (var s of r.subList) {
+                        if (investigate === false)
+                            break
+
+                        if (s.address === l) {
+                            toDelete.push(l)
+                            investigate = false
+                        }
+                    }
+                }
+            } else {
+                if (r.ipRequested === l) {
+                    toDelete.push(l)
+                    investigate = false
+                }
+            }
+        }
+    }
+
+
+    var toRet = []
+    for (var l of list) {
+        if (toDelete.includes(l)) {
+
+        } else {
+            toRet.push(l)
+        }
+    }
+
+    return toRet
 }
 
 // - pre jednu IP adresu
@@ -487,7 +682,7 @@ function extractFromXML(extractedData, originalResponse, provider) {
 
 // For EVENTS
 /* for maps */
-const getJsonForMapRequests = async () => {
+const getJsonForMapRequests = async (cached) => {
     // we want same same provider data
     var providers = await getAllUsableProviders()
 
@@ -558,8 +753,6 @@ const getJsonForMapRequests = async () => {
         
     
         // put to fgTableValues
-        // TODO 
-        // 'len tak' treba nahradit realnym findingom
         retObj.fgTableValues.push([
             `${x.ipRequested}`,
             `${detailString}`,
@@ -574,7 +767,7 @@ const getJsonForMapRequests = async () => {
 }
 
 /* for graphs */
-const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
+const getJsonWithCountedOrigin = async (cached) => {
     // we want same country names, so same provider is a necessity
     var providers = await getAllUsableProviders()
 
@@ -630,7 +823,7 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
         }
         // TODO zvysok
     }
-    for (var x of cacheBlkResp) {
+    for (var x of cached.cachedBloklistResponses) {
         if (x.list[0].country) {
             for (var y of x.list) {
                 // vieme x.country
@@ -668,7 +861,7 @@ const getJsonWithCountedOrigin = async (cacheBlkProv, cacheBlkResp) => {
     return retObj
 }
 
-const getJsonWithCountedAs = async (cacheBlkProv, cacheBlkResp) => {
+const getJsonWithCountedAs = async (cached) => {
     // we want same AS names, so same provider is a necessity
     var providers = await getAllUsableProviders()
 
@@ -701,7 +894,7 @@ const getJsonWithCountedAs = async (cacheBlkProv, cacheBlkResp) => {
             uniqueValues.push({"name": x.as, "count": 0})
         }
     }
-    for (var x of cacheBlkResp) {
+    for (var x of cached.cachedBloklistResponses) {
         if (x.list[0].asnumber) {
             for (var y of x.list) {
                 var toFind = `AS${y.asnumber} `
@@ -721,8 +914,8 @@ const getJsonWithCountedAs = async (cacheBlkProv, cacheBlkResp) => {
     for (var x of uniqueResponses) {
         uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count++
     }
-    // pozvysovat pocty v cacheBlkResp a pripadne pridat rovno do pola ak neni
-    for (var x of cacheBlkResp) {
+    // pozvysovat pocty v cached.cachedBloklistResponses a pripadne pridat rovno do pola ak neni
+    for (var x of cached.cachedBloklistResponses) {
         if (x.list[0].asnumber) {
             for (var y of x.list) {
                 var toFind = `AS${y.asnumber} `

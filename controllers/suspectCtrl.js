@@ -161,12 +161,12 @@ const geolocateProvider = async (req, res) => {
     }
 
     // if checked already do nothing
-    // TODO uncomment
-    if (provider.total > 0 && provider.analyzed === provider.total) {
-        console.log(`The whole list "${provider.name}" was already analyzed.`)
-        res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
-        return
-    }
+    // TODO uncomment - but maybe not, because if someone deletes the list or sth after geolocating once we will not geolocate it again
+    // if (provider.total > 0 && provider.analyzed === provider.total) {
+    //     console.log(`The whole list "${provider.name}" was already analyzed.`)
+    //     res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
+    //     return
+    // }
 
     if (provider.total === 0) {
         console.log(`Nothing to analyze in this list "${provider.name}".`)
@@ -175,7 +175,7 @@ const geolocateProvider = async (req, res) => {
     }
 
     var ips = cached.getUniqueGeolocatedIps()
-    if (ips.length === 0) {
+    if (ips === null) {
         res.redirect(`${configuration.WWW_SUSPECT_HOME}`)
         return
     }
@@ -184,7 +184,7 @@ const geolocateProvider = async (req, res) => {
     var willBeSet = []
     provider.analyzed = 0
     for (var x of provider.ipList) {
-        if (ips.includes(x.ip)) {
+        if (ips.length > 0 && ips.includes(x.ip)) {
             x.checked = 1
             provider.analyzed++
         } else {
@@ -192,7 +192,7 @@ const geolocateProvider = async (req, res) => {
         }
     }
 
-    console.log(provider)
+    //console.log(provider)
 
     try {
         provider.save()
@@ -215,13 +215,29 @@ const geolocateProvider = async (req, res) => {
     // just in case, sort by asc ip address list
     // netreba, je
 
-    // vytvor list, ktory bude mat polia podla subnetov
+    // vytvor list, ktory bude mat polia podla subnetov (ak nie je IPv6)
     var list = []
     var subnetObject = undefined
     var activeSubnet = undefined
     for (var x of willBeSet) {
-        var subnet = getSubnetForIp(x, 24)
+        var subnet = undefined
         
+        // Ak IPv6 tak nemozeme to zistovat ten subnet
+        if (net.isIP(x) === 6) {
+            if (activeSubnet) 
+                list.push(subnetObject)
+
+            subnetObject = {'ipv6': x, 'provider': provider._id}
+            list.push(subnetObject)
+
+            activeSubnet = undefined
+            subnetObject = undefined
+            continue
+        // IPv4
+        } else {
+            subnet = getSubnetForIp(x, 24)
+        }
+            
         // add IP to subnet that exists
         if (subnet === activeSubnet) {
             subnetObject.ips.push(x)
@@ -238,20 +254,23 @@ const geolocateProvider = async (req, res) => {
             subnetObject = {'subnet': activeSubnet, 'provider': provider._id, 'ips': []}
             subnetObject.ips.push(x)
         }
+
     }
     // last iteration needs manual  addition
-    list.push(subnetObject)
+    if (subnetObject !== undefined)
+        list.push(subnetObject)
 
     // confirm all ok
     //console.log(list)
 
     // Divide subnets by Geolocation LIMIT
+    var limit = await reqFile.setGeolocationLimit()
     var limitedList = []
     var activeList = []
     for (var x of list) {
         activeList.push(x)
 
-        if (activeList.length === 2) {
+        if (activeList.length === limit) {
             limitedList.push(activeList)
             activeList = []
         }
@@ -545,7 +564,7 @@ const reportFindingsHere = async (arg) => {
         // ip adresa zo zoznamu
         for (var xIp of arg) {
             // porovnavat iba ak uz neni v retArr taka ip adresa ( pozor, moze byt vo viac zoznamoch preto reset processed - zaujima nas iba pre 1 list aby nebola duplikacia )
-            if (previousIp !== xIp.ipRequested) {
+            if (xIp.isSubnet === 0 && previousIp !== xIp.ipRequested) {
                 if (xList.ipList.some(e => e.ip === xIp.ipRequested)) {
                     previousIp = xIp.ipRequested
                     processed = {
@@ -555,6 +574,27 @@ const reportFindingsHere = async (arg) => {
                     }
 
                     retArr.push(processed)
+                }
+            } else {
+                // Ak to je subnet, prejst IP adresy vnutri subListu
+                var toLook = true
+                if (toLook && xIp.isSubnet === 1) {
+                    
+                    for (var s of xIp.subList) {
+                        if (previousIp !== s.address && xList.ipList.some(e => e.ip === s.address)) {
+                            previousIp = s.address
+                            processed = {
+                                ipRequested: s.address,
+                                text: `SUSPECT | ${listTags} | ${xList.slug} | ${xList.name}`,
+                                foundAt: Date.now()
+                            }
+        
+                            retArr.push(processed)
+
+                            toLook = false
+                            break
+                        }
+                    }
                 }
             }
 

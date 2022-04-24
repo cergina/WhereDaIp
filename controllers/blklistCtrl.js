@@ -8,7 +8,7 @@ const blklistProvider = require("../models/BlklistProvider")
 const blklistResponse = require("../models/ResponseBlklist")
 const { sendPromise } = require('../services/simpleCommunicator.js')
 const { logError } = require('../services/helper.js')
-const { getCachedBloklistProviders, getCachedBloklistResponses } = require('../services/cacheFile.js')
+const { getCachedBloklistProviders, getCachedBloklistResponses, getUniqueGeolocatedIps } = require('../services/cacheFile.js')
 const net = require('net')
 
 /* settings */
@@ -185,10 +185,10 @@ function renderList(req, res, provider) {
 
 /* */
 // For EVENTS
-const getJsonWithCountedOnline = async (cacheBlkProv, cacheBlkResp) => {
+const getJsonWithCountedOnline = async (cached) => {
     var ro = []
 
-    const providers = cacheBlkProv
+    const providers = cached.cachedBloklistProviders
     
     
     ro.push({"name": "online", "count": 0})
@@ -200,7 +200,7 @@ const getJsonWithCountedOnline = async (cacheBlkProv, cacheBlkResp) => {
     var countNA = 0
 
     for (var provider of providers) {
-        var tmpResp = cacheBlkResp.find(temp => provider._id.equals(temp.provider))
+        var tmpResp = cached.cachedBloklistResponses.find(temp => provider._id.equals(temp.provider))
 
         if (tmpResp?.list) {
             for (var stat of tmpResp.list) {
@@ -346,9 +346,9 @@ const reportFindingsHere = async (arg) => {
 }
 
 
-const getJsonWithCountedPorts = async (cacheBlkProv, cacheBlkResp) => {
+const getJsonWithCountedPorts = async (cached) => {
     // get all responses
-    var responses = cacheBlkResp
+    var responses = cached.cachedBloklistResponses
 
     var retArr = []
     const regexForPort = /:[0-9]+/g;
@@ -401,9 +401,9 @@ const getJsonWithCountedPorts = async (cacheBlkProv, cacheBlkResp) => {
     return retObj
 }
 
-const getJsonWithCountedSignatures = async (cacheBlkProv, cacheBlkResp) => {
+const getJsonWithCountedSignatures = async (cached) => {
     // get all responses
-    var responses = cacheBlkResp
+    var responses = cached.cachedBloklistResponses
 
     var retArr = []
     const regexForSignatures = /[^,]+/g;
@@ -450,9 +450,9 @@ const getJsonWithCountedSignatures = async (cacheBlkProv, cacheBlkResp) => {
     return retObj
 }
 
-const getJsonWithCountedDomainsAndHttp = async (cacheBlkProv, cacheBlkResp) => {
+const getJsonWithCountedDomainsAndHttp = async (cached) => {
     // get all responses
-    var responses = cacheBlkResp
+    var responses = cached.cachedBloklistResponses
 
     var retArr = []
     const regexForDomain = /^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i;
@@ -496,6 +496,14 @@ const getJsonWithCountedDomainsAndHttp = async (cacheBlkProv, cacheBlkResp) => {
                 httpsArr[0].count++
             }
         }
+    }
+    // prejst nalezy geolokalizovane
+    for (var g of cached.cachedUniqueGeolocatedIps) {
+        
+        if (g.type === 4)
+            doms[0].count++
+        else if (g.type === 6)
+            doms[1].count++
     }
 
     // sort based on domain occurence

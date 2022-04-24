@@ -18,29 +18,29 @@ var fileNameWriteCoveredAll = 'comparedCoveredAll.json'
 
 
 // public
-const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
+const onEventGenerateFiles = async (cached) => {
     var funcLog
     try {
         funcLog = fileNameWriteOnline
-        await generateCompOnline(cacheBlkProv, cacheBlkResp)
+        await generateCompOnline(cached)
     } catch (e) {helper.logError(`Error in compGen - ${funcLog} - occured during event ${e}`)}
     try {
         funcLog = fileNameWriteDomain
-        await generateCompDomainAndHttp(cacheBlkProv, cacheBlkResp)
+        await generateCompDomainAndHttp(cached)
     } catch (e) {helper.logError(`Error in compGen - ${funcLog} - occured during event ${e}`)}
     try {
         funcLog = fileNameWriteCovered
-        await generateCompCovered(cacheBlkProv, cacheBlkResp)
+        await generateCompCovered(cached)
     } catch (e) {helper.logError(`Error in compGen - ${funcLog} - occured during event ${e}`)}
 } 
 
 // private
-const generateCompOnline = async (cacheBlkProv, cacheBlkResp) => {
+const generateCompOnline = async (cached) => {
     // Init
     var fil = JSON.parse(JSON.stringify(fileBar))
     fil.nazov = 'compGen - comparedOnline'
 
-    const retObj = await getJsonWithCountedOnline(cacheBlkProv, cacheBlkResp)
+    const retObj = await getJsonWithCountedOnline(cached)
 
     // Chart.js
     var list = retObj.list
@@ -72,8 +72,8 @@ const generateCompOnline = async (cacheBlkProv, cacheBlkResp) => {
     // Generic
     saveChangesToFile(folderWrite, fileNameWriteOnline, fil)
 }
-const generateCompDomainAndHttp = async (cacheBlkProv, cacheBlkResp) => {
-    const retObj = await getJsonWithCountedDomainsAndHttp(cacheBlkProv, cacheBlkResp)
+const generateCompDomainAndHttp = async (cached) => {
+    const retObj = await getJsonWithCountedDomainsAndHttp(cached)
 
     // DOM comp
     var fil = JSON.parse(JSON.stringify(fileBar))
@@ -147,8 +147,8 @@ const generateCompDomainAndHttp = async (cacheBlkProv, cacheBlkResp) => {
     // Generic
     saveChangesToFile(folderWrite, fileNameWriteHttps, fil)
 }
-const generateCompCovered = async (cacheBlkProv, cacheBlkResp) => {
-    const retObj = await getJsonWithCountedCovered(cacheBlkProv, cacheBlkResp)
+const generateCompCovered = async (cached) => {
+    const retObj = await getJsonWithCountedCovered(cached)
 
     // DOM comp
     var fil = JSON.parse(JSON.stringify(fileBar))

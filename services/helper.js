@@ -94,12 +94,12 @@ function getLocalIp() {
 
 function getSubnetForIp(ipAddress, subnetMask) {
     if (!net.isIPv4(ipAddress)) {
-        LogError(`${ipAddress} is not a valid IPv4 address, therefore its mask wont be calculated.`)
+        logError(`${ipAddress} is not a valid IPv4 address, therefore its mask wont be calculated.`)
         return undefined
     }
 
     if (subnetMask < 0 || subnetMask > 32) {
-        LogError(`${subnetMask} is not a valid IPv4 mask in CIDR notation. Use 0 - 32.`)
+        logError(`${subnetMask} is not a valid IPv4 mask in CIDR notation. Use 0 - 32.`)
         return undefined
     }
     

@@ -33,8 +33,13 @@ const popOneBatch = async () => {
     return popped
 }
 
+const getLimitAndBatchCount = async () => {
+    return {batchesCount: setOfIp.length, currentLimit: currentGeolocationMin}
+}
+
 module.exports = {
     setGeolocationLimit,
     addNewSet,
-    popOneBatch   
+    popOneBatch,
+    getLimitAndBatchCount
 }

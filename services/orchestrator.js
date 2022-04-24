@@ -12,7 +12,7 @@ const mapGen = require('../controllers/maps/mapGen.js')
 const { onEventRun } = require('./workers/top.js')
 const { getState, setFree, setFreeAfterTime } = require('../controllers/generalCtrl.js')
 const { isCacheUsable, setCacheBloklistResponses, setCacheBloklistProviders, getCachedBloklistProviders, getCachedBloklistResponses, 
-    setCacheGeolocatedIps } = require('../services/cacheFile.js')
+    setCacheGeolocatedIps, getAllCache, calculateUniqueGeolocatedIps, setCacheUniqueGeolocatedIps } = require('../services/cacheFile.js')
 const reqFile = require('./requestsFile.js')
 const eventEmitter = new EventEmitter()
 
@@ -41,11 +41,19 @@ const setUp = () => {
     // }, configuration.TIMER_EVENT_TEST) 
 
     /* spracuj GEOLOCATION event */
+    reqFile.setGeolocationLimit()
+
     eventEmitter.on(configuration.EVENT_GEOLOCATION, async () => {
         // set max time block
-        if ((await generalCtrl.getState(2)).isBusy === 0) {
+        var actualState = await generalCtrl.getState(2)
+        var batchesLeft = await reqFile.getLimitAndBatchCount()
+        
+        if (actualState.isBusy === 0 && batchesLeft.batchesCount > 0) {
             await generalCtrl.setBusyFor(2, configuration.BLOCK_TIME_GEOLOCATION)
             await generalCtrl.simulateWorkAndThenSetIdle(2, configuration.BLOCK_TIME_GEOLOCATION)
+        } else if (actualState.isBusy === 0 && batchesLeft.batchesCount === 0) {
+            console.log("Event GEOLOCATION NOT raised. Nothing to do.")
+            return 
         } else {
             console.log("Event GEOLOCATION NOT raised. Consider increasing period for source caching.")
             return 
@@ -94,10 +102,14 @@ const setUp = () => {
             var resps = await blklistResponse.find({})
             var provs = await blklistProvider.find({})
             var ips = await ipsCtrl.getAllGeolocatedIps()
-
+            
             setCacheBloklistResponses(resps)
             setCacheBloklistProviders(provs)
             setCacheGeolocatedIps(ips)
+            
+            var uips = await calculateUniqueGeolocatedIps()
+            setCacheUniqueGeolocatedIps(uips)
+            
         } catch (e) {
             helper.logError(`Error: ${e}`)
         } finally {
@@ -124,10 +136,10 @@ const setUp = () => {
         
         try {
             if (isCacheUsable()) {
-                var tmp1 = getCachedBloklistProviders()
-                var tmp2 = getCachedBloklistResponses()
-                await compGen.onEventGenerateFiles(tmp1, tmp2);
-                await topGen.onEventGenerateFiles(tmp1, tmp2);
+                var cached = getAllCache()
+
+                await compGen.onEventGenerateFiles(cached);
+                await topGen.onEventGenerateFiles(cached);
             } else {
                 console.log("Data for compGen and topGen not ready yet")
             }
@@ -155,9 +167,8 @@ const setUp = () => {
 
         try {
             if (isCacheUsable()) {
-                var tmp1 = getCachedBloklistProviders()
-                var tmp2 = getCachedBloklistResponses()
-                await mapGen.onEventGenerateFiles(tmp1, tmp2);
+                var cached = getAllCache()
+                await mapGen.onEventGenerateFiles(cached);
             } else {
                 console.log("Data for mapGen not ready yet")
             }

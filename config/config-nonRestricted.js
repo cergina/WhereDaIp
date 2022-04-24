@@ -53,6 +53,7 @@ configuration.DEBUG = true          // Enable DEBUG level msg logging
 
 // Site tree used for navigation URLs
 configuration.WWW_ROOT = "/"
+configuration.WWW_STATE = "/state"
 configuration.WWW_GEODB_HOME = "/providers"
 configuration.WWW_GEODB_NEW = "/providers/new"
 configuration.WWW_COVER_HOME = "/covert"

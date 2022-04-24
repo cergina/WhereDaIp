@@ -19,7 +19,7 @@ const { getLocationByCode, getGeolocCodeArrayCountsZero } = require('../../servi
 const { getJsonForMapRequests } = require('../../controllers/ipsCtrl')
 
 // public
-const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
+const onEventGenerateFiles = async (cached) => {
     var funcLog
     try {
         funcLog = fileNameWriteTest
@@ -27,11 +27,11 @@ const onEventGenerateFiles = async (cacheBlkProv, cacheBlkResp) => {
     } catch (e) {helper.logError(`Error in mapGen - ${funcLog} - occured during event ${e}`)}
     try {
         funcLog = fileNameWriteRequests
-        await generateMapRequests()
+        await generateMapRequests(cached)
     } catch (e) {helper.logError(`Error in mapGen - ${funcLog} - occured during event ${e}`)}
     try {
         funcLog = fileNameWriteQakbot
-        await generateMapForBotnets(cacheBlkProv, cacheBlkResp)
+        await generateMapForBotnets(cached)
     } catch (e) {helper.logError(`Error in mapGen - ${funcLog} - occured during event ${e}`)}
     // TODO dalsie
 }
@@ -45,12 +45,12 @@ const generateMapTest = async () => {
     // Generic
     saveChangesToFile(folderWrite, fileNameWriteTest, fil)
 }
-const generateMapRequests = async () => {
+const generateMapRequests = async (cached) => {
     var fil = JSON.parse(JSON.stringify(fileBase))
     fil.nazov = 'mapGen - generateMapRequests'
     
     /* UNDER WORK START */ 
-    var retObj = await getJsonForMapRequests()
+    var retObj = await getJsonForMapRequests(cached)
 
     fil.points = retObj.points
     fil.forGridJs.tableNames = retObj.fgTableNames
@@ -61,9 +61,9 @@ const generateMapRequests = async () => {
     // Generic
     saveChangesToFile(folderWrite, fileNameWriteRequests, fil)
 }
-const generateMapForBotnets = async (cacheBlkProv, cacheBlkResp) => {
+const generateMapForBotnets = async (cached) => {
     var places = []
-    for (var x of cacheBlkProv) {
+    for (var x of cached.cachedBloklistProviders) {
         if (x.response.country && x.response.tags)
             places.push(x._id)
     }
@@ -75,7 +75,7 @@ const generateMapForBotnets = async (cacheBlkProv, cacheBlkResp) => {
         qakbot: getGeolocCodeArrayCountsZero(),
         trickbot: getGeolocCodeArrayCountsZero()
     } 
-    for (var x of cacheBlkResp) {
+    for (var x of cached.cachedBloklistResponses) {
         if (places.find(el => el.equals(x.provider))) {
             // pozriet odpoved x ideme
             // x.list[0].country

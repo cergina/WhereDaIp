@@ -27,29 +27,174 @@
     },
     "points": [
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>104.20.22.0<br></span>",
-            "lat": "37.7803",
-            "lon": "-122.39"
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>1.1.1.0<br>\n<br>1. SUSPECT  \"asd\"  tags:   dfhfcvh, test </span>",
+            "lat": "-27.4766",
+            "lon": "153.0166"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>108.62.56.0<br>\n<br>1. SUSPECT  \"Mail attacks IPs\"  tags:   mail, postfix \n<br>2. SUSPECT  \"Testovaci zoznam\"  tags:   botnet, spam </span>",
-            "lat": "47.6062",
-            "lon": "-122.332"
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>104.244.77.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "49.7866",
+            "lon": "6.0753"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>116.179.32.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "39.9204",
+            "lon": "116.358"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>116.179.37.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "39.9204",
+            "lon": "116.358"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>147.175.250.133<br>\n<br>1. SUSPECT  \"asd\"  tags:   dfhfcvh, test </span>",
+            "lat": "48.1514",
+            "lon": "17.1128"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>157.90.181.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "50.475",
+            "lon": "12.365"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>157.90.209.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "50.475",
+            "lon": "12.365"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>163.172.105.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "48.8714",
+            "lon": "2.32141"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>167.86.70.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "49.405",
+            "lon": "11.1617"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>173.212.246.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "49.405",
+            "lon": "11.1617"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>174.250.32.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "32.7766",
+            "lon": "-79.9309"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>175.27.161.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "22.5431",
+            "lon": "114.058"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>178.159.37.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "50.458",
+            "lon": "30.5303"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>18.206.170.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "39.0438",
+            "lon": "-77.4874"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>183.136.225.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "39.9042",
+            "lon": "116.407"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>188.165.217.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "50.6917",
+            "lon": "3.20157"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>192.169.139.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "33.6173",
+            "lon": "-111.905"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>192.241.211.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "37.7308",
+            "lon": "-122.3838"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>192.241.213.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "37.7308",
+            "lon": "-122.3838"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>23.88.77.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "49.1156",
+            "lon": "10.7511"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>2803:9800:98c1:8544:5ddb:4b39:9caa:2d9<br></span>",
+            "lat": "-32.954",
+            "lon": "-60.6634"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>34.207.145.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "39.0438",
+            "lon": "-77.4874"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>45.142.122.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "45.0452",
+            "lon": "38.9722"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>46.161.11.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "59.8761",
+            "lon": "30.4339"
         },
         {
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>46.34.240.96<br></span>",
-            "lat": "48.1833",
-            "lon": "17.0379"
+            "lat": "48.0835",
+            "lon": "17.2607"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>62.197.243.225<br>\n<br>1. SUSPECT  \"Test list\"  tags:   test </span>",
-            "lat": "48.3762",
-            "lon": "17.5829"
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>5.164.208.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "56.334",
+            "lon": "44.0026"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>8.8.8.8<br>\n<br>1. SUSPECT  \"Test list\"  tags:   test </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>5.165.248.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "47.2363",
+            "lon": "39.7233"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>6.6.6.0<br></span>",
+            "lat": "39.0161",
+            "lon": "-77.4594"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>62.197.243.225<br></span>",
+            "lat": "48.3132",
+            "lon": "18.0512"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>66.249.64.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "37.422",
+            "lon": "-122.084"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>7.7.7.0<br></span>",
+            "lat": "39.0161",
+            "lon": "-77.4594"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>8.8.8.8<br>\n<br>1. SUSPECT  \"asd\"  tags:   dfhfcvh, test \n<br>2. SUSPECT  \"test list\"  tags:   test </span>",
             "lat": "39.03",
             "lon": "-77.5"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>88.130.134.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "50.1109",
+            "lon": "8.68213"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>91.211.88.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "lat": "48.4647",
+            "lon": "35.2119"
         }
     ],
     "forGridJs": {
@@ -62,42 +207,245 @@
         ],
         "tableValues": [
             [
-                "104.20.22.0",
-                "",
+                "1.1.1.0",
+                "\n\r1. SUSPECT  \"asd\"  tags:   dfhfcvh, test ",
                 "AS13335 Cloudflare, Inc.",
+                "South Brisbane",
+                "Australia"
+            ],
+            [
+                "104.244.77.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS53667 FranTech Solutions",
+                "Roost",
+                "Luxembourg"
+            ],
+            [
+                "116.179.32.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS4837 CHINA UNICOM China169 Backbone",
+                "Xicheng District",
+                "China"
+            ],
+            [
+                "116.179.37.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS4837 CHINA UNICOM China169 Backbone",
+                "Xicheng District",
+                "China"
+            ],
+            [
+                "147.175.250.133",
+                "\n\r1. SUSPECT  \"asd\"  tags:   dfhfcvh, test ",
+                "AS2607 Zdruzenie pouzivatelov Slovenskej akademickej datovej siete",
+                "Bratislava",
+                "Slovakia"
+            ],
+            [
+                "157.90.181.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS24940 Hetzner Online GmbH",
+                "Falkenstein",
+                "Germany"
+            ],
+            [
+                "157.90.209.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS24940 Hetzner Online GmbH",
+                "Falkenstein",
+                "Germany"
+            ],
+            [
+                "163.172.105.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS12876 ONLINE S.A.S.",
+                "Paris",
+                "France"
+            ],
+            [
+                "167.86.70.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS51167 Contabo GmbH",
+                "Nuremberg",
+                "Germany"
+            ],
+            [
+                "173.212.246.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS51167 Contabo GmbH",
+                "Nuremberg",
+                "Germany"
+            ],
+            [
+                "174.250.32.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS6167 Verizon Business",
+                "Charleston",
+                "United States"
+            ],
+            [
+                "175.27.161.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS45090 Shenzhen Tencent Computer Systems Company Limited",
+                "Shenzhen",
+                "China"
+            ],
+            [
+                "178.159.37.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS206791 Slobozhenyuk B.Y. PE",
+                "Kyiv",
+                "Ukraine"
+            ],
+            [
+                "18.206.170.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS14618 Amazon.com, Inc.",
+                "Ashburn",
+                "United States"
+            ],
+            [
+                "183.136.225.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS58461 CT-HangZhou-IDC",
+                "Beijing",
+                "China"
+            ],
+            [
+                "188.165.217.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS16276 OVH SAS",
+                "Roubaix",
+                "France"
+            ],
+            [
+                "192.169.139.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS398101 GoDaddy.com, LLC",
+                "Scottsdale",
+                "United States"
+            ],
+            [
+                "192.241.211.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS14061 DigitalOcean, LLC",
                 "San Francisco",
                 "United States"
             ],
             [
-                "108.62.56.0",
-                "\n\r1. SUSPECT  \"Mail attacks IPs\"  tags:   mail, postfix \n\r2. SUSPECT  \"Testovaci zoznam\"  tags:   botnet, spam ",
-                "AS396190 Leaseweb USA, Inc.",
-                "Seattle",
+                "192.241.213.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS14061 DigitalOcean, LLC",
+                "San Francisco",
                 "United States"
+            ],
+            [
+                "23.88.77.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS24940 Hetzner Online GmbH",
+                "Gunzenhausen",
+                "Germany"
+            ],
+            [
+                "2803:9800:98c1:8544:5ddb:4b39:9caa:2d9",
+                "",
+                "AS11664 Techtel LMDS Comunicaciones Interactivas S.A.",
+                "Rosario",
+                "Argentina"
+            ],
+            [
+                "34.207.145.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS14618 Amazon.com, Inc.",
+                "Ashburn",
+                "United States"
+            ],
+            [
+                "45.142.122.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS210644 AEZA GROUP Ltd",
+                "Krasnodar",
+                "Russia"
+            ],
+            [
+                "46.161.11.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS34665 Petersburg Internet Network ltd.",
+                "St Petersburg",
+                "Russia"
             ],
             [
                 "46.34.240.96",
                 "",
                 "AS28952 O2 Business Services, a.s",
-                "Bratislava",
+                "Dunajska Luzna",
                 "Slovakia"
+            ],
+            [
+                "5.164.208.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS42682 JSC ER-Telecom Holding",
+                "Nizhniy Novgorod",
+                "Russia"
+            ],
+            [
+                "5.165.248.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS57378 JSC ER-Telecom Holding",
+                "Rostov-on-Don",
+                "Russia"
+            ],
+            [
+                "6.6.6.0",
+                "",
+                "AS3269 Telecom Italia S.p.A.",
+                "Ashburn",
+                "United States"
             ],
             [
                 "62.197.243.225",
-                "\n\r1. SUSPECT  \"Test list\"  tags:   test ",
+                "",
                 "AS5578 SWAN, a.s.",
-                "Trnava",
+                "Nitra",
                 "Slovakia"
             ],
             [
+                "66.249.64.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS15169 Google LLC",
+                "Mountain View",
+                "United States"
+            ],
+            [
+                "7.7.7.0",
+                "",
+                "AS749 DoD Network Information Center",
+                "Ashburn",
+                "United States"
+            ],
+            [
                 "8.8.8.8",
-                "\n\r1. SUSPECT  \"Test list\"  tags:   test ",
+                "\n\r1. SUSPECT  \"asd\"  tags:   dfhfcvh, test \n\r2. SUSPECT  \"test list\"  tags:   test ",
                 "AS15169 Google LLC",
                 "Ashburn",
                 "United States"
+            ],
+            [
+                "88.130.134.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS8881 1&1 Versatel Deutschland GmbH",
+                "Frankfurt am Main",
+                "Germany"
+            ],
+            [
+                "91.211.88.0",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "AS206638 PE Brezhnev Daniil",
+                "Dnipro",
+                "Ukraine"
             ]
         ]
     },
     "nazov": "mapGen - generateMapRequests",
-    "time": "2022-04-22 12:09:23"
+    "time": "2022-04-25 01:58:10"
 }

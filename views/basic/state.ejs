@@ -29,11 +29,7 @@
                 Unknown whether present GeoAPIs cover necessary fields
             </p>
         </div>
-        <div class="bd-callout bd-callout-warning">
-            <p>
-                Probably ready, but at risk of overfilling max requests 
-            </p>
-        </div>
+        
 
         <!-- to-do list -->
         <a href="#" data-toggle="modal" data-target="#todoModalCenter" class="btn btn-lg btn-warning btn-block mb-4">TODO List</a>
@@ -64,16 +60,16 @@
 
         <!-- geolokacia -->
         <div class="float-right"><span class="badge badge-primary badge-pill"><%= state.geoloc.isBusy == 1 ? 'BUSY' : 'IDLE' %> </span></div>
-        <h5 class="display-5 mt-4 mb-2">Geolocation</h5>
+        <h5 class="display-5">Geolocation</h5>
         <!-- datumy -->
         <div class="form-group">
-            <!-- ci je aktivny -->
+            <!-- ci je aktivny --> 
             <div class="row">
                 <div class="col-md-6">
-                    <label>Date started (shows last one)</label>
+                    <label>Date started (most recent batch)</label>
                 </div>
                 <div class="col-md-6">
-                    <label>Date ended (or expected)</label>
+                    <label>Date of next possible batch geolocation</label>
                 </div>
             </div>
             <div class="row">
@@ -85,10 +81,26 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="bd-callout bd-callout-info">
+                    <p>
+                        Number of batches to be processed: <%= state.geoloc.batchesCount %> 
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="bd-callout bd-callout-warning">
+                    <p>
+                        Current limit of IPs in batch per minute: <%= state.geoloc.currentLimit %>
+                    </p>
+                </div>
+            </div>
+        </div>
         
         <!-- grafy -->
         <div class="float-right"><span class="badge badge-primary badge-pill"><%= state.geoloc.isBusy == 1 ? 'BUSY' : 'IDLE' %> </span></div>
-        <h5 class="display-5 mt-4 mb-2">Graphs file generation</h5>
+        <h5 class="display-5 mt-2 mb-2">Graphs file generation</h5>
         <!-- datumy -->
         <div class="form-group">
             <!-- ci je aktivny -->
