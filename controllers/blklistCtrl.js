@@ -290,41 +290,46 @@ function saveAndRedirect(viewName) {
 const reportFindingsHere = async (arg) => {
     // get this only once
     var lists = getCachedBloklistProviders()
-    var responses = getCachedBloklistResponses()
+    var blkResponses = getCachedBloklistResponses()
 
     var retArr = []
 
     // zoznam odpovedi
-    for (var xResp of responses) {
+    for (var xBlkResp of blkResponses) {
         var processed = null
         var previousIp = null
 
         // ip adresa zo zoznamu
         for (var xIp of arg) {
+
             // porovnat iba ak uz neni v retArr ta ista IP
-            if (previousIp !== xIp.ipRequested) {
+            if (xIp.isSubnet === 0 && previousIp !== xIp.ipRequested) {
                 // ci obsiahnuta v zozname a vratit ktora to je
                 
-                var found = xResp.list.filter(e => {
+                var found = xBlkResp.list.filter(e => {
                     // if (e.url === 'http://41.78.172.77:42550/Mozi.m' && xIp.ipRequested === '41.78.172.77')
                     //     console.log('som tu')
                     
                     // if (e.url === 'http://110.85.99.215:43230/Mozi.a' && xIp.ipRequested === '110.85.99.215')
                     //     console.log('som tu 2')
 
-                    if (e.url)
+                    var retVal = false
+                    if (e.ip)
+                        retVal = e.ip === xIp.ipRequested
+                    
+                    if (retVal === false && e.url)
                         return e.url.includes(xIp.ipRequested)
                     else
-                        return false
+                        return retVal
                 })
 
                 if (found.length > 0) {
 
                     var tempName  = lists.find(l => {
                         //console.log(l)
-                        //console.log(xResp)
+                        //console.log(xBlkResp)
 
-                        if (l._id.id.equals(xResp.provider.id))
+                        if (l._id.id.equals(xBlkResp.provider.id))
                             return l
                     })
 
@@ -332,11 +337,54 @@ const reportFindingsHere = async (arg) => {
                     processed = {
                         foundAt: Date.now(),
                         ipRequested: xIp.ipRequested,
-                        //text: `BLKLIST | ${xResp.tags} | ${tempName.slug} | ${tempName.name}`
+                        //text: `BLKLIST | ${xBlkResp.tags} | ${tempName.slug} | ${tempName.name}`
                         text: `BLKLIST | ${found[0].tags} | ${tempName.slug} | ${tempName.name}`
                     }
 
                     retArr.push(processed)
+                }
+            // CAN BE SUBNET
+            } else {
+                // scanning xIp whether its in xBlkResp
+                var toLook = true
+
+                if (toLook && xIp.isSubnet === 1) {
+                    for (var s of xIp.subList) {
+                        
+
+                        var found = xBlkResp.list.filter(e => {
+        
+                            var retVal = false
+                            if (e.ip)
+                                retVal = e.ip === s.address
+                            
+                            if (retVal === false && e.url)
+                                return e.url.includes(s.address)
+                            else
+                                return retVal
+                        })
+        
+                        if (found.length > 0) {
+        
+                            var tempName  = lists.find(l => {
+                                if (l._id.id.equals(xBlkResp.provider.id))
+                                    return l
+                            })
+        
+                            previousIp = s.address
+                            processed = {
+                                foundAt: Date.now(),
+                                ipRequested: s.address,
+                                text: `BLKLIST | ${found[0].tags} | ${tempName.slug} | ${tempName.name}`
+                            }
+        
+                            retArr.push(processed)
+                        }
+
+
+
+
+                    }
                 }
             }
         }

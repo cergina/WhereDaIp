@@ -87,6 +87,11 @@
             "lon": "114.058"
         },
         {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>178.128.83.0<br></span>",
+            "lat": "1.32123",
+            "lon": "103.695"
+        },
+        {
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>178.159.37.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
             "lat": "50.458",
             "lon": "30.5303"
@@ -100,6 +105,11 @@
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>183.136.225.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
             "lat": "39.9042",
             "lon": "116.407"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>186.32.75.0<br></span>",
+            "lat": "13.7066",
+            "lon": "-89.2053"
         },
         {
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>188.165.217.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
@@ -120,6 +130,11 @@
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>192.241.213.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
             "lat": "37.7308",
             "lon": "-122.3838"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>216.10.251.0<br></span>",
+            "lat": "19.1146",
+            "lon": "72.8956"
         },
         {
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>23.88.77.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
@@ -291,6 +306,13 @@
                 "China"
             ],
             [
+                "178.128.83.0",
+                "",
+                "AS14061 DigitalOcean, LLC",
+                "Singapore",
+                "Singapore"
+            ],
+            [
                 "178.159.37.0",
                 "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
                 "AS206791 Slobozhenyuk B.Y. PE",
@@ -310,6 +332,13 @@
                 "AS58461 CT-HangZhou-IDC",
                 "Beijing",
                 "China"
+            ],
+            [
+                "186.32.75.0",
+                "",
+                "AS27773 MILLICOM CABLE EL SALVADOR S.A. DE C.V.",
+                "San Salvador",
+                "El Salvador"
             ],
             [
                 "188.165.217.0",
@@ -338,6 +367,13 @@
                 "AS14061 DigitalOcean, LLC",
                 "San Francisco",
                 "United States"
+            ],
+            [
+                "216.10.251.0",
+                "",
+                "AS394695 PDR",
+                "Mumbai",
+                "India"
             ],
             [
                 "23.88.77.0",
@@ -447,5 +483,5 @@
         ]
     },
     "nazov": "mapGen - generateMapRequests",
-    "time": "2022-04-25 01:58:10"
+    "time": "2022-04-25 22:05:34"
 }

@@ -139,6 +139,10 @@ const analyseIps = async (req, res) => {
     res.redirect('/state')
 
     setTimeout(async function() {
+        // we want same same provider data
+        var providers = await getAllUsableProviders()
+        var useIndex = 0
+
         // let's analyze
         var responses = await responseData.find({}, {
             "success": 1,
@@ -147,14 +151,24 @@ const analyseIps = async (req, res) => {
             "findings": 1,
             "isSubnet": 1,
             "subList": 1,
-            "subProvider": 1,
+            "subProvider": 1
         }).sort({ ipRequested: 'asc'})
+        var oneProviderResponses = await responseData.find({ provider : providers[useIndex]._id}, {
+            "success": 1,
+            "ipRequested": 1,
+            "addedAt": 1,
+            "findings": 1,
+            "isSubnet": 1,
+            "subList": 1,
+            "subProvider": 1,
+            "provider": 1
+        }).sort({ipRequested: 'asc'})
 
 
         /* TODO - podobne ako je sus */
-        var covFindings = await covertCtrl.reportFindingsHere(responses)
-        var blkFindings = await blklistCtrl.reportFindingsHere(responses)
-        var susFindings = await suspectCtrl.reportFindingsHere(responses)
+        var covFindings = await covertCtrl.reportFindingsHere(oneProviderResponses)
+        var blkFindings = await blklistCtrl.reportFindingsHere(oneProviderResponses)
+        var susFindings = await suspectCtrl.reportFindingsHere(oneProviderResponses)
 
         /* mame findingy. teraz ich treba priradit ku kazdemu response.findings arrayu */
         try {
@@ -190,9 +204,26 @@ const analyseIps = async (req, res) => {
 
                 /* TODO - podobne ako je sus */
                 // blk
+                // for (var b of blkFindings) {
+                //     if (x.ipRequested === b.ipRequested) {
+                //         x.findings.push({text: b.text, foundAt: b.foundAt})
+                //     }
+                // }
+                subnetEntered = undefined
                 for (var b of blkFindings) {
-                    if (x.ipRequested === b.ipRequested) {
+
+                    if (x.isSubnet === 0 && x.ipRequested === b.ipRequested) {
                         x.findings.push({text: b.text, foundAt: b.foundAt})
+                    } else if (x.isSubnet === 1) {
+                        for (var w of x.subList) {
+                            var wsub = getSubnetForIp(w.address, 24)
+
+                            if (subnetEntered !== wsub && w.address ===  b.ipRequested) {
+                                x.findings.push({text: b.text, foundAt: b.foundAt})
+                                subnetEntered = getSubnetForIp(b.ipRequested, 24)
+                                break
+                            }
+                        }
                     }
                 }
 

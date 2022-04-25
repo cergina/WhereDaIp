@@ -581,6 +581,7 @@ const reportFindingsHere = async (arg) => {
                 if (toLook && xIp.isSubnet === 1) {
                     
                     for (var s of xIp.subList) {
+
                         if (previousIp !== s.address && xList.ipList.some(e => e.ip === s.address)) {
                             previousIp = s.address
                             processed = {
@@ -594,6 +595,7 @@ const reportFindingsHere = async (arg) => {
                             toLook = false
                             break
                         }
+                        
                     }
                 }
             }

@@ -16,7 +16,7 @@
                     47,
                     42,
                     40,
-                    34
+                    35
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -81,7 +81,7 @@
             [
                 5,
                 "India",
-                34
+                35
             ],
             [
                 6,
@@ -96,7 +96,7 @@
             [
                 8,
                 "Singapore",
-                22
+                23
             ],
             [
                 9,
@@ -355,40 +355,45 @@
             ],
             [
                 60,
-                "Dominican Republic",
+                "El Salvador",
                 1
             ],
             [
                 61,
-                "Cyprus",
+                "Dominican Republic",
                 1
             ],
             [
                 62,
-                "Cameroon",
+                "Cyprus",
                 1
             ],
             [
                 63,
-                "Bosnia and Herzegovina",
+                "Cameroon",
                 1
             ],
             [
                 64,
-                "Bolivia",
+                "Bosnia and Herzegovina",
                 1
             ],
             [
                 65,
-                "Belgium",
+                "Bolivia",
                 1
             ],
             [
                 66,
+                "Belgium",
+                1
+            ],
+            [
+                67,
                 "Austria",
                 1
             ]
         ]
     },
-    "time": "2022-04-25 01:57:41"
+    "time": "2022-04-25 22:07:36"
 }
