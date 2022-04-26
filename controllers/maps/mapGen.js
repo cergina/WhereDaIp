@@ -14,9 +14,14 @@ var fileNameWriteDridex = 'mapDridex.json'
 var fileNameWriteEmotet = 'mapEmotet.json'
 var fileNameWriteQakbot = 'mapQakbot.json'
 var fileNameWriteTrickbot = 'mapTrickbot.json'
+var fileNameWriteTopSignatures = 'mapTopSignatures.json'
+var fileNameWriteSusTags = 'mapTopSusTags.json'
+var fileNameWriteHideouts = 'mapTopHideouts.json'
 
 const { getLocationByCode, getGeolocCodeArrayCountsZero } = require('../../services/countries.js')
 const { getJsonForMapRequests } = require('../../controllers/ipsCtrl')
+
+const graphCache = require('../../services/graphOutputCache.js')
 
 // public
 const onEventGenerateFiles = async (cached) => {
@@ -33,6 +38,18 @@ const onEventGenerateFiles = async (cached) => {
         funcLog = fileNameWriteQakbot
         await generateMapForBotnets(cached)
     } catch (e) {helper.logError(`Error in mapGen - ${funcLog} - occured during event ${e}`)}
+    try {
+        funcLog = fileNameWriteHideouts
+        await generateMapForHideouts(cached)
+    } catch (e) {helper.logError(`Error in mapGen - ${funcLog} - occured during event ${e}`)}
+    try {
+        funcLog = fileNameWriteSusTags
+        await generateMapForSusTags(cached)
+    } catch (e) {helper.logError(`Error in mapGen - ${funcLog} - occured during event ${e}`)}
+    // try {
+    //     funcLog = fileNameWriteTopSignatures
+    //     await generateMapForTopSignatures(cached)
+    // } catch (e) {helper.logError(`Error in mapGen - ${funcLog} - occured during event ${e}`)}
     // TODO dalsie
 }
 
@@ -67,7 +84,7 @@ const generateMapForBotnets = async (cached) => {
         if (x.response.country && x.response.tags)
             places.push(x._id)
     }
-
+    
 
     var arrays = {
         emotet: getGeolocCodeArrayCountsZero(),
@@ -83,7 +100,7 @@ const generateMapForBotnets = async (cached) => {
 
             for (var y of x.list) {
 
-                var kt = getLocationByCode(y.country)
+                //var kt = getLocationByCode(y.country)
                 //console.log(kt)
 
                 if (y.tags.toUpperCase().includes('EMOTET')) {
@@ -120,6 +137,82 @@ const generateMapForBotnets = async (cached) => {
     // TRICKBOT
     botnetFileProcessAndSave(fileBase, fileNameWriteTrickbot, 'TrickBot', arrays.trickbot)
 }
+
+const generateMapForHideouts = async (cached) => {
+    var hids = graphCache.getTopHideouts()
+
+    var noOfFiles = hids.length
+
+    for (let i=0; i< noOfFiles; i++) {
+        hids[i].occurences = getGeolocCodeArrayCountsZero()
+    }
+
+    if (noOfFiles === 0) {
+        console.log(`Wait for one more iteration. generateMapForHideouts has noOfFiles === 0`)
+        return
+    }
+    console.log(hids)
+
+    // najdi krajiny pre kazdy top hideout
+    
+
+    console.log(hids)
+}
+const generateMapForSusTags = async (cached) => {
+    var hids = graphCache.getTopSusTags()
+
+    var noOfFiles = hids.length
+
+    for (let i=0; i< noOfFiles; i++) {
+        hids[i].occurences = getGeolocCodeArrayCountsZero()
+    }
+
+    if (noOfFiles === 0) {
+        console.log(`Wait for one more iteration. generateMapForSusTags has noOfFiles === 0`)
+        return
+    }
+
+    console.log(hids)
+
+    // as
+    
+
+    console.log(hids)
+}
+
+/* GOOD but not every blocklist has country without prior geolocation so this would only work 
+as another botnet file generator, rather make top tags from suspicious lists and look in 
+geolocated files */
+// const generateMapForTopSignatures = async (cached) => {
+//     // ziskaj top tagy z topSignatures z grafov
+//     // prejdi vsetky blocklisty a najdi v nich includes ten tag, ak je... zvys occurence
+//     var sigs = graphCache.getTopSignatures()
+
+//     var noOfFiles = sigs.length
+
+//     for (let i=0; i< noOfFiles; i++) {
+//         sigs[i].occurences = getGeolocCodeArrayCountsZero()
+//     }
+
+//     console.log(sigs)
+
+//     // najdi krajiny pre kazdy top signature
+//     for (var x of cached.cachedBloklistResponses) {
+//         for (var y of x.list) {
+
+//             var kt = getLocationByCode(y.country)
+
+//             // pre vsetky z top tagov najdi krajinu a zvys
+//             for (let i = 0; i <noOfFiles; i++) {
+//                 if (y.tags.toUpperCase().includes(sigs[i].name.toUpperCase())) {
+//                     sigs[i].occurences[sigs[i].occurences.findIndex(el => el.code === y.country)].count++
+//                 }
+//             }
+//         }
+//     }
+
+//     console.log(sigs)
+// }
 
 function botnetFileProcessAndSave(baseFile, argFileWriteName, argName, argArr) {
     var fil = JSON.parse(JSON.stringify(baseFile))

@@ -13,6 +13,7 @@ const { logDebug, logError, yyyymmdd, getSubnetForIp } = require('../services/he
 const { sendPromise, sendFakePromise } = require('../services/apiCommunicator.js')
 const locationProvider = require('../models/locationProvider.js')
 const {isCacheUsable} = require('../services/cacheFile.js')
+const graphCache = require('../services/graphOutputCache.js')
 const reqFile = require('../services/requestsFile.js')
 const { getCountryNameByCode, getCountryArrayCountsZero } = require('../services/countries.js')
 
@@ -751,11 +752,10 @@ const getJsonForMapRequests = async (cached) => {
         "as": 1,
         "findings": 1,
         "latitude": 1,
-        "longitude": 1
+        "longitude": 1,
+        "isSubnet": 1,
+        "subList": 1
     }).sort({ ipRequested: 'asc'})
-
-    // TODO maybe sa stane, ze [0] nebude mat to as a preto by sa malo kontrolovat 
-    // ci ma a zvolit takeho providera radsej
 
     // prejst pole a nechat len take kde je ip adresa raz
     var uniqueResponses = []
@@ -782,6 +782,7 @@ const getJsonForMapRequests = async (cached) => {
         // put to points
         var detailStringHtml = ''
         var detailString = ''
+        var additionalDetail = x.isSubnet === 1 ? `/24 (${x.subList.length} IP addresses)`: ``
         var inc = 0
         for (var f of x.findings) {
             ++inc
@@ -792,7 +793,7 @@ const getJsonForMapRequests = async (cached) => {
 
         // doplnit info o nebezpecnosti IP adresy, nejake findingy a tak
         retObj.points.push({
-            "htmlSnippet": `<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>${x.ipRequested}<br>${detailStringHtml}</span>`,
+            "htmlSnippet": `<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>${x.ipRequested}${additionalDetail}<br>${detailStringHtml}</span>`,
             "lat": x.latitude,
             "lon": x.longitude
         })
@@ -800,7 +801,7 @@ const getJsonForMapRequests = async (cached) => {
     
         // put to fgTableValues
         retObj.fgTableValues.push([
-            `${x.ipRequested}`,
+            `${x.ipRequested}${additionalDetail}`,
             `${detailString}`,
             `${x.as}`,
             `${x.city}`,
@@ -1066,6 +1067,9 @@ const getJsonWithCountedCovered = async () => {
         if (tmp.count > 0)
             retObj.table.push([order++, tmp.name, tmp.count])
     }
+
+    // set in cache for map calculation
+    graphCache.setTopHideouts(uniqueValues)
 
     return retObj
 }

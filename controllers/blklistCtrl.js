@@ -9,6 +9,7 @@ const blklistResponse = require("../models/ResponseBlklist")
 const { sendPromise } = require('../services/simpleCommunicator.js')
 const { logError } = require('../services/helper.js')
 const { getCachedBloklistProviders, getCachedBloklistResponses, getUniqueGeolocatedIps } = require('../services/cacheFile.js')
+const graphCache = require('../services/graphOutputCache.js')
 const net = require('net')
 
 /* settings */
@@ -494,6 +495,9 @@ const getJsonWithCountedSignatures = async (cached) => {
     for (var tmp of uniqueValues) {
         retObj.table.push([order++, tmp.name, tmp.count])
     }
+
+    // set graphOutputCache for map calculations
+    graphCache.setTopSignatures(retObj.list)
 
     return retObj
 }

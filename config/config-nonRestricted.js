@@ -73,13 +73,14 @@ configuration.WWW_API = "/api"
 configuration.EVENT_TEST = "event_test"
 configuration.TIMER_EVENT_TEST = 16000
 configuration.EVENT_GRAPH = "event_graph_update"
-configuration.TIMER_EVENT_GRAPH = 80000
+configuration.TIMER_EVENT_GRAPH = 30000
 configuration.EVENT_MAPS = "event_maps_update"
-configuration.TIMER_EVENT_MAPS = 140000
+//configuration.TIMER_EVENT_MAPS = 140000
+configuration.TIMER_EVENT_MAPS = 40000
 configuration.EVENT_GEOLOCATION = "event_geolocation_process"
 configuration.TIMER_EVENT_GEOLOCATION = 60000
 configuration.EVENT_SOURCES = "event_graph_sources"
-configuration.TIMER_EVENT_SOURCES = 28000 // has to be smaller than maps and graphs
+configuration.TIMER_EVENT_SOURCES = 20000 // has to be smaller than maps and graphs
 
 
 // Blocktimes in minutes (its max)
