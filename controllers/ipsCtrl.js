@@ -917,6 +917,8 @@ const getJsonWithCountedAs = async (cached) => {
     var responses = await responseData.find({ provider : providers[searchedIndex]._id}, {
         "success": 1,
         "ipRequested": 1,
+        "isSubnet": 1,
+        "subList": 1,
         "addedAt": 1,
         "as": 1
     }).sort({ ipRequested: 'asc'})
@@ -958,7 +960,10 @@ const getJsonWithCountedAs = async (cached) => {
 
     // pozvysovat pocty ake su v uniqueResp
     for (var x of uniqueResponses) {
-        uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count++
+        if (x.isSubnet === 0)
+            uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count++
+        else  if (x.isSubnet === 1)
+            uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count+= x.subList.length
     }
     // pozvysovat pocty v cached.cachedBloklistResponses a pripadne pridat rovno do pola ak neni
     for (var x of cached.cachedBloklistResponses) {
@@ -1000,6 +1005,8 @@ const getJsonWithCountedCovered = async () => {
         "mobile": 1,
         "proxy": 1,
         "hosting": 1,
+        "isSubnet": 1,
+        "subList": 1,
         "findings": 1
     }).sort({ ipRequested: 'asc'})
 
@@ -1024,23 +1031,25 @@ const getJsonWithCountedCovered = async () => {
     ]
 
     for (var x of uniqueResponses) {
+        var toInc = x.isSubnet === 1 ? x.subList.length : 1
+
         // GEODB part
         if (x.mobile === 'true')
-            uniqueValues[0].count++
+            uniqueValues[0].count+= toInc
         if (x.proxy === 'true')
-            uniqueValues[1].count++
+            uniqueValues[1].count+= toInc
         if (x.hosting === 'true')
-            uniqueValues[2].count++
+            uniqueValues[2].count+= toInc
         if (x.mobile === 'false' && x.proxy === 'false' && x.hosting === 'false')
-            uniqueValues[3].count++
+            uniqueValues[3].count+= toInc
         
         // COVERT from findings
         if (x.findings.some(el => {
             return true === el?.text?.includes("COVERT", "VPN")
-        })) uniqueValues[4].count++
+        })) uniqueValues[4].count+= toInc
         if (x.findings.some(el => {
             return true === el?.text?.includes("COVERT", "TOR")
-        })) uniqueValues[5].count++
+        })) uniqueValues[5].count+= toInc
     }
 
     uniqueValues = uniqueValues.filter(a => a.count > 0)

@@ -2,8 +2,8 @@
     "type": "bar",
     "data": {
         "labels": [
-            "Hosting",
             "Nothing",
+            "Hosting",
             "Proxy/VPN/TOR",
             "Cellular",
             "TOR"
@@ -12,9 +12,9 @@
             {
                 "label": "Comparation of privacy techniques",
                 "data": [
-                    18,
-                    14,
-                    12,
+                    29,
+                    20,
+                    13,
                     2,
                     1
                 ],
@@ -60,18 +60,18 @@
         "tableValues": [
             [
                 1,
-                "Hosting",
-                18
+                "Nothing",
+                29
             ],
             [
                 2,
-                "Nothing",
-                14
+                "Hosting",
+                20
             ],
             [
                 3,
                 "Proxy/VPN/TOR",
-                12
+                13
             ],
             [
                 4,
@@ -90,5 +90,5 @@
             ]
         ]
     },
-    "time": "2022-04-26 02:13:42"
+    "time": "2022-04-26 12:28:05"
 }
