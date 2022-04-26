@@ -5,7 +5,8 @@
             "Hosting",
             "Nothing",
             "Proxy/VPN/TOR",
-            "Cellular"
+            "Cellular",
+            "TOR"
         ],
         "datasets": [
             {
@@ -14,7 +15,8 @@
                     18,
                     14,
                     12,
-                    2
+                    2,
+                    1
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -75,8 +77,18 @@
                 4,
                 "Cellular",
                 2
+            ],
+            [
+                5,
+                "TOR",
+                1
+            ],
+            [
+                6,
+                "VPN",
+                1
             ]
         ]
     },
-    "time": "2022-04-25 22:07:36"
+    "time": "2022-04-26 02:13:42"
 }

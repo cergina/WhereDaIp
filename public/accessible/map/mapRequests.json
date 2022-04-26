@@ -32,7 +32,7 @@
             "lon": "153.0166"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>104.244.77.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>104.244.77.0<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam \n<br>2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES </span>",
             "lat": "49.7866",
             "lon": "6.0753"
         },
@@ -87,7 +87,7 @@
             "lon": "114.058"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>178.128.83.0<br></span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>178.128.83.0<br>\n<br>1. BLKLIST  \"feodotracker by abuse.ch\"  Dridex </span>",
             "lat": "1.32123",
             "lon": "103.695"
         },
@@ -107,7 +107,7 @@
             "lon": "116.407"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>186.32.75.0<br></span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>186.32.75.0<br>\n<br>1. BLKLIST  \"abuse.ch\"  32-bit,arm,elf,Mozi </span>",
             "lat": "13.7066",
             "lon": "-89.2053"
         },
@@ -132,7 +132,7 @@
             "lon": "-122.3838"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>216.10.251.0<br></span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>216.10.251.0<br>\n<br>1. BLKLIST  \"feodotracker by abuse.ch\"  Dridex </span>",
             "lat": "19.1146",
             "lon": "72.8956"
         },
@@ -230,7 +230,7 @@
             ],
             [
                 "104.244.77.0",
-                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam \n\r2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES ",
                 "AS53667 FranTech Solutions",
                 "Roost",
                 "Luxembourg"
@@ -307,7 +307,7 @@
             ],
             [
                 "178.128.83.0",
-                "",
+                "\n\r1. BLKLIST  \"feodotracker by abuse.ch\"  Dridex ",
                 "AS14061 DigitalOcean, LLC",
                 "Singapore",
                 "Singapore"
@@ -335,7 +335,7 @@
             ],
             [
                 "186.32.75.0",
-                "",
+                "\n\r1. BLKLIST  \"abuse.ch\"  32-bit,arm,elf,Mozi ",
                 "AS27773 MILLICOM CABLE EL SALVADOR S.A. DE C.V.",
                 "San Salvador",
                 "El Salvador"
@@ -370,7 +370,7 @@
             ],
             [
                 "216.10.251.0",
-                "",
+                "\n\r1. BLKLIST  \"feodotracker by abuse.ch\"  Dridex ",
                 "AS394695 PDR",
                 "Mumbai",
                 "India"
@@ -483,5 +483,5 @@
         ]
     },
     "nazov": "mapGen - generateMapRequests",
-    "time": "2022-04-25 22:05:34"
+    "time": "2022-04-26 02:12:15"
 }

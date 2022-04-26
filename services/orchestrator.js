@@ -74,7 +74,7 @@ const setUp = () => {
 
                 await ipsCtrl.searchForIpsController(whatToDo)
             } else {
-                console.log('Nothing to do now')
+                console.log('Nothing to do now') 
             }
         } catch (e) {
             helper.logError(`Error: ${e}`)
@@ -140,6 +140,7 @@ const setUp = () => {
 
                 await compGen.onEventGenerateFiles(cached);
                 await topGen.onEventGenerateFiles(cached);
+                await onEventRun()  // topTags.json
             } else {
                 console.log("Data for compGen and topGen not ready yet")
             }

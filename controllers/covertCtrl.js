@@ -186,7 +186,7 @@ const reportFindingsHere = async (arg) => {
         // ip adresa zo zoznamu
         for (var xIp of arg) {
             // porovnavat iba ak uz neni v retArr taka ip adresa ( pozor, moze byt vo viac zoznamoch preto reset processed - zaujima nas iba pre 1 list aby nebola duplikacia )
-            if (previousIp !== xIp.ipRequested) {
+            if (xIp.isSubnet === 0 && previousIp !== xIp.ipRequested) {
                 if (xList.list.some(e => e.ip === xIp.ipRequested)) {
                     previousIp = xIp.ipRequested
                     processed = {
@@ -196,6 +196,29 @@ const reportFindingsHere = async (arg) => {
                     }
 
                     retArr.push(processed)
+                }
+            } else {
+                var toLook = true
+                if (toLook && xIp.isSubnet === 1) {
+
+                    for (var c of xIp.subList) {
+
+                        if (previousIp !== c.address && xList.list.some(e => e.ip === c.address)) {
+                            previousIp = c.address
+                            processed = {
+                                ipRequested: c.address,
+                                text: `COVERT | ${xList.type === 1 ? 'TOR_EXIT_NODES' : 'VPN_SERVERS'} | ${xList.slug} | ${xList.name}`,
+                                foundAt: Date.now()
+                            }
+        
+                            retArr.push(processed)
+
+                            toLook = false
+                            break
+                        }
+
+                    }
+
                 }
             }
 

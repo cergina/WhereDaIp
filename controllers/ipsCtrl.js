@@ -194,15 +194,30 @@ const analyseIps = async (req, res) => {
                     }
                 }
 
-                /* TODO - podobne ako je sus */
                 // cov
+                // for (var c of covFindings) {
+                //     if (x.ipRequested === c.ipRequested) {
+                //         x.findings.push({text: c.text, foundAt: c.foundAt})
+                //     }
+                // } 
+                subnetEntered = undefined
                 for (var c of covFindings) {
-                    if (x.ipRequested === c.ipRequested) {
-                        x.findings.push({text: c.text, foundAt: c.foundAt})
-                    }
-                } 
 
-                /* TODO - podobne ako je sus */
+                    if (x.isSubnet === 0 && x.ipRequested === c.ipRequested) {
+                        x.findings.push({text: c.text, foundAt: c.foundAt})
+                    } else if (x.isSubnet === 1) {
+                        for (var w of x.subList) {
+                            var wsub = getSubnetForIp(w.address, 24)
+
+                            if (subnetEntered !== wsub && w.address ===  c.ipRequested) {
+                                x.findings.push({text: c.text, foundAt: c.foundAt})
+                                subnetEntered = getSubnetForIp(c.ipRequested, 24)
+                                break
+                            }
+                        }
+                    }
+                }
+
                 // blk
                 // for (var b of blkFindings) {
                 //     if (x.ipRequested === b.ipRequested) {
