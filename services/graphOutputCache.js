@@ -24,7 +24,7 @@ function setTopSusTags(arg) {
         topSusTags = []
         let max = (maxTopValue < arg.length) ? maxTopValue : arg.length
         for (var i = 0; i < max; i++) {
-            topSusTags.push({'name': arg[i].name, 'count': arg[i].count})
+            topSusTags.push({'name': arg[i].tagName, 'count': arg[i].numOfIps})
         }
     }
 }

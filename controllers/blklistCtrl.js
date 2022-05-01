@@ -10,6 +10,7 @@ const { sendPromise } = require('../services/simpleCommunicator.js')
 const { logError } = require('../services/helper.js')
 const { getCachedBloklistProviders, getCachedBloklistResponses, getUniqueGeolocatedIps } = require('../services/cacheFile.js')
 const graphCache = require('../services/graphOutputCache.js')
+const actionSaver = require('../services/actionSaver.js')
 const net = require('net')
 
 /* settings */
@@ -46,8 +47,10 @@ const showList = async (req, res) => {
 const refreshProviderList = async (req, res) => {
     const provider = await blklistProvider.findOne({ slug: req.params.slug })
 
-    if (provider == null)
+    if (provider == null) {
         res.redirect(`${configuration.WWW_ROOT}`)
+        return
+    }
 
     console.log('refreshujem list')
     try {
@@ -118,6 +121,7 @@ const refreshProviderList = async (req, res) => {
 
         // SAVE
         await objParsed.save()
+        actionSaver.changeOccured()
     } catch(e) {
         logError(e)
     }
@@ -497,7 +501,7 @@ const getJsonWithCountedSignatures = async (cached) => {
     }
 
     // set graphOutputCache for map calculations
-    graphCache.setTopSignatures(retObj.list)
+    // graphCache.setTopSignatures(retObj.list)
 
     return retObj
 }

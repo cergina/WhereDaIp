@@ -19,6 +19,12 @@ const crossroad = (req, res) => {
 const viewRequests = (req, res) => { 
     res.render(`${basePath}viewRequests.ejs`, { siteTitle: 'Map showing geolocated IPs'})
 }
+const viewDeception = (req, res) => { 
+    res.render(`${basePath}viewDeception.ejs`, { siteTitle: 'Categorized map - detected evasive techniques'})
+}
+const viewSus = (req, res) => { 
+    res.render(`${basePath}viewSus.ejs`, { siteTitle: 'Categorized map - tags'})
+}
 const viewDridex = (req, res) => { 
     res.render(`${basePath}viewDridex.ejs`, { siteTitle: 'Dridex'})
 }
@@ -35,5 +41,6 @@ const viewTrickbot = (req, res) => {
 module.exports = {
     test, testMultiple,
     crossroad,
-    viewRequests, viewDridex, viewQakbot, viewEmotet, viewTrickbot
+    viewRequests, viewSus, viewDeception, 
+    viewDridex, viewQakbot, viewEmotet, viewTrickbot
 }

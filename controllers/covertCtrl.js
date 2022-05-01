@@ -4,6 +4,7 @@
 const configuration = require("../config/config-nonRestricted")
 const { logDebug, logError, logInfo, logRaw, yyyymmdd } = require('../services/helper.js')
 const { sendPromise } = require('../services/simpleCommunicator.js')
+const actionSaver = require('../services/actionSaver.js')
 const coverSource = require("../models/coverSource")
 const net = require('net')
 
@@ -91,8 +92,10 @@ const obtainSourceList = async (req, res, next) => {
         });
 
         // non zero length array should be considered okay
-        if (newList.length > 0)
+        if (newList.length > 0) {
             req.source.list = newList
+            actionSaver.changeOccured()
+        }
 
     } catch (e) {
         logError(e)

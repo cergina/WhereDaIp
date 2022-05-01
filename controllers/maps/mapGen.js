@@ -4,7 +4,9 @@ const helper = require('../../services/helper');
 // template
 var folderRead = '../../public/templates/'
 var fileNameRead = 'mapBase.json'
+var fileMapSettings = 'mapSettings.json'
 var fileBase = require(folderRead + fileNameRead);
+var fileSettings = require(folderRead + fileMapSettings);
 
 // saves
 var folderWrite = './public/accessible/map/'
@@ -143,28 +145,114 @@ const generateMapForHideouts = async (cached) => {
 
     var noOfFiles = hids.length
 
+    var nothingIndex = undefined
+    var hostingIndex = undefined
+    var vpnIndex = undefined
+    var torIndex = undefined
+    var proxyIndex = undefined
+    var cellularIndex = undefined
+
     for (let i=0; i< noOfFiles; i++) {
         hids[i].occurences = getGeolocCodeArrayCountsZero()
+        switch (hids[i].name) {
+            case 'Nothing':
+                nothingIndex = i
+                break
+            case 'Hosting':
+                hostingIndex = i
+                break
+            case 'Proxy/VPN/TOR':
+                proxyIndex = i
+                break
+            case 'Cellular':
+                cellularIndex = i
+                break
+            case 'TOR':
+                torIndex = i
+                break
+            case 'VPN':
+                vpnIndex = i
+                break
+        }
     }
 
     if (noOfFiles === 0) {
         console.log(`Wait for one more iteration. generateMapForHideouts has noOfFiles === 0`)
         return
     }
-    console.log(hids)
+    //console.log(hids)
 
     // najdi krajiny pre kazdy top hideout
-    
+    for (var x of cached.cachedGeolocatedIps) {
+        var incBy = 1
+        var foundSth = false
+        if (x.isSubnet === 1)
+            incBy = x.subList.length
 
-    console.log(hids)
+        var kt = getLocationByCode(x.countryCode)
+
+        // hosting
+        if (x.hosting && x.hosting === 'true') {
+            var at = hids[hostingIndex].occurences.findIndex(el => el.code === x.countryCode)
+            hids[hostingIndex].occurences[at].count += incBy
+            foundSth = true
+        }
+
+        // cellular
+        if (x.mobile && x.mobile === 'true') {
+            var at = hids[cellularIndex].occurences.findIndex(el => el.code === x.countryCode)
+            hids[cellularIndex].occurences[at].count += incBy
+            foundSth = true
+        }
+
+        // proxy/vpn/tor
+        if (x.proxy && x.proxy === 'true') {
+            var at = hids[proxyIndex].occurences.findIndex(el => el.code === x.countryCode)
+            hids[proxyIndex].occurences[at].count += incBy
+            foundSth = true
+        }
+
+        for (let f of x.findings) {
+            //console.log(f)
+            var textArr = f.text.split('|')
+            if (textArr[0] === 'COVERT ') {
+
+                if (textArr[1] === ' TOR_EXIT_NODES ') {
+                    var at = hids[torIndex].occurences.findIndex(el => el.code === x.countryCode)
+                    hids[torIndex].occurences[at].count += incBy
+                    foundSth = true
+                }
+
+                if (textArr[1] === ' VPN_SERVERS ') {
+                    var at = hids[vpnIndex].occurences.findIndex(el => el.code === x.countryCode)
+                    hids[vpnIndex].occurences[at].count += incBy
+                    foundSth = true
+                }
+            }
+        }
+
+        if (foundSth === false) {
+            var at = hids[nothingIndex].occurences.findIndex(el => el.code === x.countryCode)
+            hids[nothingIndex].occurences[at].count += incBy
+        }
+    }
+
+
+    // sort and filter
+    for (var h of hids) {
+        h.occurences = h.occurences.filter(a => a.count > 0)
+        h.occurences.sort((a, b) => (a.count < b.count) ? 1 : -1)
+    }
+
+    coverFileProcessAndSave({}, fileSettings, fileNameWriteHideouts, hids)
 }
 const generateMapForSusTags = async (cached) => {
-    var hids = graphCache.getTopSusTags()
+    var sids = graphCache.getTopSusTags()
 
-    var noOfFiles = hids.length
+    var noOfFiles = sids.length
 
     for (let i=0; i< noOfFiles; i++) {
-        hids[i].occurences = getGeolocCodeArrayCountsZero()
+        sids[i].occurences = getGeolocCodeArrayCountsZero()
     }
 
     if (noOfFiles === 0) {
@@ -172,12 +260,36 @@ const generateMapForSusTags = async (cached) => {
         return
     }
 
-    console.log(hids)
+    // najdi krajiny pre kazdy top sus tag
+    for (var x of cached.cachedGeolocatedIps) {
+        var incBy = 1
+        if (x.isSubnet === 1)
+            incBy = x.subList.length
 
-    // as
-    
+        var kt = getLocationByCode(x.countryCode)
 
-    console.log(hids)
+        for (let f of x.findings) {
+            var textArr = f.text.split('|')
+            if (textArr[0] === 'SUSPECT ') {
+                for (let s=0; s<noOfFiles; s++) {
+                    if (textArr[1].includes(sids[s].name)) {
+                        var at = sids[s].occurences.findIndex(el => el.code === x.countryCode)
+                        sids[s].occurences[at].count += incBy
+                    }
+                }
+            }
+        }
+    }
+
+
+    // sort and filter
+    for (var s of sids) {
+        s.occurences = s.occurences.filter(a => a.count > 0)
+        s.occurences.sort((a, b) => (a.count < b.count) ? 1 : -1)
+    }
+    sids.sort((a, b) => a.occurences.length < b.occurences.length ? 1 : -1)
+
+    susFileProcessAndSave({}, fileSettings, fileNameWriteSusTags, sids)
 }
 
 /* GOOD but not every blocklist has country without prior geolocation so this would only work 
@@ -213,6 +325,78 @@ geolocated files */
 
 //     console.log(sigs)
 // }
+function susFileProcessAndSave(baseFile, settingsFile, argFileWriteName, argArr) {
+    var fil = JSON.parse(JSON.stringify(baseFile))
+    var sets = JSON.parse(JSON.stringify(settingsFile))
+    fil.nazov = `mapGen - ${argFileWriteName}`
+
+    var max = argArr.length
+
+    fil.count = max
+    fil.covers = []
+
+    for (let i = 0; i < max; i++) {
+        var retObj = {name: argArr[i].name, points: [], tableNames: [], tableValues: [], options: sets.options, tiles: sets.tiles} 
+        
+        retObj.tableNames.push("Description")
+        retObj.tableNames.push("Country")
+        retObj.tableNames.push("Count")
+        
+
+        for (var x of argArr[i].occurences) {
+            retObj.points.push({
+                "htmlSnippet": `<b>${argArr[i].name} confirmed!</b><br>We identified threat actors tagged like this.<br/><span style='font-size:15px;color:#999'>${x.count} IP address(es) in ${x.code} - ${x.name}</span>`,
+                "lat": x.latitude,
+                "lon": x.longitude
+            })
+            retObj.tableValues.push([
+                argArr[i].name,
+                `${x.code} - ${x.name}`,
+                `${x.count}`
+            ])
+        }
+
+        fil.covers.push(retObj)
+    }
+
+    saveChangesToFile(folderWrite, argFileWriteName, fil)
+}
+function coverFileProcessAndSave(baseFile, settingsFile, argFileWriteName, argArr) {
+    var fil = JSON.parse(JSON.stringify(baseFile))
+    var sets = JSON.parse(JSON.stringify(settingsFile))
+    fil.nazov = `mapGen - ${argFileWriteName}`
+
+    var max = argArr.length
+
+    fil.count = max
+    fil.covers = []
+
+    for (let i = 0; i < max; i++) {
+        var retObj = {name: argArr[i].name, points: [], tableNames: [], tableValues: [], options: sets.options, tiles: sets.tiles} 
+        
+        retObj.tableNames.push("Description")
+        retObj.tableNames.push("Country")
+        retObj.tableNames.push("Count")
+        
+
+        for (var x of argArr[i].occurences) {
+            retObj.points.push({
+                "htmlSnippet": `<b>${argArr[i].name} in use!</b><br>We identified, that threat actors may evade detection.<br/><span style='font-size:15px;color:#999'>${x.count} IP address(es) in ${x.code} - ${x.name}</span>`,
+                "lat": x.latitude,
+                "lon": x.longitude
+            })
+            retObj.tableValues.push([
+                argArr[i].name,
+                `${x.code} - ${x.name}`,
+                `${x.count}`
+            ])
+        }
+
+        fil.covers.push(retObj)
+    }
+
+    saveChangesToFile(folderWrite, argFileWriteName, fil)
+}
 
 function botnetFileProcessAndSave(baseFile, argFileWriteName, argName, argArr) {
     var fil = JSON.parse(JSON.stringify(baseFile))

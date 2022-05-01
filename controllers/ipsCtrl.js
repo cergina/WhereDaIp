@@ -15,6 +15,7 @@ const locationProvider = require('../models/locationProvider.js')
 const {isCacheUsable} = require('../services/cacheFile.js')
 const graphCache = require('../services/graphOutputCache.js')
 const reqFile = require('../services/requestsFile.js')
+const actionSaver = require('../services/actionSaver.js')
 const { getCountryNameByCode, getCountryArrayCountsZero } = require('../services/countries.js')
 
 const basePath = `requests/`
@@ -249,6 +250,7 @@ const analyseIps = async (req, res) => {
             console.log(e)
         } finally {
             await generalCtrl.setFree(3)
+            actionSaver.analysisDone()
         }
     }, 500)
 
@@ -344,24 +346,14 @@ const searchForIpsController = async (batch) => {
                 addr = address.ips[0]
 
             providers.forEach(async provider => {
-                // TODO - nefunguje zatial tento zoznam z
-                /*
-                1.1.1.1
-8.8.8.8
-6.6.6.6
-7.7.7.7
-7.7.7.8
-7.7.7.9
-7.7.7.10
-2001:0db8:85a3:0000:0000:8a2e:0370:7334
-7.7.7.1
-                */
+                
                 // IPv6
                 if (address.ipv6) {
                     // get geolocation data
                     sendPromise(addr, provider)
                     .then(async res => {
-                        logDebug(res)
+                        // logDebug geolokacia
+                        //logDebug(res)
                         let extractedData = extractDataFromResponse(addr, res, provider)
                         await extractedData.save()
                     })
@@ -379,7 +371,8 @@ const searchForIpsController = async (batch) => {
                         // get geolocation data
                         sendPromise(addr, provider)
                         .then(async res => {
-                            logDebug(res)
+                            // logDebug geolokacia
+                            //logDebug(res)
                             let extractedData = extractSubnetDataFromResponse(addr, address, res, provider)
                             await extractedData.save()
                         })
@@ -389,6 +382,9 @@ const searchForIpsController = async (batch) => {
                 
             })
         })
+
+        // allow for source cache
+        actionSaver.changeOccured()
     } catch(e) {
         logError(e)
     }

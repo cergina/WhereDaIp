@@ -12,6 +12,8 @@ const net = require('net')
 const { WWW_SUSPECT_HOME } = require("../config/config-nonRestricted")
 const res = require("express/lib/response")
 const cached = require('../services/cacheFile.js')
+const actionSaver = require('../services/actionSaver.js')
+const graphCache = require('../services/graphOutputCache.js')
 const reqFile = require('../services/requestsFile.js')
 
 const baseViewFolder = `${WWW_SUSPECT_HOME}`
@@ -57,7 +59,7 @@ const getJsonWithCountedListTags = async () => {
 
     
     ro.sort((a, b) => (a.numOfIps < b.numOfIps) ? 1 : -1)
-
+    graphCache.setTopSusTags(ro)
 
     // 
     // for chart.js
@@ -534,6 +536,7 @@ function saveAndRedirectTest(viewName) {
             }
             
             res.redirect(`/${baseViewFolder.slice(1)}` + `/providers/${provider.slug}/?changed=1`)
+            actionSaver.changeOccured()
         } catch (e) {
             res.render(`${baseViewFolder.slice(1)}` + `/${viewName}`, { provider: provider, siteTitle: 'Manually add new list' })
         }

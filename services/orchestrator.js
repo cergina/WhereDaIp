@@ -13,12 +13,13 @@ const { onEventRun } = require('./workers/top.js')
 const { getState, setFree, setFreeAfterTime } = require('../controllers/generalCtrl.js')
 const { isCacheUsable, setCacheBloklistResponses, setCacheBloklistProviders, getCachedBloklistProviders, getCachedBloklistResponses, 
     setCacheGeolocatedIps, getAllCache, calculateUniqueGeolocatedIps, setCacheUniqueGeolocatedIps } = require('../services/cacheFile.js')
+const actionSaver = require('../services/actionSaver.js')
 const reqFile = require('./requestsFile.js')
 const eventEmitter = new EventEmitter()
 
 
 
-const setUp = () => {
+const setUp = () => { 
     /* vyhadzovanie eventov */
     setInterval( () => {
         eventEmitter.emit(configuration.EVENT_SOURCES);
@@ -36,9 +37,6 @@ const setUp = () => {
         eventEmitter.emit(configuration.EVENT_GEOLOCATION);
     }, configuration.TIMER_EVENT_GEOLOCATION)
     
-    // setInterval( () => {
-    //     eventEmitter.emit(configuration.EVENT_TEST);
-    // }, configuration.TIMER_EVENT_TEST) 
 
     /* spracuj GEOLOCATION event */
     reqFile.setGeolocationLimit()
@@ -80,11 +78,17 @@ const setUp = () => {
             helper.logError(`Error: ${e}`)
         } finally {
             console.log("Event GEOLOCATION done, but new jobs will not be available straightaway")
+            actionSaver.changeOccured()
         }
     });
 
     /* spracuj SOURCE event */
     eventEmitter.on(configuration.EVENT_SOURCES, async () => {
+        if (actionSaver.isRequiredToCalcSources() === false) {
+            console.log(`Cache does not have to be refreshed.`)
+            return
+        }
+
         // set max time block
         if ((await generalCtrl.getState(6)).isBusy === 0) {
             await generalCtrl.setBusyFor(6, configuration.BLOCK_TIME_SOURCES)
@@ -115,6 +119,7 @@ const setUp = () => {
         } finally {
             await generalCtrl.setFree(6)
             console.log("Freed SOURCE")
+            actionSaver.cacheDone()
         }
     });
 
@@ -122,6 +127,11 @@ const setUp = () => {
 
     /* spracuj GRAPH event */
     eventEmitter.on(configuration.EVENT_GRAPH, async () => {
+        if (actionSaver.isRequiredToCalcGraphs() === false) {
+            console.log(`Graphs do not have to be refreshed.`)
+            return
+        }
+
         // set max time block
         if ((await generalCtrl.getState(4)).isBusy === 0) {
             await generalCtrl.setBusyFor(4, configuration.BLOCK_TIME_GRAPHS)
@@ -149,11 +159,17 @@ const setUp = () => {
         } finally {
             await generalCtrl.setFree(4)
             console.log("Freed GRAPH")
+            actionSaver.graphsDone()
         }
     });
     
     /* spracuj MAPS event */
     eventEmitter.on(configuration.EVENT_MAPS, async () => {
+        if (actionSaver.isRequiredToCalcMaps() === false) {
+            console.log(`Maps do not have to be refreshed.`)
+            return
+        }
+
         // set max time block
         if ((await generalCtrl.getState(5)).isBusy === 0) {
             await generalCtrl.setBusyFor(5, configuration.BLOCK_TIME_MAPS)
@@ -178,35 +194,10 @@ const setUp = () => {
         } finally {
             await generalCtrl.setFree(5)
             console.log("Freed MAPS")
+            actionSaver.mapsDone()
         }
     });
     
-    /* spracuj TEST event */
-    eventEmitter.on(configuration.EVENT_TEST, async () => {
-        // set max time block
-        if ((await generalCtrl.getState(2)).isBusy === 0) {
-            await generalCtrl.setBusyFor(2, configuration.BLOCK_TIME_ANALYSIS)
-            await generalCtrl.simulateWorkAndThenSetIdle(2, 1)
-        } else {
-            console.log("Event TEST NOT raised. Consider increasing period for tests.")
-            return
-        }
-
-        // Work
-        console.log(`Event TEST raised on: ${helper.date_plus_time()}`);
-
-        onPremiseChangeTestFile()
-
-        try {
-            await onEventRun()
-        } catch (e) {
-            helper.logError(`Error: ${e}`)
-        } finally {
-            console.log("Test finished, freeing")
-            await generalCtrl.setFree(2)
-            console.log("Freed TEST")
-        }
-    });
 }
 
 // freeing of sources, graphs and maps is safe

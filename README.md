@@ -1,4 +1,4 @@
-# WhereDaIp 0.6 (in development) 
+# WhereDaIp 0.9 (in development) 
 
 *WhereDaIp is a SW created as a part of diploma thesis research on FIIT STU by student Bc. Maroš Čergeť in the academic year of 2021/2022.*
 

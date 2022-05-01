@@ -4,18 +4,18 @@
         "labels": [
             "Nothing",
             "Hosting",
-            "Proxy/VPN/TOR",
             "Cellular",
+            "Proxy/VPN/TOR",
             "TOR"
         ],
         "datasets": [
             {
                 "label": "Comparation of privacy techniques",
                 "data": [
-                    29,
-                    20,
-                    13,
-                    2,
+                    4743,
+                    3055,
+                    832,
+                    58,
                     1
                 ],
                 "backgroundColor": [
@@ -61,22 +61,22 @@
             [
                 1,
                 "Nothing",
-                29
+                4743
             ],
             [
                 2,
                 "Hosting",
-                20
+                3055
             ],
             [
                 3,
-                "Proxy/VPN/TOR",
-                13
+                "Cellular",
+                832
             ],
             [
                 4,
-                "Cellular",
-                2
+                "Proxy/VPN/TOR",
+                58
             ],
             [
                 5,
@@ -90,5 +90,5 @@
             ]
         ]
     },
-    "time": "2022-04-26 16:13:46"
+    "time": "2022-05-02 01:28:34"
 }

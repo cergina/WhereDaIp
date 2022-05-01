@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<%- include('../../_headerOutMap') %> 
+<body>
+    
+    <div class="container"> 
+        <!-- alert at top -->
+        <div class="alert alert-info">
+            <h1 class="mb-4 display-4">Threat types</h1> 
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/presentation/">Results</a></li>
+                    <li class="breadcrumb-item"><a href="/maps">Maps</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Categorized suspect origins</li>
+                </ol>
+              </nav>
+        </div> 
+
+        
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item"><a class="nav-link active" id="tab-0" href="#data-0" data-toggle="tab" role="tab" aria-selected="true" >Type 1</a></li>
+          <li class="nav-item"><a class="nav-link"        id="tab-1" href="#data-1" data-toggle="tab" role="tab" aria-selected="false">Type 2</a></li>
+          <li class="nav-item"><a class="nav-link"        id="tab-2" href="#data-2" data-toggle="tab" role="tab" aria-selected="false">Type 3</a></li>
+          <li class="nav-item"><a class="nav-link"        id="tab-3" href="#data-3" data-toggle="tab" role="tab" aria-selected="false">Type 4</a></li>
+          <li class="nav-item"><a class="nav-link"        id="tab-4" href="#data-4" data-toggle="tab" role="tab" aria-selected="false">Type 5</a></li>
+          <li class="nav-item"><a class="nav-link"        id="tab-5" href="#data-5" data-toggle="tab" role="tab" aria-selected="false">Type 6</a></li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <% for (let t=0; t<6; t++) { %>
+            <div class="tab-pane fade <%= (t === 0) ? 'show active' : 'show active' %>" role="tabpanel" id="data-<%= t %>">
+              <!-- main test -->
+              <div class="center mw-80" style="border:1px solid gray; padding:2px;" id="earth_div<%= t %>"></div>
+              <!-- GridJS -->
+              <div id="wrapper<%= t %>"></div>
+            </div>
+          <% } %>
+        </div>
+
+        <div class="center">
+            <small class="form-text text-muted" id="datetime">Data gotten at [time here].</small>
+        </div>
+
+        <!-- footer with name, year, FIIT, www -->
+        <%- include('../../_footer') %> 
+    </div>
+
+
+
+    <script>
+        fetch("/accessible/map/mapTopSusTags.json")
+            .then(response => response.json())
+            .then(async data => {
+              var earths = []
+              for (let i=0; i<data.count; i++) {
+                console.log(data.covers[i].name)
+
+                // WebGL
+                earths[i] = new WE.map(`earth_div${i}`, {
+                  'zooming': data.covers[i].options.zooming, 'tilting': data.covers[i].options.tilting, 'dragging': data.covers[i].options.dragging, 'maxZoom': data.covers[i].options.maxZoom,
+                  'sky': data.covers[i].options.sky, 'atmosphere': data.covers[i].options.atmosphere, 'minAltitude': data.covers[i].options.minAltitude, 'maxAltitude': data.covers[i].options.maxAltitude
+                });
+                await WE.tileLayer('/{z}/{x}/{y}.jpg', {
+                  tileSize: data.covers[i].tiles.tileSize,
+                  bounds: data.covers[i].tiles.bounds,
+                  minZoom: data.covers[i].tiles.minZoom,
+                  maxZoom: data.covers[i].tiles.maxZoom, // urcuje kolko si max vypytat tiles zo servera
+                  attribution: data.covers[i].tiles.attribution,
+                  tms: data.covers[i].tiles.tms,
+                }).addTo(earths[i]);
+
+                for (var point of data.covers[i].points) {
+                  var marker = WE.marker([point.lat, point.lon]).addTo(earths[i]);
+                  marker.bindPopup(point.htmlSnippet, {maxWidth: 300, closeButton: true}).closePopup();
+                }
+                
+                try {
+                  await earths[i].setView([data.covers[i].points[0].lat, data.covers[i].points[0].lon], data.covers[i].options.zoom);
+                } catch (e) {}
+
+                // GridJS
+                await new gridjs.Grid({ 
+                  columns: data.covers[i].tableNames,
+                  data: data.covers[i].tableValues
+                }).render(document.getElementById(`wrapper${i}`))
+
+                if (i !== 0) {
+                  document.getElementById(`data-${i}`).classList.remove('active', 'show')
+                }
+              }
+
+              document.getElementById('datetime').textContent = `Data calculated at ${data.time}`
+            })
+    </script>
+
+</body>
+</html>
+
+
