@@ -83,6 +83,7 @@ function getUniqueGeolocatedIpsWithType() {
 }
 const calculateUniqueGeolocatedIps =  async () => {
     var toRet = []
+    var collisionCollider = []
     if (cachedGeolocatedIps === undefined) {
         console.log("Wait until event SOURCE is generated first.")
         return null
@@ -92,13 +93,21 @@ const calculateUniqueGeolocatedIps =  async () => {
         // subnet IPs
         if (x.isSubnet) {
             for (var y of x.subList) {
-                if (toRet.findIndex(i => i.address === y.address) === -1)
-                    toRet.push({address: y.address, type: net.isIP(y.address)})    
+                if (collisionCollider.indexOf(y.address) === -1) {
+                    toRet.push({address: y.address, type: net.isIP(y.address)})
+                    collisionCollider.push(y.address)
+                }
+                // if (toRet.findIndex(i => i.address === y.address) === -1) 
+                //     toRet.push({address: y.address, type: net.isIP(y.address)})    
             }
         // general IP
         } else {
-            if (toRet.findIndex(i => i.address === x.ipRequested) === -1)
+            if (collisionCollider.indexOf(x.ipRequested) === -1) {
                 toRet.push({address: x.ipRequested, type: net.isIP(x.ipRequested)})
+                collisionCollider.push(x.ipRequested)
+            }
+            // if (toRet.findIndex(i => i.address === x.ipRequested) === -1)
+            //     toRet.push({address: x.ipRequested, type: net.isIP(x.ipRequested)})
         }
     }
     return toRet
