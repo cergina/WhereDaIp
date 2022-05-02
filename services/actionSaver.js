@@ -14,6 +14,8 @@ function mapsDone() {
 
 function changeOccured() {
     sources = true
+    graphs = false
+    maps = false
     console.log('nastavujem sources na true')
 }
 function cacheDone() {

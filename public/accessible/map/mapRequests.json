@@ -287,7 +287,7 @@
             "lon": "-74.1403"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>104.244.77.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam \n<br>2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>104.244.77.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam \n<br>2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES \n<br>3. BLKLIST  \"abuse.ch\"  shellscript </span>",
             "lat": "49.7866",
             "lon": "6.0753"
         },
@@ -1492,7 +1492,7 @@
             "lon": "4.9392"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>167.86.70.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>167.86.70.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam \n<br>2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES </span>",
             "lat": "49.405",
             "lon": "11.1617"
         },
@@ -1510,6 +1510,11 @@
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>167.99.96.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
             "lat": "37.3417",
             "lon": "-121.9753"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>17.17.17.0/24 (2 IP addresses)<br></span>",
+            "lat": "37.3219",
+            "lon": "-122.03"
         },
         {
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>170.150.72.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
@@ -1645,6 +1650,11 @@
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>179.27.60.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
             "lat": "-34.8947",
             "lon": "-56.1531"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>18.18.18.0/24 (1 IP addresses)<br></span>",
+            "lat": "42.3649",
+            "lon": "-71.0987"
         },
         {
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>18.206.170.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam </span>",
@@ -1817,7 +1827,7 @@
             "lon": "117.925"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>185.36.81.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>185.36.81.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n<br>2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES </span>",
             "lat": "54.9038",
             "lon": "23.8924"
         },
@@ -1852,7 +1862,7 @@
             "lon": "-46.6455"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>186.32.75.0/24 (1 IP addresses)<br></span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>186.32.75.0/24 (1 IP addresses)<br>\n<br>1. BLKLIST  \"abuse.ch\"  32-bit,arm,elf,Mozi </span>",
             "lat": "13.7066",
             "lon": "-89.2053"
         },
@@ -1940,6 +1950,11 @@
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>189.8.68.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
             "lat": "-23.8566",
             "lon": "-46.2705"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>19.19.19.0/24 (1 IP addresses)<br></span>",
+            "lat": "42.3223",
+            "lon": "-83.1763"
         },
         {
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>190.1.203.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
@@ -2100,6 +2115,11 @@
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>2.45.185.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
             "lat": "41.8904",
             "lon": "12.5126"
+        },
+        {
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>20.20.20.0/24 (2 IP addresses)<br></span>",
+            "lat": "43.6532",
+            "lon": "-79.3832"
         },
         {
             "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>200.105.183.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
@@ -2272,7 +2292,7 @@
             "lon": "103.695"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>208.180.16.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>208.180.16.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n<br>2. BLKLIST  \"abuse.ch\"  32-bit,arm,elf,hajime </span>",
             "lat": "35.0987",
             "lon": "-77.1045"
         },
@@ -2357,7 +2377,7 @@
             "lon": "37.6171"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>213.230.67.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>213.230.67.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n<br>2. BLKLIST  \"abuse.ch\"  elf,Mozi </span>",
             "lat": "41.3171",
             "lon": "69.2494"
         },
@@ -2722,7 +2742,7 @@
             "lon": "-44.0807"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>45.232.73.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>45.232.73.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n<br>2. BLKLIST  \"abuse.ch\"  32-bit,arm,elf,mirai,Mozi </span>",
             "lat": "-23.3128",
             "lon": "-51.1596"
         },
@@ -2752,7 +2772,7 @@
             "lon": "37.7136"
         },
         {
-            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>45.9.20.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong </span>",
+            "htmlSnippet": "<b>Location marked!</b><br>Target found<br/><span style='font-size:15px;color:#999'>45.9.20.0/24 (1 IP addresses)<br>\n<br>1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n<br>2. BLKLIST  \"abuse.ch\"  gozi_module </span>",
             "lat": "55.7384",
             "lon": "37.6163"
         },
@@ -3582,7 +3602,7 @@
             ],
             [
                 "104.244.77.0/24 (1 IP addresses)",
-                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam \n\r2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES ",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam \n\r2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES \n\r3. BLKLIST  \"abuse.ch\"  shellscript ",
                 "AS53667 FranTech Solutions",
                 "Roost",
                 "Luxembourg"
@@ -5269,7 +5289,7 @@
             ],
             [
                 "167.86.70.0/24 (1 IP addresses)",
-                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam ",
+                "\n\r1. SUSPECT  \"Bots by blocklist.de\"  tags:   bots, spam \n\r2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES ",
                 "AS51167 Contabo GmbH",
                 "Nuremberg",
                 "Germany"
@@ -5293,6 +5313,13 @@
                 "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong ",
                 "AS14061 DigitalOcean, LLC",
                 "Santa Clara",
+                "United States"
+            ],
+            [
+                "17.17.17.0/24 (2 IP addresses)",
+                "",
+                "AS714 Apple Inc.",
+                "Cupertino",
                 "United States"
             ],
             [
@@ -5483,6 +5510,13 @@
                 "AS6057 Administracion Nacional de Telecomunicaciones",
                 "La Blanqueada",
                 "Uruguay"
+            ],
+            [
+                "18.18.18.0/24 (1 IP addresses)",
+                "",
+                "AS3 Massachusetts Institute of Technology",
+                "Cambridge",
+                "United States"
             ],
             [
                 "18.206.170.0/24 (1 IP addresses)",
@@ -5724,7 +5758,7 @@
             ],
             [
                 "185.36.81.0/24 (1 IP addresses)",
-                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong ",
+                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n\r2. COVERT  \"GitHub Tor Exit Nodes List\"  TOR_EXIT_NODES ",
                 "AS133398 Tele Asia Limited",
                 "Kaunas",
                 "Lithuania"
@@ -5773,7 +5807,7 @@
             ],
             [
                 "186.32.75.0/24 (1 IP addresses)",
-                "",
+                "\n\r1. BLKLIST  \"abuse.ch\"  32-bit,arm,elf,Mozi ",
                 "AS27773 MILLICOM CABLE EL SALVADOR S.A. DE C.V.",
                 "San Salvador",
                 "El Salvador"
@@ -5896,6 +5930,13 @@
                 "AS11419 TELEFÔNICA BRASIL S.A",
                 "Santos",
                 "Brazil"
+            ],
+            [
+                "19.19.19.0/24 (1 IP addresses)",
+                "",
+                "",
+                "Dearborn",
+                "United States"
             ],
             [
                 "190.1.203.0/24 (1 IP addresses)",
@@ -6120,6 +6161,13 @@
                 "AS30722 Vodafone Italia S.p.A.",
                 "Rome",
                 "Italy"
+            ],
+            [
+                "20.20.20.0/24 (2 IP addresses)",
+                "",
+                "AS8075 Microsoft Corporation",
+                "Toronto",
+                "Canada"
             ],
             [
                 "200.105.183.0/24 (1 IP addresses)",
@@ -6361,7 +6409,7 @@
             ],
             [
                 "208.180.16.0/24 (1 IP addresses)",
-                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong ",
+                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n\r2. BLKLIST  \"abuse.ch\"  32-bit,arm,elf,hajime ",
                 "AS19108 Suddenlink Communications",
                 "New Bern",
                 "United States"
@@ -6480,7 +6528,7 @@
             ],
             [
                 "213.230.67.0/24 (1 IP addresses)",
-                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong ",
+                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n\r2. BLKLIST  \"abuse.ch\"  elf,Mozi ",
                 "AS8193 Uzbektelekom Joint Stock Company",
                 "Tashkent",
                 "Uzbekistan"
@@ -6991,7 +7039,7 @@
             ],
             [
                 "45.232.73.0/24 (1 IP addresses)",
-                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong ",
+                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n\r2. BLKLIST  \"abuse.ch\"  32-bit,arm,elf,mirai,Mozi ",
                 "AS267251 TELEFONARNET TELECOMUNICACOES",
                 "Londrina",
                 "Brazil"
@@ -7033,7 +7081,7 @@
             ],
             [
                 "45.9.20.0/24 (1 IP addresses)",
-                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong ",
+                "\n\r1. SUSPECT  \"Strong IPs by blocklist.de\"  tags:   old, strong \n\r2. BLKLIST  \"abuse.ch\"  gozi_module ",
                 "AS60930 VCTech SAS",
                 "Moscow",
                 "Russia"
@@ -7671,5 +7719,5 @@
         ]
     },
     "nazov": "mapGen - generateMapRequests",
-    "time": "2022-05-02 01:29:28"
+    "time": "2022-05-02 16:01:49"
 }

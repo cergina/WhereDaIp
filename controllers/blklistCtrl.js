@@ -294,8 +294,8 @@ function saveAndRedirect(viewName) {
 
 const reportFindingsHere = async (arg) => {
     // get this only once
-    var lists = getCachedBloklistProviders()
-    var blkResponses = getCachedBloklistResponses()
+    const lists = getCachedBloklistProviders()
+    const blkResponses = getCachedBloklistResponses()
 
     var retArr = []
 
@@ -322,8 +322,12 @@ const reportFindingsHere = async (arg) => {
                     if (e.ip)
                         retVal = e.ip === xIp.ipRequested
                     
-                    if (retVal === false && e.url)
-                        return e.url.includes(xIp.ipRequested)
+                    if (retVal === false && e.url) {
+                        var sepIp = e.url.split('/')
+                        sepIp = sepIp.length > 2 ? sepIp[2].split(':') : ''
+
+                        return sepIp[0] === xIp.ipRequested
+                    }
                     else
                         return retVal
                 })
@@ -331,9 +335,6 @@ const reportFindingsHere = async (arg) => {
                 if (found.length > 0) {
 
                     var tempName  = lists.find(l => {
-                        //console.log(l)
-                        //console.log(xBlkResp)
-
                         if (l._id.id.equals(xBlkResp.provider.id))
                             return l
                     })
@@ -350,47 +351,86 @@ const reportFindingsHere = async (arg) => {
                 }
             // CAN BE SUBNET
             } else {
-                // scanning xIp whether its in xBlkResp
-                var toLook = true
+                // subnet is only IPv4
+                if (xIp.isSubnet === 1) {
+                    // ip adresa subnetu ktoru porovnavame
+                    let cmpIp = xIp.subList[0].address.split('.')
+                    cmpIp = `${cmpIp[0]}.${cmpIp[1]}.${cmpIp[2]}.`
 
-                if (toLook && xIp.isSubnet === 1) {
-                    for (var s of xIp.subList) {
-                        
-
-                        var found = xBlkResp.list.filter(e => {
-        
-                            var retVal = false
-                            if (e.ip)
-                                retVal = e.ip === s.address
-                            
-                            if (retVal === false && e.url)
-                                return e.url.includes(s.address)
-                            else
-                                return retVal
-                        })
-        
-                        if (found.length > 0) {
-        
-                            var tempName  = lists.find(l => {
-                                if (l._id.id.equals(xBlkResp.provider.id))
-                                    return l
-                            })
-        
-                            previousIp = s.address
-                            processed = {
-                                foundAt: Date.now(),
-                                ipRequested: s.address,
-                                text: `BLKLIST | ${found[0].tags} | ${tempName.slug} | ${tempName.name}`
-                            }
-        
-                            retArr.push(processed)
+                    // vsetko z blocklistu
+                    let found = []
+                    for (var xB of xBlkResp.list) {
+                        // IP adresa, ktoru porovnavame jednu z blocklistu
+                        var arr = xB.url ? xB.url.split('/') : undefined
+                        var ip = ''
+                        if (arr) {
+                            ip = arr[2].split('.')
+                            ip = `${ip[0]}.${ip[1]}.${ip[2]}.`
                         }
-
-
-
-
+                        
+                        //console.log(arr)
+                        if (cmpIp === ip) {
+                            found.push(xB)
+                            break
+                        }
                     }
-                }
+
+                    // vlozit nalezy
+                    if (found.length > 0) {
+    
+                        let tempName  = lists.find(l => {
+                            if (l._id.id.equals(xBlkResp.provider.id))
+                                return l
+                        })
+    
+                        previousIp = xIp.ipRequested
+                        processed = {
+                            foundAt: Date.now(),
+                            ipRequested: xIp.ipRequested,
+                            text: `BLKLIST | ${found[0].tags} | ${tempName.slug} | ${tempName.name}`
+                        }
+    
+                        retArr.push(processed)
+                    }
+
+                    // for (var s of xIp.subList) {
+                        
+                        
+                    //     var found = xBlkResp.list.filter(e => {
+        
+                    //         var retVal = false
+                    //         if (e.ip)
+                    //             retVal = e.ip === s.address
+                            
+                    //         if (retVal === false && e.url)
+                    //             return e.url.includes(s.address)
+                    //         else
+                    //             return retVal
+                    //     })
+        
+                    //     if (found.length > 0) {
+        
+                    //         var tempName  = lists.find(l => {
+                    //             if (l._id.id.equals(xBlkResp.provider.id))
+                    //                 return l
+                    //         })
+        
+                    //         previousIp = s.address
+                    //         processed = {
+                    //             foundAt: Date.now(),
+                    //             ipRequested: s.address,
+                    //             text: `BLKLIST | ${found[0].tags} | ${tempName.slug} | ${tempName.name}`
+                    //         }
+        
+                    //         retArr.push(processed)
+                    //     }
+
+
+
+
+                    // }
+                } // end of IPv4 comparison
+
             }
         }
     }

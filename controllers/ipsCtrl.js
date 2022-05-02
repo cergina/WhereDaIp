@@ -133,14 +133,17 @@ const analyseIps = async (req, res) => {
         await generalCtrl.simulateWorkAndThenSetIdle(3, 1)
     } else {
         console.log("Analyse is already occupied")
-        res.redirect('/state')
+        if (res)
+            res.redirect('/state')
         return
     }
 
     // just test
-    res.redirect('/state')
+    if (res)
+        res.redirect('/state')
 
     setTimeout(async function() {
+        console.log(`analysis START`)
         // we want same same provider data
         var providers = await getAllUsableProviders()
         var useIndex = 0
@@ -167,10 +170,13 @@ const analyseIps = async (req, res) => {
         }).sort({ipRequested: 'asc'})
 
 
-        /* TODO - podobne ako je sus */
+        /* Ziskajme findings */
         var covFindings = await covertCtrl.reportFindingsHere(oneProviderResponses)
+        console.log(`covFindings DONE`)
         var blkFindings = await blklistCtrl.reportFindingsHere(oneProviderResponses)
+        console.log(`blkFindings DONE`)
         var susFindings = await suspectCtrl.reportFindingsHere(oneProviderResponses)
+        console.log(`susFindings DONE`)
 
         /* mame findingy. teraz ich treba priradit ku kazdemu response.findings arrayu */
         try {
@@ -204,20 +210,22 @@ const analyseIps = async (req, res) => {
                 // } 
                 subnetEntered = undefined
                 for (var c of covFindings) {
-
-                    if (x.isSubnet === 0 && x.ipRequested === c.ipRequested) {
-                        x.findings.push({text: c.text, foundAt: c.foundAt})
-                    } else if (x.isSubnet === 1) {
-                        for (var w of x.subList) {
-                            var wsub = getSubnetForIp(w.address, 24)
-
-                            if (subnetEntered !== wsub && w.address ===  c.ipRequested) {
-                                x.findings.push({text: c.text, foundAt: c.foundAt})
-                                subnetEntered = getSubnetForIp(c.ipRequested, 24)
-                                break
-                            }
-                        }
+                    if (x.ipRequested === c.ipRequested) {
+                        x.findings.push({text: c.text, foundAt: c.foundAt})    
                     }
+                    // if (x.isSubnet === 0 && x.ipRequested === c.ipRequested) {
+                    //     x.findings.push({text: c.text, foundAt: c.foundAt})    
+                    // } else if (x.isSubnet === 1) {
+                    //     for (var w of x.subList) {
+                    //         var wsub = getSubnetForIp(w.address, 24)
+
+                    //         if (subnetEntered !== wsub && w.address ===  c.ipRequested) {
+                    //             x.findings.push({text: c.text, foundAt: c.foundAt})
+                    //             subnetEntered = getSubnetForIp(c.ipRequested, 24)
+                    //             break
+                    //         }
+                    //     }
+                    // }
                 }
 
                 // blk
@@ -228,29 +236,33 @@ const analyseIps = async (req, res) => {
                 // }
                 subnetEntered = undefined
                 for (var b of blkFindings) {
-
-                    if (x.isSubnet === 0 && x.ipRequested === b.ipRequested) {
+                    if (x.ipRequested === b.ipRequested)
                         x.findings.push({text: b.text, foundAt: b.foundAt})
-                    } else if (x.isSubnet === 1) {
-                        for (var w of x.subList) {
-                            var wsub = getSubnetForIp(w.address, 24)
+                    // if (x.isSubnet === 0 && x.ipRequested === b.ipRequested) {
+                    //     x.findings.push({text: b.text, foundAt: b.foundAt})
+                    // } else if (x.isSubnet === 1 && x.ipRequested === b.ipRequested) {
+                    //     x.fndings.push({text: b.text, foundAt: b.foundAt})
 
-                            if (subnetEntered !== wsub && w.address ===  b.ipRequested) {
-                                x.findings.push({text: b.text, foundAt: b.foundAt})
-                                subnetEntered = getSubnetForIp(b.ipRequested, 24)
-                                break
-                            }
-                        }
-                    }
+                    //     // for (var w of x.subList) {
+                    //     //     var wsub = getSubnetForIp(w.address, 24)
+
+                    //     //     if (subnetEntered !== wsub && w.address ===  b.ipRequested) {
+                    //     //         x.findings.push({text: b.text, foundAt: b.foundAt})
+                    //     //         subnetEntered = getSubnetForIp(b.ipRequested, 24)
+                    //     //         break
+                    //     //     }
+                    //     // }
+                    // }
                 }
 
                 x.save()
             }
+            actionSaver.changeOccured()
         } catch(e) {
             console.log(e)
         } finally {
+            console.log(`Analysis END`)
             await generalCtrl.setFree(3)
-            actionSaver.analysisDone()
         }
     }, 500)
 
@@ -325,7 +337,7 @@ const deleteExistingResponse = async (req, res) => {
 
 // regular geolocation event - suspicious list
 // TODO geoEvent
-const searchForIpsController = async (batch) => {
+const searchForIpsController = async (batch, isLast) => {
     try {
         // only use active ones
         var providers = await getAllUsableProviders()
@@ -384,7 +396,9 @@ const searchForIpsController = async (batch) => {
         })
 
         // allow for source cache
-        actionSaver.changeOccured()
+        // call for changes
+        if  (isLast === true)
+            actionSaver.changeOccured()
     } catch(e) {
         logError(e)
     }

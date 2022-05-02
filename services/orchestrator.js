@@ -45,10 +45,14 @@ const setUp = () => {
         // set max time block
         var actualState = await generalCtrl.getState(2)
         var batchesLeft = await reqFile.getLimitAndBatchCount()
+        var isLast = undefined
         
         if (actualState.isBusy === 0 && batchesLeft.batchesCount > 0) {
             await generalCtrl.setBusyFor(2, configuration.BLOCK_TIME_GEOLOCATION)
             await generalCtrl.simulateWorkAndThenSetIdle(2, configuration.BLOCK_TIME_GEOLOCATION)
+            
+            if (batchesLeft.batchesCount === 1)
+                isLast = true
         } else if (actualState.isBusy === 0 && batchesLeft.batchesCount === 0) {
             console.log("Event GEOLOCATION NOT raised. Nothing to do.")
             return 
@@ -66,11 +70,12 @@ const setUp = () => {
             // save as subnet - with inner IPs
             var whatToDo = await reqFile.popOneBatch()
 
+
             if (whatToDo !== null) { 
                 // geolocate
                 console.log(`Now we do: \n${whatToDo}`)
 
-                await ipsCtrl.searchForIpsController(whatToDo)
+                await ipsCtrl.searchForIpsController(whatToDo, isLast)
             } else {
                 console.log('Nothing to do now') 
             }
@@ -78,7 +83,6 @@ const setUp = () => {
             helper.logError(`Error: ${e}`)
         } finally {
             console.log("Event GEOLOCATION done, but new jobs will not be available straightaway")
-            actionSaver.changeOccured()
         }
     });
 

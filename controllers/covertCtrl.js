@@ -201,28 +201,52 @@ const reportFindingsHere = async (arg) => {
                     retArr.push(processed)
                 }
             } else {
-                var toLook = true
-                if (toLook && xIp.isSubnet === 1) {
+                if (xIp.isSubnet === 1) {
+                    // min 1 tu je urcite
+                    var addr = xIp.subList[0].address.split('.')
+                    addr = `${addr[0]}.${addr[1]}.${addr[2]}.`
 
-                    for (var c of xIp.subList) {
+                    for (let i=0; i<xList.list.length; i++) {
+                        // currIp
+                        var curr = xList.list[i].ip.split('.')
+                        curr = curr.length > 2 ? `${curr[0]}.${curr[1]}.${curr[2]}.` : undefined
 
-                        if (previousIp !== c.address && xList.list.some(e => e.ip === c.address)) {
-                            previousIp = c.address
+                        if (addr === curr) {
+                            previousIp = xIp.ipRequested
+                            
                             processed = {
-                                ipRequested: c.address,
+                                ipRequested: xIp.ipRequested,
                                 text: `COVERT | ${xList.type === 1 ? 'TOR_EXIT_NODES' : 'VPN_SERVERS'} | ${xList.slug} | ${xList.name}`,
                                 foundAt: Date.now()
                             }
         
                             retArr.push(processed)
-
-                            toLook = false
                             break
                         }
-
                     }
-
                 }
+                // var toLook = true
+                // if (toLook && xIp.isSubnet === 1) {
+
+                //     for (var c of xIp.subList) {
+
+                //         if (previousIp !== c.address && xList.list.some(e => e.ip === c.address)) {
+                //             previousIp = c.address
+                //             processed = {
+                //                 ipRequested: c.address,
+                //                 text: `COVERT | ${xList.type === 1 ? 'TOR_EXIT_NODES' : 'VPN_SERVERS'} | ${xList.slug} | ${xList.name}`,
+                //                 foundAt: Date.now()
+                //             }
+        
+                //             retArr.push(processed)
+
+                //             toLook = false
+                //             break
+                //         }
+
+                //     }
+
+                // }
             }
 
         }
