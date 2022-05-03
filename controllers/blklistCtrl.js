@@ -86,7 +86,7 @@ const refreshProviderList = async (req, res) => {
         }
         else if (provider.format === 0) {
             // CSV is split with commas and new line
-            acquiredList = acquiredList.split(/\r?\n/)
+            acquiredList = acquiredList.split(/\r?\n/).filter(item => item)
             
             acquiredList.forEach(address => {
                 var res = address.startsWith('#')

@@ -2,7 +2,7 @@
 // to handle requests. 
 
 const configuration = require("../config/config-nonRestricted")
-const { logDebug, logError, logInfo, logRaw, yyyymmdd } = require('../services/helper.js')
+const { logDebug, logError, logInfo, logRaw, yyyymmdd, uniq } = require('../services/helper.js')
 const { sendPromise } = require('../services/simpleCommunicator.js')
 const actionSaver = require('../services/actionSaver.js')
 const coverSource = require("../models/coverSource")
@@ -71,7 +71,15 @@ const obtainSourceList = async (req, res, next) => {
         acquiredList = await sendPromise(req.source)
         
         // check every IP for type and save
-        acquiredList = acquiredList.split(/\r?\n/);
+        acquiredList = acquiredList.split(/\r?\n/).filter(item => item).sort();
+        
+        
+        var addressesX =  []
+        for (var a of acquiredList) {
+            addressesX.push(a.split('/')[0])
+        }
+        acquiredList = uniq(addressesX)
+
 
         let newList = []
         acquiredList.forEach(address => {

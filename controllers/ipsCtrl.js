@@ -788,11 +788,15 @@ const getJsonForMapRequests = async (cached) => {
     retObj.fgTableNames.push("City")
     retObj.fgTableNames.push("Country")
     
+    uniqueResponses.sort((a, b) => (a.findings.length < b.findings.length) ? 1 : -1)
+    // uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
+
     for (var x of uniqueResponses) {
         // put to points
         var detailStringHtml = ''
         var detailString = ''
-        var additionalDetail = x.isSubnet === 1 ? `/24 (${x.subList.length} IP addresses)`: ``
+        //var additionalDetail = x.isSubnet === 1 ? `/24 (${x.subList.length} IP addresses)`: ``
+        var additionalDetail = x.isSubnet === 1 ? `/24`: ``
         var inc = 0
         for (var f of x.findings) {
             ++inc
@@ -946,45 +950,75 @@ const getJsonWithCountedAs = async (cached) => {
 
     // ziskat unikatne AS pre uniqueResp
     var uniqueValues = []
+    var collider = []
     for (var x of uniqueResponses) {
-        var tmpCes = uniqueValues.some(elem => elem.name === x.as)
-
-        if (!tmpCes) {
-            uniqueValues.push({"name": x.as, "count": 0})
+        var as = x.as.split(' ')[0]
+        if (collider.indexOf(as) === -1) {
+            collider.push(as)
+            uniqueValues.push({"name": x.as, "as": as, "count": 0})
         }
+
+        // var tmpCes = uniqueValues.some(elem => elem.name === x.as)
+
+        // if (!tmpCes) {
+        //     uniqueValues.push({"name": x.as, "as": x.as, "count": 0})
+        // }
     }
     for (var x of cached.cachedBloklistResponses) {
         if (x.list[0].asnumber) {
             for (var y of x.list) {
-                var toFind = `AS${y.asnumber} `
-                var tmpCes = uniqueValues.some(elem => {
-                    return elem.name.includes(toFind)
-                })
+                var as = `AS${y.asnumber}`
+                if (collider.indexOf(as) === -1) {
+                    collider.push(as)
+                    uniqueValues.push({"name": as, "as": as, "count": 0})
+                }
+
+                // var toFind = `AS${y.asnumber} `
+                // var tmpCes = uniqueValues.some(elem => {
+                //     return elem.name.includes(toFind)
+                // })
                 
-                if (!tmpCes)
-                    uniqueValues.push({"name": toFind, "count": 0})
+                // if (!tmpCes)
+                //     uniqueValues.push({"name": toFind, "count": 0})
             }
         }
     }
 
     
-
     // pozvysovat pocty ake su v uniqueResp
     for (var x of uniqueResponses) {
+        var index = collider.indexOf(x.as.split(' ')[0])
         if (x.isSubnet === 0)
-            uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count++
-        else  if (x.isSubnet === 1)
-            uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count+= x.subList.length
+            uniqueValues[index].count++
+        else if (x.isSubnet === 1)
+            uniqueValues[index].count+= x.subList.length
     }
     // pozvysovat pocty v cached.cachedBloklistResponses a pripadne pridat rovno do pola ak neni
     for (var x of cached.cachedBloklistResponses) {
         if (x.list[0].asnumber) {
             for (var y of x.list) {
-                var toFind = `AS${y.asnumber} `
-                uniqueValues[uniqueValues.findIndex(el => el.name.includes(toFind))].count++
+                var toFind = `AS${y.asnumber}`
+                var index = collider.indexOf(toFind)
+                uniqueValues[index].count++
             }
         }
     }
+    // pozvysovat pocty ake su v uniqueResp
+    // for (var x of uniqueResponses) {
+    //     if (x.isSubnet === 0)
+    //         uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count++
+    //     else  if (x.isSubnet === 1)
+    //         uniqueValues[uniqueValues.findIndex(el => el.name === x.as)].count+= x.subList.length
+    // }
+    // // pozvysovat pocty v cached.cachedBloklistResponses a pripadne pridat rovno do pola ak neni
+    // for (var x of cached.cachedBloklistResponses) {
+    //     if (x.list[0].asnumber) {
+    //         for (var y of x.list) {
+    //             var toFind = `AS${y.asnumber} `
+    //             uniqueValues[uniqueValues.findIndex(el => el.name.includes(toFind))].count++
+    //         }
+    //     }
+    // }
 
     uniqueValues = uniqueValues.filter(a => a.count > 0)
     uniqueValues.sort((a, b) => (a.count < b.count) ? 1 : -1)
@@ -1043,24 +1077,36 @@ const getJsonWithCountedCovered = async () => {
 
     for (var x of uniqueResponses) {
         var toInc = x.isSubnet === 1 ? x.subList.length : 1
+        var wasInc = false
 
         // GEODB part
-        if (x.mobile === 'true')
-            uniqueValues[0].count+= toInc
-        if (x.proxy === 'true')
-            uniqueValues[1].count+= toInc
-        if (x.hosting === 'true')
-            uniqueValues[2].count+= toInc
-        if (x.mobile === 'false' && x.proxy === 'false' && x.hosting === 'false')
-            uniqueValues[3].count+= toInc
+        if (x.mobile === 'true') {
+            uniqueValues[0].count += toInc
+            wasInc = true
+        }
+        if (x.proxy === 'true') {
+            uniqueValues[1].count += toInc
+            wasInc = true
+        }
+        if (x.hosting === 'true') {
+            uniqueValues[2].count += toInc
+            wasInc = true
+        }
         
         // COVERT from findings
         if (x.findings.some(el => {
-            return true === el?.text?.includes("COVERT", "VPN")
-        })) uniqueValues[4].count+= toInc
+            if (el?.text?.includes("COVERT"))
+                return true === el?.text?.includes("VPN")
+            return false
+        })) { uniqueValues[4].count += toInc; wasInc = true }
         if (x.findings.some(el => {
-            return true === el?.text?.includes("COVERT", "TOR")
-        })) uniqueValues[5].count+= toInc
+            if (el?.text?.includes("COVERT"))
+                return true === el?.text?.includes("TOR")
+            return false
+        })) { uniqueValues[5].count += toInc; wasInc = true; }
+
+        if (wasInc === false)
+            uniqueValues[3].count += toInc
     }
 
     uniqueValues = uniqueValues.filter(a => a.count > 0)

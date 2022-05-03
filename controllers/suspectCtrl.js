@@ -320,7 +320,11 @@ const acceptNewList = async (req, res, next) => {
     logInfo('list addition requested')
 
     var addresses = req.body.ip_addresses.split("\r\n").filter(item => item)
-    addresses = uniq(addresses)
+    var addressesX =  []
+    for (var a of addresses) {
+        addressesX.push(a.split('/')[0])
+    }
+    addresses = uniq(addressesX)
 
     // supports IPv4 and IPv6, but accepts only minimal like 192.168.0.1 and no 192.168.0.001
     if (! addresses.every( currentValue => net.isIP(currentValue))) {
@@ -356,7 +360,11 @@ const acceptEditExisting = async (req, res, next) => {
     // REST METHOD === 1 === NONE
     if (req.provider.restMethod === 1) {
         addresses = req.body.ip_addresses.split("\r\n").filter(item => item)
-        addresses = uniq(addresses)
+        var addressesX =  []
+        for (var a of addresses) {
+            addressesX.push(a.split('/')[0])
+        }
+        addresses = uniq(addressesX)
     
         
         if (! addresses.every( currentValue => net.isIP(currentValue))) {
@@ -484,8 +492,12 @@ function saveAndRedirectTest(viewName) {
                 let acquiredList = await sendPromise(provider.baseUrl)
                 
                 // check every IP for type and save
-                acquiredList = acquiredList.split(/\r?\n/)
-                acquiredList = uniq(acquiredList)
+                acquiredList = acquiredList.split(/\r?\n/).filter(item => item).sort()
+                var addressesX =  []
+                for (var a of acquiredList) {
+                    addressesX.push(a.split('/')[0])
+                }
+                acquiredList = uniq(addressesX)
                 let newList = []
 
                 acquiredList.forEach(address => {
@@ -781,7 +793,7 @@ function saveAndRedirect(viewName) {
                 acquiredList = await sendPromise(req.baseUrl)
                 
                 // check every IP for type and save
-                acquiredList = acquiredList.split(/\r?\n/);
+                acquiredList = acquiredList.split(/\r?\n/).filter(item => item).sort();
         
                 let newList = []
                 acquiredList.forEach(address => {
