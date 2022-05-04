@@ -3,16 +3,14 @@
     "data": {
         "labels": [
             "IPv4",
-            "Domain",
-            "IPv6"
+            "Domain"
         ],
         "datasets": [
             {
                 "label": "Domains vs No domains",
                 "data": [
-                    57652,
-                    4231,
-                    4
+                    84928,
+                    17152
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -57,19 +55,14 @@
             [
                 1,
                 "IPv4",
-                57652
+                84928
             ],
             [
                 2,
                 "Domain",
-                4231
-            ],
-            [
-                3,
-                "IPv6",
-                4
+                17152
             ]
         ]
     },
-    "time": "2022-05-04 01:12:46"
+    "time": "2022-05-05 00:24:24"
 }

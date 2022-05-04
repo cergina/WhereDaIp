@@ -3,7 +3,7 @@
 const configuration = require('../config/config-nonRestricted.js')
 const stateProvider = require('../models/stateProvider.js')
 const basePath = `basic/`
-const { getLimitAndBatchCount } = require('../services/requestsFile.js')
+const { getLimitAndBatchCount, setGeolocationLimit } = require('../services/requestsFile.js')
 
 
 // just for / to show basic redirects, possibly some info later
@@ -19,6 +19,7 @@ const state = async (req, res) => {
     state.maps = await getState(5)
     state.sources = await getState(6)
 
+    await setGeolocationLimit()
     var geo = await getLimitAndBatchCount()
     state.geoloc.batchesCount = geo.batchesCount
     state.geoloc.currentLimit = geo.currentLimit

@@ -116,6 +116,7 @@ locationProviderSchema.pre('validate', function(next) {
         throw validationError
     }
 
+
     next()
 })
 

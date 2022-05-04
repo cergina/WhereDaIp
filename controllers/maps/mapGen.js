@@ -243,6 +243,19 @@ const generateMapForHideouts = async (cached) => {
         h.occurences = h.occurences.filter(a => a.count > 0)
         h.occurences.sort((a, b) => (a.count < b.count) ? 1 : -1)
     }
+    //hids.sort((a, b) => a.occurences.length < b.occurences.length ? 1 : -1)
+    hids.sort((a, b) => {
+        var aLen = a.occurences.length
+        var bLen = b.occurences.length
+        var aCnt = a.occurences[0].count
+        var bCnt = b.occurences[0].count
+
+        if (aLen === bLen) {
+            return (aCnt > bCnt) ? -1 : 1
+        } else {
+            return (aLen > bLen) ? -1 : 1
+        }
+    })
 
     coverFileProcessAndSave({}, fileSettings, fileNameWriteHideouts, hids)
 }
@@ -266,7 +279,7 @@ const generateMapForSusTags = async (cached) => {
         if (x.isSubnet === 1)
             incBy = x.subList.length
 
-        var kt = getLocationByCode(x.countryCode)
+        //var kt = getLocationByCode(x.countryCode)
 
         for (let f of x.findings) {
             var textArr = f.text.split('|')
@@ -287,7 +300,19 @@ const generateMapForSusTags = async (cached) => {
         s.occurences = s.occurences.filter(a => a.count > 0)
         s.occurences.sort((a, b) => (a.count < b.count) ? 1 : -1)
     }
-    sids.sort((a, b) => a.occurences.length < b.occurences.length ? 1 : -1)
+    //sids.sort((a, b) => a.occurences.length < b.occurences.length ? 1 : -1)
+    sids.sort((a, b) => {
+        var aLen = a.occurences.length
+        var bLen = b.occurences.length
+        var aCnt = a.count
+        var bCnt = b.count
+        
+        if (aLen === bLen) {
+            return (aCnt < bCnt) ? 1 : (aCnt > bCnt) ? 0 : -1
+        } else {
+            return (aLen < bLen) ? 1 : -1
+        }
+    })
 
     susFileProcessAndSave({}, fileSettings, fileNameWriteSusTags, sids)
 }
