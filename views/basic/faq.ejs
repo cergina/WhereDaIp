@@ -21,55 +21,15 @@
           </p>
       </div>
 
-        <!-- start test -->
+        <!-- testing -->
         <div class="accordion mb-4" id="accordionExample">
-            <!-- one -->
-            <div class="card">
-              <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                  <button class="btn btn-link" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseOne" id="1" onclick="myFunction(this.id)">
-                    FAQ 1
-                  </button>
-                </h5>
-              </div>
-              <div class="collapse" id="collapse-1">
-                <div class="card-body">
-                  Example 1
-                </div>
-              </div>
-            </div>
-            <!-- two -->
-            <div class="card">
-              <div class="card-header" id="headingTwo">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo" id="2" onclick="myFunction(this.id)">
-                    FAQ 2
-                  </button>
-                </h5>
-              </div>
-              <div class="collapse" id="collapse-2">
-                <div class="card-body">
-                  Example 2
-                </div>
-              </div>
-            </div>
-            <!-- three -->
-            <div class="card">
-              <div class="card-header">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapseThree" id="3" onclick="myFunction(this.id)">
-                    FAQ 3
-                  </button>
-                </h5>
-              </div>
-              <div class="collapse" id="collapse-3">
-                <div class="card-body">
-                  Example 3
-                </div>
-              </div>
-            </div>
-          </div>
-        <!-- end test -->
+          <%- include('./_faqElem.ejs', { num: '1', faqTitle: 'What is the purpose of this work?', faqContent: 'To provide a scientific tool with its help we can get outputs that could be used during scientific analysis and comparation with other published research outputs.'}) %>
+          <%- include('./_faqElem.ejs', { num: '2', faqTitle: 'What is the current state of development?', faqContent: 'The SW is currently undergoing optimizations and looking for bugs. Everything during operation.'}) %>
+          <%- include('./_faqElem.ejs', { num: '3', faqTitle: 'Used technologies?', faqContent: 'Everything is open-source or free to use. Some technologies include : NodeJS, MongoDB, Express, Bootstrap 4.6, EJS, ... '}) %>
+          <%- include('./_faqElem.ejs', { num: '4', faqTitle: 'Rules of operation?', faqContent: 'Add geolocation data providers, so all required fields are set. (Remember to set geolocation limits per minute. Some providers may send 503 if these limits are overcomed) Add various cover lists (VPN, TOR) of your choice. Add APIs of blocklists and then obtain them. Proceed to add suspicious lists (either manually or via url). After all this is done, you can geolocate either manually or proceed to analyze suspicious lists. After all is done (you can see that in Application state module), proceed to Run analysis in Results/Individual outputs and then you can see results in individual/fused IP outputs and graphs or maps via chosen categories.'}) %>
+          <%- include('./_faqElem.ejs', { num: '5', faqTitle: 'Disclaimer', faqContent: 'This software is provided as is, with no guarantee of correct information. This way I hereby declare that data shown by this application are only the result of accumulated lists and run analysis.'}) %>
+        </div>
+        <!-- testing end -->
 
         <!-- footer with name, year, FIIT, www -->
         <%- include('../_footer') %> 

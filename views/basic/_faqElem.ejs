@@ -1,0 +1,15 @@
+<!-- FAQ element -->
+<div class="card">
+    <div class="card-header" id="heading<%= num %>">
+      <h5 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse<%= num %>" id="<%= num %>" onclick="myFunction(this.id)">
+          <%= faqTitle %>
+        </button>
+      </h5>
+    </div>
+    <div class="collapse" id="collapse-<%= num %>">
+      <div class="card-body">
+        <%= faqContent %>
+      </div>
+    </div>
+  </div>

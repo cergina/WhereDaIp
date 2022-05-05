@@ -20,14 +20,11 @@
             </p>
         </div>
         <div class="bd-callout bd-callout-danger">
-            <p>
-                No information about running jobs
-            </p>
-        </div>
-        <div class="bd-callout bd-callout-danger">
-            <p>
-                Unknown whether present GeoAPIs cover necessary fields
-            </p>
+            <% if (state.fieldsMissing && state.fieldsMissing.length > 0) { %>
+                <p>This system is missing these GeoAPI fields to have full ability during IP geolocation requests. '<%= state.fieldsMissing %>'</p>
+            <% } else { %>
+                <p>All GeoAPI fields are fullfilled with active providers.</p>
+            <% } %>
         </div>
         
 

@@ -23,6 +23,7 @@ const state = async (req, res) => {
     var geo = await getLimitAndBatchCount()
     state.geoloc.batchesCount = geo.batchesCount
     state.geoloc.currentLimit = geo.currentLimit
+    state.fieldsMissing = geo.fieldsMissing
 
     res.render(`${basePath}state.ejs`, { name: configuration.USER, siteTitle: 'APP state', startedAt: configuration.STARTEDAT, 
         state: state

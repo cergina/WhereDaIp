@@ -4,7 +4,6 @@
 const configuration = require("../config/config-nonRestricted")
 const locationProvider = require("../models/locationProvider")
 const { logInfo, yyyymmdd } = require('../services/helper.js')
-const { setGeolocationLimit } = require('../services/requestsFile.js')
 
 const basePath = `providers/`
 
@@ -123,11 +122,11 @@ function saveAndRedirect(viewName) {
         provider.response.hostingPath = req.body.api_resp_hosting_path
 
         try {
-            provider = await provider.save()
-            await setGeolocationLimit()
-            res.redirect(`${configuration.WWW_GEODB_HOME}/${provider.slug}/?changed=1`)
+            provider = await provider.save();
+            res.redirect(`${configuration.WWW_GEODB_HOME}/${provider.slug}/?changed=1`);
 
         } catch (e) {
+            console.log(e)
             res.render(`${configuration.WWW_GEODB_HOME.slice(1)}\\${viewName}`, { siteTitle: "Provider (correction)", provider: provider, error: 1  })
         }
     }
