@@ -19,8 +19,9 @@
                 Running since: <%= startedAt %>
             </p>
         </div>
-        <div class="bd-callout bd-callout-danger">
-            <% if (state.fieldsMissing && state.fieldsMissing.length > 0) { %>
+        <% var isRed = (state.fieldsMissing && state.fieldsMissing.length > 0) %>
+        <div class="bd-callout <%= (isRed === false) ? 'bd-callout-success' : 'bd-callout-danger' %>">
+            <% if (isRed) { %>
                 <p>This system is missing these GeoAPI fields to have full ability during IP geolocation requests. '<%= state.fieldsMissing %>'</p>
             <% } else { %>
                 <p>All GeoAPI fields are fullfilled with active providers.</p>

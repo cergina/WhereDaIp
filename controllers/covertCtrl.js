@@ -149,7 +149,7 @@ function saveAndRedirect(viewName) {
 
         try {
             source = await source.save()
-            logInfo(`Successfull Creating/Editing ${source.name}`)
+            logInfo(`Successful Creating/Editing ${source.name}`)
             res.redirect(`${baseViewFolder}` + `/${source.slug}/?changed=1`)
         } catch (e) {
             res.render(`${baseViewFolder.slice(1)}` + `/${viewName}`, { source: source })

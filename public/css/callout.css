@@ -47,3 +47,11 @@
 .bd-callout-danger h4 {
     color: #d9534f
 }
+
+.bd-callout-success {
+    border-left-color: #3fde0e
+}
+
+.bd-callout-success h4 {
+    color: #3fde0e
+}

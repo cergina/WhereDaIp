@@ -29,12 +29,11 @@ const showAllIps = async (req, res) => {
         "addedAt": 1,
         "city": 1,
         "country": 1,
-        "provider": 1
+        "provider": 1,
+        "subProvider": 1,
+        "findings": 1
     }).sort({ addedAt: 'desc'})
-
-    // not optimized
-    //const requests = await responseData.find().sort({ addedAt: 'desc'})
-        
+  
     const providers = await locationProvider.find()
 
     // create shortened json to send to frontend 
@@ -46,7 +45,27 @@ const showAllIps = async (req, res) => {
         customizedProviders[providers[i]._id] = item
     }
 
-    res.render(`${basePath}ips.ejs`, { requests: requests, 
+    var changedRequests = []
+    for (var i in requests) {
+
+        var item = 
+        {
+            id: requests[i].id,
+            success: requests[i].success,
+            ipRequested: requests[i].ipRequested,
+            isSubnet: requests[i].isSubnet,
+            addedAt: requests[i].addedAt,
+            city: requests[i].city,
+            country: requests[i].country,
+            provider: requests[i].provider,
+            subProvider: requests[i].subProvider,
+            somethingFound: requests[i].findings.length > 0
+        }
+
+        changedRequests.push(item)
+    }
+
+    res.render(`${basePath}ips.ejs`, { requests: changedRequests, 
         providers: customizedProviders,
         siteTitle: 'List of IPs'})
 }
@@ -59,11 +78,10 @@ const showFilteredIps = async (req, res) => {
         "addedAt": 1,
         "city": 1,
         "country": 1,
-        "provider": 1
+        "provider": 1,
+        "subProvider": 1,
+        "findings": 1
     }).sort({ addedAt: 'desc'})
-
-    // not optimized
-    // const requests = await responseData.find().sort({ addedAt: 'desc'})
     
     const providers = await locationProvider.find()
     
@@ -89,9 +107,10 @@ const showFilteredIps = async (req, res) => {
             ipRequested: requests[i].ipRequested,
             isSubnet: requests[i].isSubnet,
             firstAddedAt: requests[i].addedAt,
-            lastAddedAt: requests[i].addedAt,
             city: requests[i].city,
-            country: requests[i].country
+            country: requests[i].country,
+            subProvider: requests[i].subProvider,
+            somethingFound: requests[i].findings.length > 0
         }
 
         summedRequests.push(item)
@@ -429,8 +448,11 @@ const acceptRequestController = async (req, res) => {
         // remove ip addresses that were already geolocated
         var willBeSet = await returnOnlyAddressesThatWereNotGeolocated(addresses)
 
-        if (willBeSet && willBeSet.length === 0) {
-            res.redirect(`${configuration.WWW_REQ_NEW}/?geolocated=1`)
+        if (willBeSet && willBeSet.arr.length === 0) {
+            if (willBeSet.added)
+                res.redirect(`${configuration.WWW_REQ_NEW}/?added=1`)
+            else
+                res.redirect(`${configuration.WWW_REQ_NEW}/?geolocated=1`)
             return
         }
 
@@ -582,6 +604,7 @@ const returnOnlyAddressesThatWereNotGeolocated = async (list) => {
         return list
 
     let toDelete = []
+    var added = false
     for (var l of list) {
         var ipv4 = true
         if (net.isIPv4(l))
@@ -596,6 +619,8 @@ const returnOnlyAddressesThatWereNotGeolocated = async (list) => {
         var investigate = true
 
         for (var r of responses) {
+            var changed = false
+
             if (investigate === false)
                 break
             
@@ -604,14 +629,24 @@ const returnOnlyAddressesThatWereNotGeolocated = async (list) => {
                 // is same subnet?
                 // if yes, check everyone inside subList
                 if (subnet === r.ipRequested) {
+                    var found = false
+
                     for (var s of r.subList) {
                         if (investigate === false)
                             break
 
                         if (s.address === l) {
+                            found = true
                             toDelete.push(l)
                             investigate = false
                         }
+                    }
+
+                    // ak nic nebolo najdene, nejdeme geolokalizovat tu istu IP znova
+                    if (found === false) {
+                        r.subList.push({address: l})
+                        toDelete.push(l)
+                        changed = true
                     }
                 }
             } else {
@@ -620,16 +655,24 @@ const returnOnlyAddressesThatWereNotGeolocated = async (list) => {
                     investigate = false
                 }
             }
+
+
+            if (changed) {
+                try {
+                    added = true
+                    await r.save()
+                } catch (e) {console.log(e)}
+            }
         }
     }
 
 
-    var toRet = []
+    var toRet = {added: added, arr: []}
     for (var l of list) {
         if (toDelete.includes(l)) {
 
         } else {
-            toRet.push(l)
+            toRet.arr.push(l)
         }
     }
 

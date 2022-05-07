@@ -4,7 +4,7 @@
 <%- include('../../_headerOutMap') %> 
 <body>
     
-    <div class="container"> 
+    <div class="container" id="MY_CONTAINER_ID" style="justify-content:center; vertical-align: middle; align-items: center;"> 
         <!-- alert at top -->
         <div class="alert alert-info">
             <h1 class="mb-4 display-4">Position evasion</h1> 
@@ -18,25 +18,10 @@
               </nav>
         </div> 
 
-        
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item"><a class="nav-link active" id="tab-0" href="#data-0" data-toggle="tab" role="tab" aria-selected="true" >Technique 1</a></li>
-          <li class="nav-item"><a class="nav-link"        id="tab-1" href="#data-1" data-toggle="tab" role="tab" aria-selected="false">Technique 2</a></li>
-          <li class="nav-item"><a class="nav-link"        id="tab-2" href="#data-2" data-toggle="tab" role="tab" aria-selected="false">Technique 3</a></li>
-          <li class="nav-item"><a class="nav-link"        id="tab-3" href="#data-3" data-toggle="tab" role="tab" aria-selected="false">Technique 4</a></li>
-          <li class="nav-item"><a class="nav-link"        id="tab-4" href="#data-4" data-toggle="tab" role="tab" aria-selected="false">Technique 5</a></li>
-          <li class="nav-item"><a class="nav-link"        id="tab-5" href="#data-5" data-toggle="tab" role="tab" aria-selected="false">Technique 6</a></li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-          <% for (let t=0; t<6; t++) { %>
-            <div class="tab-pane fade <%= (t === 0) ? 'show active' : 'show active' %>" role="tabpanel" id="data-<%= t %>">
-              <!-- main test -->
-              <div class="center mw-80" style="border:1px solid gray; padding:2px;" id="earth_div<%= t %>"></div>
-              <!-- GridJS -->
-              <div id="wrapper<%= t %>"></div>
-            </div>
-          <% } %>
-        </div>
+        <!-- navigacny panel pre zem a tabulku -->
+        <ul style="justify-content:center;" class="nav nav-tabs" id="myTab" role="tablist"></ul>
+        <!-- obsah zem a tabulka -->
+        <div style="justify-content:center; margin: 0 auto; vertical-align: middle;" class="tab-content" id="myTabContent"></div> 
 
         <div class="center">
             <small class="form-text text-muted" id="datetime">Data gotten at [time here].</small>
@@ -49,9 +34,39 @@
 
 
     <script>
+        var watTab = document.getElementById('myTab');
+        var watTabContent = document.getElementById('myTabContent');
         fetch("/accessible/map/mapTopHideouts.json")
             .then(response => response.json())
             .then(async data => {
+              // experimental
+              for (let i=0; i<data.count; i++) {
+                var li = document.createElement('li')
+                li.classList.add("nav-item")
+                var a = document.createElement('a')
+                a.classList.add("nav-link"); a.id = `tab-${i}`; a.href = `#data-${i}`; a.role="tab"; a.setAttribute("data-toggle", "tab");  a.setAttribute("aria-selected", "false");
+                if (i === 0) {a.classList.add("active")};
+                a.textContent += `Technique ${i+1}`
+                li.appendChild(a)
+                watTab.appendChild(li)
+              }
+              
+              for (let t=0; t<data.count; t++) {
+                var pane = document.createElement("div"); pane.classList.add("tab-pane"); pane.classList.add("fade"); pane.classList.add("show"); pane.classList.add("active");
+                pane.role = "tabpanel"; pane.id = `data-${t}`
+                pane.style = "justify-content:center; vertical-align: middle; align-items: center;"
+                var earth = document.createElement("div"); earth.id = `earth_div${t}`; earth.classList.add("center"); earth.classList.add("mw-80");
+                earth.style = style="border:1px solid gray; padding:2px;"
+                var wrapper = document.createElement("div"); wrapper.id = `wrapper${t}`; wrapper.style = style="justify-content:center; vertical-align: middle; align-items: center;"
+
+                pane.appendChild(earth);
+                pane.appendChild(wrapper);
+                watTabContent.appendChild(pane);
+              }
+              // end experimental
+
+
+              // test
               var earths = []
               for (let i=0; i<data.count; i++) {
                 console.log(data.covers[i].name)
@@ -77,20 +92,25 @@
                 
                 try {
                   await earths[i].setView([data.covers[i].points[0].lat, data.covers[i].points[0].lon], data.covers[i].options.zoom);
-                } catch (e) {}
+                } catch (e) {console.log(e)}
 
                 // GridJS
+                var wrapper = document.getElementById(`wrapper${i}`)
                 await new gridjs.Grid({ 
                   columns: data.covers[i].tableNames,
-                  data: data.covers[i].tableValues
-                }).render(document.getElementById(`wrapper${i}`))
-
-                if (i !== 0) {
-                  document.getElementById(`data-${i}`).classList.remove('active', 'show')
-                }
+                  data: data.covers[i].tableValues,
+                  fixedHeader: true
+                }).render(wrapper);
               }
 
               document.getElementById('datetime').textContent = `Data calculated at ${data.time}`
+
+              return data.count
+            }).then(async d => {
+              for (let i=1; i<d; i++) {
+                await document.getElementById(`data-${i}`).classList.remove('show');
+                await document.getElementById(`data-${i}`).classList.remove('active');
+              }
             })
     </script>
 

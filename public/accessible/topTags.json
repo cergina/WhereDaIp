@@ -2,21 +2,21 @@
     "type": "bar",
     "data": {
         "labels": [
-            "yfix",
-            "postfix",
+            "bots",
             "mail",
-            "spam",
-            "wiki"
+            "strong",
+            "old",
+            "login"
         ],
         "datasets": [
             {
                 "label": "Top 5 tags",
                 "data": [
+                    8007,
                     7967,
-                    7967,
-                    7967,
-                    146,
-                    140
+                    616,
+                    616,
+                    411
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -59,61 +59,56 @@
         "tableValues": [
             [
                 "1",
-                "yfix",
-                "7967"
+                "bots",
+                "8007"
             ],
             [
                 "2",
-                "postfix",
-                "7967"
-            ],
-            [
-                "3",
                 "mail",
                 "7967"
             ],
             [
+                "3",
+                "strong",
+                "616"
+            ],
+            [
                 "4",
-                "spam",
-                "146"
+                "old",
+                "616"
             ],
             [
                 "5",
-                "wiki",
-                "140"
+                "login",
+                "411"
             ],
             [
                 "6",
-                "badbots",
-                "140"
+                "bruteforce",
+                "411"
             ],
             [
                 "7",
-                "forum",
-                "140"
+                "ftp",
+                "60"
             ],
             [
                 "8",
-                "bot",
-                "140"
+                "spam",
+                "40"
             ],
             [
                 "9",
-                "bots",
-                "140"
+                "voip",
+                "17"
             ],
             [
                 "10",
-                "botnet",
-                "6"
-            ],
-            [
-                "11",
-                "test",
-                "3"
+                "sip",
+                "17"
             ]
         ]
     },
     "nazov": "top.js - seeTags",
-    "time": "2022-05-05 03:06:43"
+    "time": "2022-05-08 01:33:33"
 }

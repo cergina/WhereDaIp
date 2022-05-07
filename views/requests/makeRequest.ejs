@@ -44,7 +44,9 @@
                 swal({icon: 'error', title: 'Ooops!', text: 'One or more IPs are invalid.', button: false, timer: 1500})
             } else if (urlParams.get('geolocated') == '1') {
                 swal({icon: 'error', title: 'Ooops!', text: 'All IP addresses were already geolocated.', button: false, timer: 1500})
-            }
+            } else if (urlParams.get('added') == '1') {
+                swal({icon: 'success', title: 'Added!', text: 'All IP addresses were already geolocated and response of at least one of those was added to already geolocated subnet.', button: false, timer: 3000})
+            } 
         }
     </script>
 </body>

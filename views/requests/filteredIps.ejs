@@ -21,30 +21,39 @@
             </p>
         </div>
 
+        
         <!-- akcne tlacidlo -->
         <a href="/requests/new" class="btn btn-success">Make request</a>
-        <a href="/requests/" class="btn btn-info">All IPs (non fused)</a>
+        <a href="/requests/" class="btn btn-info">All IPs (non fused)</a> 
+        <a href="/requests/analyse" class="btn btn-warning">Run analysis</a>
 
         <!-- zoznam -->
         <% summedRequests.forEach(summedRequest => { %>
             <div class="card mt-2">
                 <div class="card-body">
                     <!-- ci je aktivny -->
-                    <div class="float-right"><span class="badge badge-primary badge-pill"><%= summedRequest.success == 1 ? 'Successful' : 'Failed' %> </span></div>
-                    
-                    <!-- nadpis -->
+                    <div class="float-right"><span class="badge badge-success badge-pill"><%= summedRequest.success == 1 ? 'Successful' : 'Failed' %> </span></div>
+                    <!-- ci je subnet -->
+                    <% var isManual = summedRequest.subProvider === undefined %>
+                    <div class="float-right mr-2"><span class="badge <%= isManual ? 'badge-dark':'badge-info' %> badge-pill"><%= isManual ? 'Manually' : 'IP group' %></span></div>
+                    <!-- subnet ? -->
                     <% if (summedRequest.isSubnet) { %>
-                        <h4 class="card-title"><%= summedRequest.ipRequested %>/24</h4>    
-                    <% } else { %>
-                        <h4 class="card-title"><%= summedRequest.ipRequested %></h4>
-                    <% }%>
+                        <div class="float-right mr-2"><span class="badge badge-primary badge-pill">Groupped as /24</span></div>
+                    <% } %>
+                    <!-- ci sa daco naslo -->
+                    <% var somethingFound = summedRequest.somethingFound %>
+                    <div class="float-right mr-2"><span class="badge <%= somethingFound ? 'badge-warning':'badge-light' %> badge-pill"><%= somethingFound ? 'Suspicious' : 'Clean so far' %></span></div>
+
+                    <!-- nadpis -->
+                    <h4 class="card-title"><%= summedRequest.ipRequested %></h4>
                     
                     <!-- tenke sede pismo -->
                     <div class="card-subtitle text-muted mb-2">
-                        First: <%= summedRequest.firstAddedAt.toLocaleString() %> Last: <%= summedRequest.lastAddedAt.toLocaleString() %>
+                        Acquired: <%= summedRequest.firstAddedAt.toLocaleString() %>
                     </div>
                     <!-- Krajina odkial -->
                     <div class="card-text mb-2"> <%= summedRequest.city %>, <%= summedRequest.country %></div>
+                    
                     <!-- tlacidla -->
                     <a href="/requests/filtered/<%= summedRequest.ipRequested %>" class="btn btn-primary">Read More</a>
                 </div>

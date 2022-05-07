@@ -2,17 +2,21 @@
     "type": "bar",
     "data": {
         "labels": [
-            "Hosting",
             "Nothing",
-            "Cellular"
+            "Hosting",
+            "Cellular",
+            "Proxy/VPN/TOR",
+            "TOR"
         ],
         "datasets": [
             {
                 "label": "Comparation of privacy techniques",
                 "data": [
-                    7,
-                    2,
-                    1
+                    5042,
+                    3384,
+                    898,
+                    270,
+                    51
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -56,20 +60,35 @@
         "tableValues": [
             [
                 1,
-                "Hosting",
-                7
+                "Nothing",
+                5042
             ],
             [
                 2,
-                "Nothing",
-                2
+                "Hosting",
+                3384
             ],
             [
                 3,
                 "Cellular",
-                1
+                898
+            ],
+            [
+                4,
+                "Proxy/VPN/TOR",
+                270
+            ],
+            [
+                5,
+                "TOR",
+                51
+            ],
+            [
+                6,
+                "VPN",
+                4
             ]
         ]
     },
-    "time": "2022-05-05 03:06:29"
+    "time": "2022-05-08 01:33:24"
 }

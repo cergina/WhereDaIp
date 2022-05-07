@@ -4,19 +4,19 @@
         "labels": [
             "elf",
             "Mozi",
-            "mirai",
             "32-bit",
+            "mirai",
             "mips"
         ],
         "datasets": [
             {
                 "label": "Signatures",
                 "data": [
-                    73854,
-                    70324,
-                    32327,
-                    21974,
-                    12966
+                    41537,
+                    39420,
+                    18156,
+                    17023,
+                    10627
                 ],
                 "backgroundColor": [
                     "rgba(255, 99, 132, 0.2)",
@@ -61,1924 +61,1469 @@
             [
                 1,
                 "elf",
-                73854
+                41537
             ],
             [
                 2,
                 "Mozi",
-                70324
+                39420
             ],
             [
                 3,
-                "mirai",
-                32327
+                "32-bit",
+                18156
             ],
             [
                 4,
-                "32-bit",
-                21974
+                "mirai",
+                17023
             ],
             [
                 5,
                 "mips",
-                12966
+                10627
             ],
             [
                 6,
-                "Qakbot",
-                11698
+                "arm",
+                7660
             ],
             [
                 7,
-                "qbot",
-                9954
+                "hajime",
+                2507
             ],
             [
                 8,
-                "Quakbot",
-                9547
+                "None",
+                2257
             ],
             [
                 9,
-                "arm",
-                9317
+                "Qakbot",
+                1627
             ],
             [
                 10,
-                "TR",
-                6765
+                "Quakbot",
+                1357
             ],
             [
                 11,
-                "zip",
-                4273
+                "TR",
+                1009
             ],
             [
                 12,
-                "b-TDS",
-                4051
+                "qbot",
+                925
             ],
             [
                 13,
-                "None",
-                3419
+                "exe",
+                868
             ],
             [
                 14,
-                "exe",
-                2797
+                "emotet",
+                721
             ],
             [
                 15,
-                "hajime",
-                2499
+                "dll",
+                661
             ],
             [
                 16,
-                "opendir",
-                1925
+                "zip",
+                617
             ],
             [
                 17,
-                "dll",
-                1154
+                "heodo",
+                552
             ],
             [
                 18,
-                "Flubot",
-                1006
+                "Matanbuchus",
+                484
             ],
             [
                 19,
-                "32",
-                954
-            ],
-            [
-                20,
-                "emotet",
-                944
-            ],
-            [
-                21,
-                "RedLineStealer",
-                883
-            ],
-            [
-                22,
-                "heodo",
-                827
-            ],
-            [
-                23,
-                "obama176",
-                707
-            ],
-            [
-                24,
-                "obama175",
-                548
-            ],
-            [
-                25,
-                "obama174",
-                489
-            ],
-            [
-                26,
-                "Matanbuchus",
-                487
-            ],
-            [
-                27,
                 "bhs02",
                 484
             ],
             [
-                28,
+                20,
+                "b-TDS",
+                484
+            ],
+            [
+                21,
+                "opendir",
+                462
+            ],
+            [
+                22,
+                "32",
+                453
+            ],
+            [
+                23,
                 "gafgyt",
-                456
+                356
             ],
             [
-                29,
-                "Formbook",
-                455
-            ],
-            [
-                30,
-                "geofenced",
-                444
-            ],
-            [
-                31,
+                24,
                 "epoch5",
-                438
+                296
             ],
             [
-                32,
-                "biden57",
-                425
-            ],
-            [
-                33,
-                "Dridex",
-                412
-            ],
-            [
-                34,
-                "epoch4",
-                398
-            ],
-            [
-                35,
-                "ascii",
-                392
-            ],
-            [
-                36,
-                "obama179",
-                336
-            ],
-            [
-                37,
-                "obama177",
-                301
-            ],
-            [
-                38,
-                "obama180",
-                297
-            ],
-            [
-                39,
-                "Loki",
+                25,
+                "hancitor",
                 295
             ],
             [
-                40,
-                "AgentTesla",
-                243
+                26,
+                "ascii",
+                275
             ],
             [
-                41,
-                "bashlite",
-                242
+                27,
+                "epoch4",
+                265
             ],
             [
-                42,
-                "SocGholish",
-                236
+                28,
+                "doc",
+                261
             ],
             [
-                43,
-                "biden",
-                235
+                29,
+                "html",
+                238
             ],
             [
-                44,
-                "obama172",
-                198
-            ],
-            [
-                45,
-                "rat",
+                30,
+                "Formbook",
                 195
             ],
             [
-                46,
-                "encrypted",
-                185
-            ],
-            [
-                47,
-                "doc",
-                178
-            ],
-            [
-                48,
-                "hancitor",
-                174
-            ],
-            [
-                49,
-                "ArkeiStealer",
-                155
-            ],
-            [
-                50,
-                "DDoS Bot",
-                150
-            ],
-            [
-                51,
-                "html",
-                149
-            ],
-            [
-                52,
+                31,
                 "IcedID",
-                149
+                143
             ],
             [
-                53,
-                "pwd R3454",
-                146
+                32,
+                "AgentTesla",
+                135
             ],
             [
-                54,
+                33,
+                "RedLineStealer",
+                131
+            ],
+            [
+                34,
                 "aggah",
-                132
+                121
             ],
             [
-                55,
-                "powershell",
-                126
+                35,
+                "Loki",
+                116
             ],
             [
-                56,
+                36,
                 "hagga",
-                123
-            ],
-            [
-                57,
-                "sparc",
-                119
-            ],
-            [
-                58,
-                "ps",
                 115
             ],
             [
-                59,
-                "RemcosRAT",
-                108
+                37,
+                "bashlite",
+                115
             ],
             [
-                60,
-                "Gozi",
-                101
+                38,
+                "encrypted",
+                103
             ],
             [
-                61,
-                "ISFB",
-                99
+                39,
+                "ArkeiStealer",
+                96
             ],
             [
-                62,
-                "ursnif",
-                97
-            ],
-            [
-                63,
-                "ITA",
-                95
-            ],
-            [
-                64,
-                "obama181",
-                94
-            ],
-            [
-                65,
+                40,
                 "bokbot",
-                92
+                90
             ],
             [
-                66,
+                41,
                 "Encoded",
-                87
+                84
             ],
             [
-                67,
-                "ddos",
-                86
+                42,
+                "Dridex",
+                81
             ],
             [
-                68,
-                "CoinMiner",
-                78
+                43,
+                "rat",
+                80
             ],
             [
-                69,
-                "obama173",
-                76
+                44,
+                "geofenced",
+                63
             ],
             [
-                70,
-                "js",
-                73
-            ],
-            [
-                71,
+                45,
                 "hta",
-                72
-            ],
-            [
-                72,
-                "shellscript",
-                69
-            ],
-            [
-                73,
-                "njRAT",
-                68
-            ],
-            [
-                74,
-                "intel",
-                64
-            ],
-            [
-                75,
-                "AsyncRAT",
                 62
             ],
             [
-                76,
-                "AveMariaRAT",
-                60
-            ],
-            [
-                77,
-                "PowerPC",
-                59
-            ],
-            [
-                78,
-                "geo",
-                59
-            ],
-            [
-                79,
-                "GuLoader",
-                59
-            ],
-            [
-                80,
+                46,
                 "l",
                 58
             ],
             [
-                81,
-                "motorola",
-                56
+                47,
+                "DDoS Bot",
+                58
             ],
             [
-                82,
-                "renesas",
-                55
+                48,
+                "js",
+                58
             ],
             [
-                83,
-                "RaccoonStealer",
-                53
-            ],
-            [
-                84,
-                "SnakeKeylogger",
+                49,
+                "CoinMiner",
                 49
             ],
             [
-                85,
-                "vbs",
+                50,
+                "ITA",
+                49
+            ],
+            [
+                51,
+                "powershell",
                 48
             ],
             [
-                86,
-                "malware",
+                52,
+                "ursnif",
+                45
+            ],
+            [
+                53,
+                "Gozi",
+                45
+            ],
+            [
+                54,
+                "ISFB",
                 44
             ],
             [
-                87,
-                "obama161",
-                43
+                55,
+                "ps",
+                42
             ],
             [
-                88,
-                "remcos",
+                56,
+                "TrickBot",
                 41
             ],
             [
-                89,
-                "Smoke Loader",
-                39
+                57,
+                "RaccoonStealer",
+                38
             ],
             [
-                90,
-                "ps1",
-                36
-            ],
-            [
-                91,
-                "dcrat",
+                58,
+                "GuLoader",
                 35
             ],
             [
-                92,
-                "PowerShellSMTPKeyLogger",
-                34
+                59,
+                "RemcosRAT",
+                35
             ],
             [
-                93,
-                "script",
-                33
-            ],
-            [
-                94,
-                "NanoCore",
-                33
-            ],
-            [
-                95,
-                "inps",
+                60,
+                "malware",
                 32
             ],
             [
-                96,
-                "FRA",
-                31
+                61,
+                "sparc",
+                32
             ],
             [
-                97,
-                "lokibot",
+                62,
+                "AsyncRAT",
                 30
             ],
             [
-                98,
-                "64",
-                25
+                63,
+                "ddos",
+                30
             ],
             [
-                99,
-                "N-W0rm",
+                64,
+                "script",
+                27
+            ],
+            [
+                65,
+                "geo",
                 24
             ],
             [
-                100,
-                "base64",
+                66,
+                "PowerPC",
+                24
+            ],
+            [
+                67,
+                "shellscript",
+                24
+            ],
+            [
+                68,
+                "intel",
                 23
             ],
             [
-                101,
-                "trojan",
-                23
-            ],
-            [
-                102,
-                "avemaria",
+                69,
+                "motorola",
                 22
             ],
             [
-                103,
-                "WarzoneRat",
+                70,
+                "inps",
                 22
             ],
             [
-                104,
-                "txt",
+                71,
+                "njRAT",
                 21
             ],
             [
-                105,
-                "RTF",
+                72,
+                "SnakeKeylogger",
                 21
             ],
             [
-                106,
-                "bumblbee",
+                73,
+                "renesas",
+                21
+            ],
+            [
+                74,
+                "NanoCore",
+                21
+            ],
+            [
+                75,
+                "N-W0rm",
                 20
             ],
             [
-                107,
+                76,
+                "remcos",
+                20
+            ],
+            [
+                77,
+                "AveMariaRAT",
+                19
+            ],
+            [
+                78,
                 "Amadey",
-                20
-            ],
-            [
-                108,
-                "LokiPWS",
-                20
-            ],
-            [
-                109,
-                "stealer",
-                20
-            ],
-            [
-                110,
-                "SilentBuilder",
-                19
-            ],
-            [
-                111,
-                "binary",
-                19
-            ],
-            [
-                112,
-                "ContactForms",
-                18
-            ],
-            [
-                113,
-                "NetWire",
-                18
-            ],
-            [
-                114,
-                "MetaMorfo",
                 17
             ],
             [
-                115,
+                79,
                 "BRA",
                 16
             ],
             [
-                116,
-                "botnet",
+                80,
+                "vbs",
                 16
             ],
             [
-                117,
-                "Ave Maria",
+                81,
+                "Smoke Loader",
+                16
+            ],
+            [
+                82,
+                "lokibot",
+                16
+            ],
+            [
+                83,
+                "stealer",
                 15
             ],
             [
-                118,
-                "strrat",
+                84,
+                "botnet",
                 15
             ],
             [
-                119,
-                "Hive",
-                15
-            ],
-            [
-                120,
-                "msi",
+                85,
+                "bazaloader",
                 14
             ],
             [
-                121,
-                "Tsunami",
+                86,
+                "xll",
+                14
+            ],
+            [
+                87,
+                "PowerShellSMTPKeyLogger",
+                14
+            ],
+            [
+                88,
+                "MetaMorfo",
                 13
             ],
             [
-                122,
+                89,
                 "wget-ua",
                 13
             ],
             [
-                123,
+                90,
                 "ua-wget",
                 13
             ],
             [
-                124,
-                "TrickBot",
-                12
-            ],
-            [
-                125,
+                91,
                 "NetSupport",
-                12
+                13
             ],
             [
-                126,
-                "xlsb",
-                12
-            ],
-            [
-                127,
+                92,
                 "x86-32",
                 12
             ],
             [
-                128,
-                "bumblebee",
-                11
-            ],
-            [
-                129,
-                "sh",
-                11
-            ],
-            [
-                130,
-                "DBatLoader",
-                10
-            ],
-            [
-                131,
-                "bitrat",
-                10
-            ],
-            [
-                132,
-                "AZORult",
-                10
-            ],
-            [
-                133,
-                "ModiLoader",
-                10
-            ],
-            [
-                134,
+                93,
                 "BazarLoader",
-                9
+                11
             ],
             [
-                135,
-                "CobaltStrike",
-                9
+                94,
+                "trojan",
+                11
             ],
             [
-                136,
+                95,
+                "ps1",
+                11
+            ],
+            [
+                96,
+                "64",
+                11
+            ],
+            [
+                97,
                 "nemucod",
                 9
             ],
             [
-                137,
-                "USA",
+                98,
+                "dcrat",
                 9
             ],
             [
-                138,
-                "xll",
+                99,
+                "LokiPWS",
                 9
             ],
             [
-                139,
-                "dofoil",
-                9
-            ],
-            [
-                140,
-                "aa",
-                8
-            ],
-            [
-                141,
-                "bazaloader",
-                8
-            ],
-            [
-                142,
+                100,
                 "agenziadelleentrate",
                 8
             ],
             [
-                143,
-                "iso",
+                101,
+                "ContactForms",
                 8
             ],
             [
-                144,
-                "DanaBot",
-                8
-            ],
-            [
-                145,
-                "Vidar",
+                102,
+                "msi",
                 7
             ],
             [
-                146,
+                103,
                 "covid19",
                 7
             ],
             [
-                147,
-                "agenziaentrate",
+                104,
+                "QuasarRAT",
                 7
             ],
             [
-                148,
-                "kinsing",
-                7
-            ],
-            [
-                149,
+                105,
                 "italy",
                 7
             ],
             [
-                150,
-                "PowerShellSMTPWiFiStealer",
+                106,
+                "TA571",
                 6
             ],
             [
-                151,
+                107,
+                "password-DT3101",
+                6
+            ],
+            [
+                108,
+                "USA",
+                6
+            ],
+            [
+                109,
+                "Vidar",
+                6
+            ],
+            [
+                110,
+                "agenziaentrate",
+                6
+            ],
+            [
+                111,
                 "ddos.tf",
                 6
             ],
             [
-                152,
-                "QuasarRAT",
+                112,
+                "AZORult",
                 6
             ],
             [
-                153,
-                "apk ",
-                6
-            ],
-            [
-                154,
-                "CVE-2021-22205",
+                113,
+                "NetWire",
                 5
             ],
             [
-                155,
-                "PowerShellMeterpreterReverseTCPx86",
-                5
-            ],
-            [
-                156,
-                "LimeRAT",
-                5
-            ],
-            [
-                157,
-                "banker",
-                5
-            ],
-            [
-                158,
-                "lnk",
-                5
-            ],
-            [
-                159,
-                "Lu0bot",
-                5
-            ],
-            [
-                160,
-                "BillGates",
-                5
-            ],
-            [
-                161,
-                "xmrig",
-                5
-            ],
-            [
-                162,
-                "android",
-                5
-            ],
-            [
-                163,
-                "Numando",
-                5
-            ],
-            [
-                164,
-                "DHL",
-                4
-            ],
-            [
-                165,
-                "monerominer",
-                4
-            ],
-            [
-                166,
-                "Microsoftimpersonation",
-                4
-            ],
-            [
-                167,
-                "plugin",
-                4
-            ],
-            [
-                168,
-                "fake microsoft",
-                4
-            ],
-            [
-                169,
-                "fake app",
-                4
-            ],
-            [
-                170,
+                114,
                 "password-D32673",
                 4
             ],
             [
-                171,
+                115,
                 "password-D7438",
                 4
             ],
             [
-                172,
-                "RedLine",
-                4
-            ],
-            [
-                173,
-                "dofloo",
-                4
-            ],
-            [
-                174,
+                116,
                 "min-headers",
                 4
             ],
             [
-                175,
-                "WSOWebShell",
+                117,
+                "CobaltStrike",
                 4
             ],
             [
-                176,
+                118,
+                "lnk",
+                4
+            ],
+            [
+                119,
+                "Lu0bot",
+                4
+            ],
+            [
+                120,
                 "agga",
                 4
             ],
             [
-                177,
+                121,
+                "xmrig",
+                4
+            ],
+            [
+                122,
                 "x86-64",
                 4
             ],
             [
-                178,
+                123,
                 "blacklist IP",
                 4
             ],
             [
-                179,
+                124,
+                "xlsb",
+                4
+            ],
+            [
+                125,
+                "dofoil",
+                4
+            ],
+            [
+                126,
+                "apk ",
+                4
+            ],
+            [
+                127,
                 "ermac",
                 4
             ],
             [
-                180,
+                128,
+                "android",
+                4
+            ],
+            [
+                129,
+                "avemaria",
+                4
+            ],
+            [
+                130,
                 "44Stealer",
                 4
             ],
             [
-                181,
+                131,
+                "sh",
+                4
+            ],
+            [
+                132,
                 "BatchDropperMEMZ",
                 4
             ],
             [
-                182,
-                "snake",
-                4
-            ],
-            [
-                183,
-                "404KeyLogger",
-                4
-            ],
-            [
-                184,
-                "PandaStealer",
-                4
-            ],
-            [
-                185,
-                "perl",
+                133,
+                "PHPWebShellWWolf",
                 3
             ],
             [
-                186,
-                "stolenimages",
+                134,
+                "RTF",
                 3
             ],
             [
-                187,
-                "bat",
-                3
-            ],
-            [
-                188,
-                "spy",
-                3
-            ],
-            [
-                189,
-                "xls",
-                3
-            ],
-            [
-                190,
-                "latamhotel",
-                3
-            ],
-            [
-                191,
-                "Muhstik",
-                3
-            ],
-            [
-                192,
-                "jpg",
-                3
-            ],
-            [
-                193,
+                135,
                 "Arechclient2",
                 3
             ],
             [
-                194,
+                136,
                 "emotetscaligera2",
                 3
             ],
             [
-                195,
-                "rar",
-                3
-            ],
-            [
-                196,
+                137,
                 "ps-dl",
                 3
             ],
             [
-                197,
+                138,
                 "lnjrat",
                 3
             ],
             [
-                198,
+                139,
+                "banker",
+                3
+            ],
+            [
+                140,
                 "obama155",
                 3
             ],
             [
-                199,
-                "PHPWebShellMiniShell",
+                141,
+                "BillGates",
                 3
             ],
             [
-                200,
-                "miner",
-                3
-            ],
-            [
-                201,
+                142,
                 "bash",
                 3
             ],
             [
-                202,
+                143,
                 "64-bit",
                 3
             ],
             [
-                203,
+                144,
                 "ettersilent",
                 3
             ],
             [
-                204,
-                "xloader",
+                145,
+                "WarzoneRat",
                 3
             ],
             [
-                205,
-                "coper",
+                146,
+                "bitrat",
                 3
             ],
             [
-                206,
-                "pw ZW6465",
-                3
-            ],
-            [
-                207,
-                "stop",
-                3
-            ],
-            [
-                208,
-                "jar",
-                3
-            ],
-            [
-                209,
-                "OskiStealer",
-                3
-            ],
-            [
-                210,
-                "vacuna",
+                147,
+                "Banload",
                 2
             ],
             [
-                211,
-                "stealth-shellbot",
+                148,
+                "jpg",
                 2
             ],
             [
-                212,
-                "ParrotTDS",
-                2
-            ],
-            [
-                213,
-                "XLM4.0",
-                2
-            ],
-            [
-                214,
-                "xlm",
-                2
-            ],
-            [
-                215,
-                "ukr",
-                2
-            ],
-            [
-                216,
-                "fakeimage",
-                2
-            ],
-            [
-                217,
-                "Kaiji",
-                2
-            ],
-            [
-                218,
-                "obanma178",
-                2
-            ],
-            [
-                219,
-                "StolenImagesEvidence",
-                2
-            ],
-            [
-                220,
-                "Neshta",
-                2
-            ],
-            [
-                221,
-                "Qabot",
-                2
-            ],
-            [
-                222,
+                149,
                 "autoit",
                 2
             ],
             [
-                223,
-                "Astaroth",
+                150,
+                "ModiLoader",
                 2
             ],
             [
-                224,
-                "xlsx",
-                2
-            ],
-            [
-                225,
-                "IRCbot",
-                2
-            ],
-            [
-                226,
+                151,
                 "emotetscaligera",
                 2
             ],
             [
-                227,
-                "Ousaban",
+                152,
+                "Hive",
                 2
             ],
             [
-                228,
-                "img",
+                153,
+                "LimeRAT",
                 2
             ],
             [
-                229,
-                "cab",
-                2
-            ],
-            [
-                230,
+                154,
                 "encrytped",
                 2
             ],
             [
-                231,
-                "PowerShellMeterpreterReverseTCPx64",
+                155,
+                "DBatLoader",
                 2
             ],
             [
-                232,
+                156,
                 " exe",
                 2
             ],
             [
-                233,
+                157,
+                "base64",
+                2
+            ],
+            [
+                158,
                 "07a7cea5eab70c8af278afcf54ddd7b4",
                 2
             ],
             [
-                234,
+                159,
+                "WSOWebShell",
+                2
+            ],
+            [
+                160,
+                "tgz",
+                2
+            ],
+            [
+                161,
                 "ImminentRAT",
                 2
             ],
             [
-                235,
-                "cmd",
-                2
-            ],
-            [
-                236,
+                162,
                 "shell",
                 2
             ],
             [
-                237,
+                163,
                 "linux",
                 2
             ],
             [
-                238,
+                164,
                 "downloader",
                 2
             ],
             [
-                239,
+                165,
                 "curl",
                 2
             ],
             [
-                240,
+                166,
                 "busybox",
                 2
             ],
             [
-                241,
+                167,
+                "coper",
+                2
+            ],
+            [
+                168,
                 "arkei",
                 2
             ],
             [
-                242,
-                "smscontrollo",
+                169,
+                "xloader",
                 2
             ],
             [
-                243,
+                170,
+                "strrat",
+                2
+            ],
+            [
+                171,
                 "m68k",
                 2
             ],
             [
-                244,
+                172,
                 "i686",
                 2
             ],
             [
-                245,
+                173,
+                "iso",
+                2
+            ],
+            [
+                174,
                 "PHPWebShellAdminConsole",
                 2
             ],
             [
-                246,
+                175,
                 "PowerShellDropperXMRIG",
                 2
             ],
             [
-                247,
+                176,
+                "snake",
+                2
+            ],
+            [
+                177,
+                "404KeyLogger",
+                2
+            ],
+            [
+                178,
                 "docx",
                 2
             ],
             [
-                248,
-                "encrpyted",
-                2
-            ],
-            [
-                249,
-                "pwd XX4649",
-                2
-            ],
-            [
-                250,
-                "Xorist",
-                2
-            ],
-            [
-                251,
-                "a310Logger",
-                2
-            ],
-            [
-                252,
-                "stolenevidence",
+                179,
+                "vmprotect",
                 1
             ],
             [
-                253,
-                "1ms0rryMiner",
+                180,
+                "upx",
                 1
             ],
             [
-                254,
-                "PHPWebShellMARIJUANA",
+                181,
+                "Redosdru",
                 1
             ],
             [
-                255,
-                "ART",
-                1
-            ],
-            [
-                256,
-                "sorillus",
-                1
-            ],
-            [
-                257,
-                " dll",
-                1
-            ],
-            [
-                258,
-                "md5-0944744c31d37852031093e490a79450",
-                1
-            ],
-            [
-                259,
-                "dropper-md5-0f3e7b2c7877d2e8c4a36cd08699c8de",
-                1
-            ],
-            [
-                260,
-                "dot",
-                1
-            ],
-            [
-                261,
-                "AgenTesla",
-                1
-            ],
-            [
-                262,
-                "excel",
-                1
-            ],
-            [
-                263,
-                "ASPXShell",
-                1
-            ],
-            [
-                264,
-                "Xorddos",
-                1
-            ],
-            [
-                265,
-                "tzr01",
-                1
-            ],
-            [
-                266,
-                "bot",
-                1
-            ],
-            [
-                267,
-                "ModLoader",
-                1
-            ],
-            [
-                268,
-                "Password-protected",
-                1
-            ],
-            [
-                269,
-                "ua-msi",
-                1
-            ],
-            [
-                270,
-                "dual-ziped",
-                1
-            ],
-            [
-                271,
-                "teambot",
-                1
-            ],
-            [
-                272,
-                "telegram",
-                1
-            ],
-            [
-                273,
-                "mekotio",
-                1
-            ],
-            [
-                274,
-                "pw-R3454",
-                1
-            ],
-            [
-                275,
-                "pw R3454",
-                1
-            ],
-            [
-                276,
-                "pass:R3454",
-                1
-            ],
-            [
-                277,
-                "Loader",
-                1
-            ],
-            [
-                278,
-                "JSPWebShellPwnshell",
-                1
-            ],
-            [
-                279,
-                "PHPAlfaTeamShell",
-                1
-            ],
-            [
-                280,
-                "PowerSell",
-                1
-            ],
-            [
-                281,
-                "data",
-                1
-            ],
-            [
-                282,
-                "BluStealer",
-                1
-            ],
-            [
-                283,
+                182,
                 "Mars",
                 1
             ],
             [
-                284,
-                "blackout",
+                183,
+                "fake anydesk",
                 1
             ],
             [
-                285,
-                "jacksbot",
+                184,
+                ".dll",
                 1
             ],
             [
-                286,
-                "brasilian",
+                185,
+                "txt",
                 1
             ],
             [
-                287,
-                "mpsl",
+                186,
+                "PHPWebShellKAKEGURAI",
                 1
             ],
             [
-                288,
-                "ipendir",
-                1
-            ],
-            [
-                289,
-                "AID",
-                1
-            ],
-            [
-                290,
-                "archive",
-                1
-            ],
-            [
-                291,
-                "exem",
-                1
-            ],
-            [
-                292,
-                "geofence",
-                1
-            ],
-            [
-                293,
-                "qbpt",
-                1
-            ],
-            [
-                294,
-                "CobaltStrikeBeaconDLLReverseHTTP",
-                1
-            ],
-            [
-                295,
+                187,
                 "gozi_module",
                 1
             ],
             [
-                296,
+                188,
                 "tvrat",
                 1
             ],
             [
-                297,
+                189,
+                "stop",
+                1
+            ],
+            [
+                190,
                 "ParallaxRAT",
                 1
             ],
             [
-                298,
+                191,
                 "SystemBC",
                 1
             ],
             [
-                299,
+                192,
                 "djvu",
                 1
             ],
             [
-                300,
+                193,
                 "7z",
                 1
             ],
             [
-                301,
+                194,
+                "Astaroth",
+                1
+            ],
+            [
+                195,
+                "xlsx",
+                1
+            ],
+            [
+                196,
                 "Agent Tesla",
                 1
             ],
             [
-                302,
+                197,
                 "RevengeRAT",
                 1
             ],
             [
-                303,
+                198,
                 "StormKitty",
                 1
             ],
             [
-                304,
+                199,
                 "password-ACCPYMT",
                 1
             ],
             [
-                305,
+                200,
                 "shellbot",
                 1
             ],
             [
-                306,
+                201,
+                "IRCbot",
+                1
+            ],
+            [
+                202,
                 "BR",
                 1
             ],
             [
-                307,
+                203,
                 "ARCompact",
                 1
             ],
             [
-                308,
+                204,
                 "PowerShellTCPKeyLogger",
                 1
             ],
             [
-                309,
+                205,
                 "ISBF",
                 1
             ],
             [
-                310,
+                206,
                 "IRPlan",
                 1
             ],
             [
-                311,
+                207,
                 "dropper",
                 1
             ],
             [
-                312,
+                208,
                 "fb0d531d6ad9e1d5c2ba5c16977d3c07",
                 1
             ],
             [
-                313,
+                209,
                 "505757b55061ec62779307e5ef6beaa1",
                 1
             ],
             [
-                314,
+                210,
                 "phishing",
                 1
             ],
             [
-                315,
+                211,
                 "iran",
                 1
             ],
             [
-                316,
+                212,
+                "rar",
+                1
+            ],
+            [
+                213,
                 "clipbanker",
                 1
             ],
             [
-                317,
+                214,
+                "Ousaban",
+                1
+            ],
+            [
+                215,
                 "meterpreter",
                 1
             ],
             [
-                318,
+                216,
                 "bazarbackdoor",
                 1
             ],
             [
-                319,
+                217,
                 "trickortreat",
                 1
             ],
             [
-                320,
+                218,
                 "WarzonaRAT",
                 1
             ],
             [
-                321,
+                219,
                 "ranion",
                 1
             ],
             [
-                322,
+                220,
                 "exploit",
                 1
             ],
             [
-                323,
+                221,
                 "exye",
                 1
             ],
             [
-                324,
+                222,
                 "Strike",
                 1
             ],
             [
-                325,
+                223,
                 "Cobalt",
                 1
             ],
             [
-                326,
+                224,
                 "groundhog",
                 1
             ],
             [
-                327,
+                225,
                 "RegAsm",
                 1
             ],
             [
-                328,
+                226,
+                "img",
+                1
+            ],
+            [
+                227,
                 "PowerShellNPlusMiner",
                 1
             ],
             [
-                329,
+                228,
                 "password:HR",
                 1
             ],
             [
-                330,
+                229,
                 "Themida",
                 1
             ],
             [
-                331,
+                230,
                 "kraken",
                 1
             ],
             [
-                332,
+                231,
+                "Numando",
+                1
+            ],
+            [
+                232,
+                "RedLine",
+                1
+            ],
+            [
+                233,
+                "cab",
+                1
+            ],
+            [
+                234,
                 "jssloader",
                 1
             ],
             [
-                333,
+                235,
+                "dofloo",
+                1
+            ],
+            [
+                236,
                 "crypt2",
                 1
             ],
             [
-                334,
+                237,
                 "log4j",
                 1
             ],
             [
-                335,
+                238,
                 "CVE-2021-44228",
                 1
             ],
             [
-                336,
+                239,
                 "4a4cc74c509cf4cc26c1ccd6e41fea1e",
                 1
             ],
             [
-                337,
+                240,
                 "Kutaki",
                 1
             ],
             [
-                338,
+                241,
                 "ASPXWebShellr00ts",
                 1
             ],
             [
-                339,
+                242,
                 "HawkEye",
                 1
             ],
             [
-                340,
+                243,
+                "a310Logger",
+                1
+            ],
+            [
+                244,
                 "a",
                 1
             ],
             [
-                341,
+                245,
                 "60184f7fd1c328bbcb5f3529c5044e32",
                 1
             ],
             [
-                342,
+                246,
+                "Tsunami",
+                1
+            ],
+            [
+                247,
+                "PowerShellMeterpreterReverseTCPx64",
+                1
+            ],
+            [
+                248,
                 "bin",
                 1
             ],
             [
-                343,
+                249,
                 "ASPXSpy",
                 1
             ],
             [
-                344,
+                250,
+                "PHPWebShellMiniShell",
+                1
+            ],
+            [
+                251,
                 "Metasploit",
                 1
             ],
             [
-                345,
+                252,
                 "PowerShellSMTPInfoStealer",
                 1
             ],
             [
-                346,
+                253,
                 "Raccoon",
                 1
             ],
             [
-                347,
+                254,
                 "9d7bf0f2fbb81660c8b91c2a323fde4e",
                 1
             ],
             [
-                348,
+                255,
                 "9b32b76f465b5458eb7bdbaefbaa589c",
                 1
             ],
             [
-                349,
+                256,
                 "23.105.131.161",
                 1
             ],
             [
-                350,
-                "tgz",
-                1
-            ],
-            [
-                351,
+                257,
                 "contacforms",
                 1
             ],
             [
-                352,
+                258,
                 "xe",
                 1
             ],
             [
-                353,
+                259,
                 "mrblack",
                 1
             ],
             [
-                354,
+                260,
                 "vhd",
                 1
             ],
             [
-                355,
+                261,
+                "miner",
+                1
+            ],
+            [
+                262,
+                "kinsing",
+                1
+            ],
+            [
+                263,
                 "orcusrat",
                 1
             ],
             [
-                356,
+                264,
                 "Tofsee",
                 1
             ],
             [
-                357,
+                265,
                 "PHPWebShellSimsimi",
                 1
             ],
             [
-                358,
+                266,
                 "PHPWebShellWebAdmin",
                 1
             ],
             [
-                359,
+                267,
                 "PHPWebShellFXShell",
                 1
             ],
             [
-                360,
+                268,
+                "cmd",
+                1
+            ],
+            [
+                269,
                 "php",
                 1
             ],
             [
-                361,
+                270,
                 "tha",
                 1
             ],
             [
-                362,
+                271,
                 "purgestealer",
                 1
             ],
             [
-                363,
+                272,
                 "manifest",
                 1
             ],
             [
-                364,
+                273,
+                "Flubot",
+                1
+            ],
+            [
+                274,
                 "darkcomet",
                 1
             ],
             [
-                365,
+                275,
                 "BlackShades",
                 1
             ],
             [
-                366,
+                276,
+                "smscontrollo",
+                1
+            ],
+            [
+                277,
                 "intesasanpaolo",
                 1
             ],
             [
-                367,
+                278,
                 "cryptbot",
                 1
             ],
             [
-                368,
+                279,
                 "c2",
                 1
             ],
             [
-                369,
+                280,
                 "sttrat",
                 1
             ],
             [
-                370,
+                281,
+                "jar",
+                1
+            ],
+            [
+                282,
                 "AgentTeslaa",
                 1
             ],
             [
-                371,
+                283,
                 "wshrat",
                 1
             ],
             [
-                372,
+                284,
                 "python",
                 1
             ],
             [
-                373,
+                285,
                 "SuperH",
                 1
             ],
             [
-                374,
+                286,
                 "sh4",
                 1
             ],
             [
-                375,
+                287,
                 "payload",
                 1
             ],
             [
-                376,
+                288,
                 "i586",
                 1
             ],
             [
-                377,
+                289,
                 "mipsel",
                 1
             ],
             [
-                378,
+                290,
                 "x64",
                 1
             ],
             [
-                379,
+                291,
                 "doubleiso",
                 1
             ],
             [
-                380,
+                292,
                 "PHPWebShellWebConsole",
                 1
             ],
             [
-                381,
+                293,
                 "PHPWebShellIndoXploit",
-                1
-            ],
-            [
-                382,
-                "pw MM6365",
-                1
-            ],
-            [
-                383,
-                "Oski",
-                1
-            ],
-            [
-                384,
-                "BlackNET",
                 1
             ]
         ]
     },
-    "time": "2022-05-05 03:06:31"
+    "time": "2022-05-08 01:33:28"
 }

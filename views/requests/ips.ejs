@@ -26,7 +26,7 @@
         <a href="/requests/filtered" class="btn btn-info">Fused responses from various services</a>
         <a href="/requests/analyse" class="btn btn-warning">Run analysis</a>
         <a href="/requests/download" download="wdi-responses.txt" class="btn btn-dark">Extract data to file</a>
-
+ 
         <div id="dialog" style="display:none;">
             Choose a path to save your shot:
             <input type="file" nwsaveas />
@@ -37,21 +37,29 @@
             <div class="card mt-2">
                 <div class="card-body">
                     <!-- ci je aktivny -->
-                    <div class="float-right"><span class="badge badge-primary badge-pill"><%= request.success == 1 ? 'Successful' : 'Failed' %> </span></div>
-                    
-                    <!-- nadpis -->
+                    <div class="float-right"><span class="badge badge-success badge-pill"><%= request.success == 1 ? 'Successful' : 'Failed' %> </span></div>
+                    <!-- ci je subnet -->
+                    <% var isManual = request.subProvider === undefined %>
+                    <div class="float-right mr-2"><span class="badge <%= isManual ? 'badge-dark':'badge-info' %> badge-pill"><%= isManual ? 'Manually' : 'IP group' %></span></div>
+                    <!-- subnet ? -->
                     <% if (request.isSubnet) { %>
-                        <h4 class="card-title"><%= request.ipRequested %>/24 by '<%= providers[request.provider].name %>' </h4>  
-                    <% } else { %>
-                        <h4 class="card-title"><%= request.ipRequested %> by '<%= providers[request.provider].name %>' </h4>
-                    <% }%>
+                      <div class="float-right mr-2"><span class="badge badge-primary badge-pill">Groupped as /24</span></div>
+                    <% } %>
+                    <!-- ci sa daco naslo -->
+                    <% var somethingFound = request.somethingFound %>
+                    <div class="float-right mr-2"><span class="badge <%= somethingFound ? 'badge-warning':'badge-light' %> badge-pill"><%= somethingFound ? 'Suspicious' : 'Clean so far' %></span></div>
+                     
+                    <!-- nadpis -->
+                    <h4 class="card-title"><%= request.ipRequested %> by '<%= providers[request.provider].name %>' </h4>  
+                    
                     
                     <!-- tenke sede pismo -->
                     <div class="card-subtitle text-muted mb-2">
-                        <%= request.addedAt.toLocaleString() %>
+                      Acquired: <%= request.addedAt.toLocaleString() %>
                     </div>
                     <!-- Krajina odkial -->
                     <div class="card-text mb-2"> <%= request.city %>, <%= request.country %></div>
+                    
                     <!-- tlacidla -->
                     <a href="/requests/<%= request.id %>" class="btn btn-primary">Read More</a>
                     <a href="/providers/<%= providers[request.provider].slug %>" class="btn btn-secondary">About provider</a>
@@ -68,7 +76,6 @@
 </body>
 
 <script>
-var fs = require('fs');
 
 var buildFile = function(name, value) {
   var img = new Buffer(value, 'base64');

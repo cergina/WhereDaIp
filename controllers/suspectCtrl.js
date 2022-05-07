@@ -840,7 +840,7 @@ function saveAndRedirect(viewName) {
             } else {
                 console.log("Not sucesfully saved")
             }
-            //logInfo(`Successfull Creating/Editing ${provider.name}`)
+            //logInfo(`Successful Creating/Editing ${provider.name}`)
             res.redirect(`/${baseViewFolder.slice(1)}` + `/providers/${provider.slug}/?changed=1`)
             //res.render(`${baseViewFolder.slice(1)}` + `/${viewName}`, { provider: provider, siteTitle: 'Manually add new list' })
         } catch (e) {

@@ -18,7 +18,7 @@ function sendPromise(ip, provider) {
 
 
 // this is so we dont waste our requests counts
-// everyone will be successfull, but print out same location, except of entered IP
+// everyone will be successful, but print out same location, except of entered IP
 function sendFakePromise(ip, provider) {
     return new Promise((resolve, reject) => {
 
