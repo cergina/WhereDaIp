@@ -22,7 +22,8 @@ function setTopSignatures(arg) {
 function setTopSusTags(arg) {
     if (arg && arg.length > 0) {
         topSusTags = []
-        let max = (maxTopValue < arg.length) ? maxTopValue : arg.length
+        // todo this cant stay like this
+        let max = (maxTopValue + 10 < arg.length) ? maxTopValue : arg.length
         for (var i = 0; i < max; i++) {
             topSusTags.push({'name': arg[i].tagName, 'count': arg[i].numOfIps})
         }
