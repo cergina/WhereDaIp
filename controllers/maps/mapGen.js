@@ -314,6 +314,66 @@ const generateMapForSusTags = async (cached) => {
         }
     })
 
+
+    
+    // pair lists that are the same
+    var sidsRaw = sids
+    
+    for (let i=0; i<sidsRaw.length; i++) {
+        sidsRaw[i].paired = false
+        sidsRaw[i].new = false
+    }
+    var currentSize = undefined
+    for (let i=0; i<sidsRaw.length; i++) {
+        if (sidsRaw[i].paired)
+            continue
+
+        if (currentSize === undefined || currentSize !== sidsRaw[i].count) {
+            sidsRaw[i].new = true
+            currentSize = sidsRaw[i].count
+        }
+
+        
+        for (let j=i+1; j<sidsRaw.length; j++) {
+            var equal = true
+
+            if (sidsRaw[i].occurences.length !== sidsRaw[j].occurences.length) {
+                equal = false
+                break
+            }
+
+            for (let x=0; x<sidsRaw[i].occurences.length; x++) {
+                if (sidsRaw[i].occurences[x].code !== sidsRaw[j].occurences[x].code 
+                    || sidsRaw[i].occurences[x].count !== sidsRaw[j].occurences[x].count) {
+                        equal = false
+                        break
+                    }
+            }
+
+            if (equal) {
+                sidsRaw[j].paired = true
+            } else {
+                break
+            }
+        }
+
+    }
+
+    var sids = []
+    for (let i=0; i< sidsRaw.length; i++) {
+        if (sidsRaw[i].new) {
+            for (let j=i+1; j<sidsRaw.length; j++) {
+                if (sidsRaw[j].paired) {
+                    sidsRaw[i].name += `, ${sidsRaw[j].name}`
+                } else {
+                    break
+                }
+            }
+
+            sids.push(sidsRaw[i])
+        }
+    }
+
     susFileProcessAndSave({}, fileSettings, fileNameWriteSusTags, sids)
 }
 
