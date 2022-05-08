@@ -355,13 +355,10 @@ const deleteExistingResponse = async (req, res) => {
 }
 
 // regular geolocation event - suspicious list
-// TODO geoEvent
 const searchForIpsController = async (batch, isLast) => {
     try {
         // only use active ones
         var providers = await getAllUsableProviders()
-        
-        // TODO treba najst ci uz existuje taky zoznam s takym providerom a ulozit to donho
 
         
         // for every address find, if not send and get
@@ -625,7 +622,6 @@ const returnOnlyAddressesThatWereNotGeolocated = async (list) => {
                 break
             
             if (r.isSubnet === 1) {
-                // TODO
                 // is same subnet?
                 // if yes, check everyone inside subList
                 if (subnet === r.ipRequested) {
@@ -925,7 +921,6 @@ const getJsonWithCountedOrigin = async (cached) => {
         } else {
             uniqueCountries[uniqueCountries.findIndex(el => el.name === foundName)].count++
         }
-        // TODO zvysok
     }
     for (var x of cached.cachedBloklistResponses) {
         if (x.list[0].country) {

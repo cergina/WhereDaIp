@@ -149,7 +149,6 @@ const editProvider = async (req, res) => {
     } else if (provider.restMethod === 0) {
         res.render(`${baseViewFolder.slice(1)}` + '/editSourceProvider.ejs', { provider: provider, siteTitle: 'Edit existing provider' })
     } else {
-        // TODO error not found
     }
 }
 

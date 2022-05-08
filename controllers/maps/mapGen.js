@@ -52,7 +52,6 @@ const onEventGenerateFiles = async (cached) => {
     //     funcLog = fileNameWriteTopSignatures
     //     await generateMapForTopSignatures(cached)
     // } catch (e) {helper.logError(`Error in mapGen - ${funcLog} - occured during event ${e}`)}
-    // TODO dalsie
 }
 
 // private

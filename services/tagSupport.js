@@ -47,7 +47,6 @@ const addTag = async (params, res) => {
         
         //console.log(`Gotten name ${tagName}`)
 
-        // TODO if exists in db inc++ else  count = 0
         var foundTag = await tagDb.findOne({ name: tagName })
         if (foundTag) {
             foundTag.count = foundTag.count + 1
@@ -70,7 +69,6 @@ const decreaseTag = async (params, res) => {
         
         //console.log(`Gotten name ${tagName}`)
 
-        // TODO if exists in db inc-- else  nth
         var foundTag = await tagDb.findOne({ name: tagName })
         if (foundTag) {
             foundTag.count = foundTag.count - 1

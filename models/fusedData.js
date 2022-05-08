@@ -13,7 +13,6 @@ const fusedDataSchema = new mongoose.Schema({
         type: Date,
         required: true   
     }
-    // todo...
 })
 
 fusedDataSchema.pre('validate', function(next) {
