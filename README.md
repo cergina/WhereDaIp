@@ -34,52 +34,63 @@ Run instructions
 
 
 > Features
-- [X] Ability to add GeoDb services via REST API
-- [ ] Test if: Are services good for paid services? 
-- [X] Get info about actual GeoDb services in the db
-- [X] Get info about actual IPs stored in the db
-- [X] Fuse IPs in database into one bigger part
-- [X] Ability to make request from WEB on one IP
-- [X] Ability to make request from WEB on more IPs
-- [X] Ability to receive replies
-- [X] Ability to process a reply from JSON
-- [X] Ability to process multiple replies
-- [X] Ability to save data from replies
-- [ ] Ability to make a request for an IP via REST API
-- [ ] Be able to add providers of hidden IPs lists (TOR exit nodes, VPN serves)
-- [ ] Be able to receive, process and save such list
-- [ ] Be able to add providers of suspicious IPs lists
-- [ ] Be able to receive, process and save list
-- [ ] Fuse combined IPs geolocation outputs with additional lists
-- [ ] Send suspicious IPs lists to geolocation
-- [ ] Ignore IPs in the same /24 subnet during requests to save requests
-- [ ] Implement limitations in order not to overuse free API plans
-- [ ] Implement visualizations of actual state
-- [ ] Create statistics in form of graphs
-- [ ] Create statistics in form of Earth model
-
+```diff
++ [X] Ability to add GeoDb services via REST API
+# [-] Test if: Are services good for paid services? (Result: irelevant)
++ [X] Get info about actual GeoDb services in the db
++ [X] Get info about actual IPs stored in the db
++ [X] Fuse IPs in database into one bigger part
++ [X] Ability to make request from WEB on one IP
++ [X] Ability to make request from WEB on more IPs
++ [X] Ability to receive replies
++ [X] Ability to process a reply from JSON
++ [X] Ability to process multiple replies
++ [X] Ability to save data from replies
+- [-] Ability to make a request for an IP via REST API (Not in this scope)
++ [X] Be able to add providers of hidden IPs lists (TOR exit nodes, VPN serves)
++ [X] Be able to receive, process and save such list
++ [X] Be able to add providers of suspicious IPs lists
++ [X] Be able to receive, process and save list
++ [X] Fuse combined IPs geolocation outputs with additional lists
++ [X] Send suspicious IPs lists to geolocation
++ [X] Ignore IPs in the same /24 subnet during requests to save requests
++ [X] Implement limitations in order not to overuse free API plans
++ [X] Implement visualizations of actual state
++ [X] Create statistics in form of graphs
++ [X] Create statistics in form of Earth model
+! [~] Look for bugs and fix'em (Continuos)
+```
 
 --- 
 
-## Code explanation
+## Code structure explanation
 
-/config: environment variables and files init
+`/config`
+> environment variables and files init
 
-/controllers: separated logic corresponding to routerss
+`/controllers` 
+> separated logic corresponding to routerss
 
-/models: MongoDb data schemas
+`/models` 
+> MongoDb data schemas
 
-/rest-tests: files with specified REST requests to test application
+`/rest-tests`
+>`: files with specified REST requests to test application
 
-/routes: routers that specifiy at which url should which controller respond
+`/routes` 
+> routers that specifiy at which url should which controller respond
 
-/services: supporting services for sending requests, help with logging and dates
+`/services` 
+> supporting services for sending requests, help with logging and dates
 
-/views: forms in ejs that show content to the visitor, prevents duplicity
+`/views` 
+> forms in ejs that show content to the visitor, prevents duplicity
 
-app.js: specification of used engines, frameworks, view-engines, routes and listening ports
+`app.js` 
+> specification of used engines, frameworks, view-engines, routes and listening ports
 
-**.env: this file is supposed to be created via instructions in config file**
+`**.env` 
+> this file is supposed to be created via instructions in config file**
 
 
 
